@@ -9,6 +9,8 @@ module.exports = {
           '@data': './src/data',
           '@domain': './src/domain',
           '@presentation': './src/presentation',
+          '@infrastructure': './src/infrastructure',
+          '@navigation': './src/navigation',
         },
       },
     ],

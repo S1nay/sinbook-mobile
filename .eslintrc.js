@@ -10,6 +10,8 @@ module.exports = {
     'plugin:react-native/all',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -19,7 +21,7 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['react', 'react-native', '@typescript-eslint', 'prettier'],
+  plugins: ['react', 'react-native', '@typescript-eslint', 'prettier', 'import'],
   rules: {
     'prettier/prettier': 'error',
     'react-native/no-unused-styles': 'warn',
@@ -31,11 +33,48 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'import/prefer-default-export': 'off',
     'no-undef': 'error',
-    'react/ react-in-jsx-scope': 'none',
+    'react/react-in-jsx-scope': 'off',
+    'import/no-unresolved': ['error', { commonjs: true, amd: true }],
+    'import/named': 'error',
+    'import/namespace': 'off',
+    'import/default': 'off',
+    'import/export': 'off',
+    'max-len': [
+      'error',
+      {
+        code: 100,
+        tabWidth: 2,
+        ignoreComments: true,
+        ignoreTemplateLiterals: true,
+        ignoreUrls: true,
+      },
+    ],
+    '@typescript-eslint/no-namespace': 'off',
+    'import/order': [
+      'error',
+      {
+        groups: [['builtin', 'external'], ['internal'], ['parent', 'sibling', 'index']],
+        pathGroups: [
+          {
+            pattern: '@/**',
+            group: 'internal',
+            position: 'after',
+          },
+        ],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+      },
+    ],
   },
   settings: {
     react: {
       version: 'detect',
+    },
+    'import/resolver': {
+      typescript: true,
     },
   },
 };

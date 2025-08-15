@@ -10,14 +10,17 @@
     "jsx": "react-native",
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
-    "moduleResolution": "NodeNext",
+    "experimentalDecorators": true,
+    "moduleResolution": "Node",
     "types": ["@types/react"],
     "resolveJsonModule": true,
     "paths": {
       "@data/*": ["./src/data/*"],
       "@domain/*": ["./src/domain/*"],
-      "@presentation": ["./src/presentation/*"],
-      "@core": ["./src/core/*"]
+      "@presentation/*": ["./src/presentation/*"],
+      "@infrastructure/*": ["./src/infrastructure/*"],
+      "@navigation/*": ["./src/navigation/*"],
+      "@core/*": ["./src/core/*"],
     }
   },
   "exclude": ["node_modules"]
