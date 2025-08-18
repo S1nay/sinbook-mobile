@@ -3,8 +3,8 @@ apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
 project.ext.envConfigFiles = [
-    prod: ".env.production",
-    dev: ".env.development"
+    release: ".env.production",
+    debug: ".env.development"
 ];
 
 apply from: project(":react-native-config").projectDir.getPath() + "/dotenv.gradle"

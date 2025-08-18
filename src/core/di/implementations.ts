@@ -2,6 +2,7 @@ import EnvConfig from 'react-native-config';
 import { Mode } from 'react-native-mmkv';
 
 import HttpClients from '@infrastructure/http';
+import SocketManager from '@infrastructure/socket';
 import Storages from '@infrastructure/storage/storages';
 
 const SinbookHttpClientImpl = new HttpClients.AxiosHttpClient({
@@ -21,4 +22,6 @@ const RootStorageImpl = new Storages.MMKVStorage({
   path: './',
 });
 
-export { SinbookHttpClientImpl, RootStorageImpl };
+const SocketManagerImpl = new SocketManager(EnvConfig.API_URL?.slice(0, -4));
+
+export { SinbookHttpClientImpl, RootStorageImpl, SocketManagerImpl };

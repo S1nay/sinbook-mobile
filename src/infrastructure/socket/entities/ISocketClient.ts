@@ -1,9 +1,12 @@
-export interface ISocketClient<T> {
-  instance?: T;
+export interface ISocketClient<T = unknown> {
+  instance: T | null;
 
-  onConnect: () => void;
-  onListen: (event: string) => void;
-  onEmit: (event: string) => void;
-  onDisconnect: () => void;
-  onError: () => void;
+  connect(authToken: string): void;
+  disconnect(): void;
+  emit<T>(event: string, payload: T): void;
+
+  onListen(event: string, listener: () => void): void;
+  onDisconnect(listener: () => void): void;
+  onConnect(listener: () => void): void;
+  onError(listener: (error: Error) => void): void;
 }

@@ -1,13 +1,14 @@
 import { AxiosInstance } from 'axios';
 
+import { UserStorageKeys } from '@infrastructure/storage/entities';
+import { AppRouteNames } from '@navigation/configuration';
+
 import {
   IRequestInterceptor,
   IResponseInterceptor,
   IRefreshTokenDTO,
   IRefreshTokenResponse,
-} from '@core/interceptors/interfaces';
-import { UserStorageKeys } from '@infrastructure/storage/entities';
-import { AppRouteNames } from '@navigation/configuration';
+} from './interfaces';
 
 const requestInterceptor = async ({ request, storage }: IRequestInterceptor) => {
   const accessToken = storage.getString(UserStorageKeys.ACCESS_TOKEN);

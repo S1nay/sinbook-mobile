@@ -3,6 +3,7 @@ import { ServiceIdentifier } from 'inversify';
 
 import type { IHttpClient } from '@infrastructure/http/entities';
 import type { INavigationService } from '@infrastructure/navigation/entities';
+import { ISocketManager } from '@infrastructure/socket/entities';
 import type { IStorage } from '@infrastructure/storage/entities';
 import type { RootStackParamList } from '@navigation/configuration/routeParams';
 
@@ -14,4 +15,6 @@ export namespace Identifiers {
 
   export const NavigationService: ServiceIdentifier<INavigationService<RootStackParamList>> =
     Symbol('NavigationService');
+
+  export const SocketManager: ServiceIdentifier<ISocketManager> = Symbol('SocketManager');
 }

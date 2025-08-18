@@ -23,7 +23,15 @@ module.exports = {
   },
   plugins: ['react', 'react-native', '@typescript-eslint', 'prettier', 'import'],
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+      {
+        usePrettierrc: true,
+      },
+    ],
     'react-native/no-unused-styles': 'warn',
     'react-native/no-inline-styles': 'warn',
     'react/prop-types': 'off',

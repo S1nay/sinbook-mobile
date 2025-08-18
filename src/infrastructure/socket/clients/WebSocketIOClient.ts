@@ -1,24 +1,56 @@
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { io, Socket } from 'socket.io-client';
 
-import type { ISocketClient, ISocketConfig } from '../entities';
+import { type ISocketClient, type ISocketConfig, SocketDefaultEvents } from '../entities';
+
+// TODO Подумать как передавать токен
 
 class WebSocketIOClient implements ISocketClient<Socket> {
-  instance: Socket<DefaultEventsMap, DefaultEventsMap>;
+  private _instance: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
+
+  get instance(): Socket<DefaultEventsMap, DefaultEventsMap> | null {
+    return this._instance;
+  }
 
   constructor(config?: ISocketConfig) {
-    this.instance = io(config?.baseUrl, {
+    this._instance = io(`${config?.baseUrl}/${config?.path}`, {
       extraHeaders: config?.headers,
       timeout: config?.timeout,
       transports: config?.transports,
       autoConnect: false,
     });
   }
-  onConnect: () => void;
-  onListen: (event: string) => void;
-  onEmit: (event: string) => void;
-  onDisconnect: () => void;
-  onError: () => void;
+
+  connect(authToken: string) {
+    if (this._instance) {
+      this._instance.auth = { token: authToken };
+      this._instance?.connect();
+    }
+  }
+
+  disconnect() {
+    this._instance?.disconnect();
+  }
+
+  emit<T>(event: string, payload: T) {
+    this._instance?.emit(event, payload);
+  }
+
+  onListen(event: string, listener: () => void) {
+    this._instance?.on(event, listener);
+  }
+
+  onConnect(listener: () => void) {
+    this._instance?.on(SocketDefaultEvents.CONNECT, listener);
+  }
+
+  onDisconnect(listener: () => void) {
+    this._instance?.on(SocketDefaultEvents.DISCONNECT, listener);
+  }
+
+  onError(listener: (error: Error) => void) {
+    this._instance?.on(SocketDefaultEvents.ERROR, listener);
+  }
 }
 
 export default WebSocketIOClient;

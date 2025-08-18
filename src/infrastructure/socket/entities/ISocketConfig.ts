@@ -4,5 +4,6 @@ export interface ISocketConfig {
   baseUrl?: string;
   headers?: ISocketHeaders;
   timeout?: number;
-  transports: ('polling' | 'websocket' | 'webtransport' | string)[];
+  transports: ('polling' | 'websocket' | 'webtransport')[];
+  path: string;
 }
