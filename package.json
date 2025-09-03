@@ -24,6 +24,7 @@
     "react": "19.0.0",
     "react-hook-form": "^7.57.0",
     "react-native": "0.79.2",
+    "react-native-advanced-input-mask": "^1.4.4",
     "react-native-bootsplash": "^6.3.9",
     "react-native-config": "^1.5.5",
     "react-native-gesture-handler": "^2.25.0",
@@ -35,7 +36,6 @@
     "react-native-svg": "15.11.2",
     "reflect-metadata": "^0.2.2",
     "socket.io-client": "^4.8.1",
-    "tamagui": "^1.126.14",
     "zod": "^3.25.71"
   },
   "devDependencies": {

@@ -17,10 +17,12 @@
     "paths": {
       "@data/*": ["./src/data/*"],
       "@domain/*": ["./src/domain/*"],
-      "@presentation/*": ["./src/presentation/*"],
       "@infrastructure/*": ["./src/infrastructure/*"],
       "@navigation/*": ["./src/navigation/*"],
       "@core/*": ["./src/core/*"],
+      "@shared/*": ["./src/presentation/shared/*"],
+      "@ui/*": ["./src/presentation/ui/*"],
+      "@components/*": ["./src/presentation/components/*"],
     }
   },
   "exclude": ["node_modules"]
