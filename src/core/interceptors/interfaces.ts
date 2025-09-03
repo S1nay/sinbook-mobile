@@ -1,7 +1,7 @@
 import { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
 
 import { IHttpClient } from '@infrastructure/http/entities';
-import { INavigationService } from '@infrastructure/navigation/entities';
+import { INavigationService } from '@infrastructure/navigation-service/entities';
 import { IStorage } from '@infrastructure/storage/entities';
 import { RootStackParamList } from '@navigation/configuration';
 

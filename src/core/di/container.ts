@@ -2,8 +2,8 @@ import { Container } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
 import type { IHttpClient } from '@infrastructure/http/entities';
-import NavigationServiceImpl from '@infrastructure/navigation';
-import type { INavigationService } from '@infrastructure/navigation/entities';
+import NavigationServiceImpl from '@infrastructure/navigation-service';
+import type { INavigationService } from '@infrastructure/navigation-service/entities';
 import { ISocketManager } from '@infrastructure/socket/entities';
 import type { IStorage } from '@infrastructure/storage/entities';
 import type { RootStackParamList } from '@navigation/configuration/routeParams';

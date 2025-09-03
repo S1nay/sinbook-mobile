@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios';
 import { ServiceIdentifier } from 'inversify';
 
 import type { IHttpClient } from '@infrastructure/http/entities';
-import type { INavigationService } from '@infrastructure/navigation/entities';
+import type { INavigationService } from '@infrastructure/navigation-service/entities';
 import { ISocketManager } from '@infrastructure/socket/entities';
 import type { IStorage } from '@infrastructure/storage/entities';
 import type { RootStackParamList } from '@navigation/configuration/routeParams';

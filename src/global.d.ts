@@ -4,3 +4,6 @@ declare module '*.svg' {
   const content: React.FC<SvgProps>;
   export default content;
 }
+
+declare type PureFunction = () => void;
+declare type ValuesOf<T> = T[keyof T];

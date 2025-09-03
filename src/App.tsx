@@ -29,21 +29,13 @@ const App = () => {
 
   const setInterceptors = () => {
     httpClient.instance?.interceptors.request.use(request =>
-      requestInterceptor({
-        request,
-        storage,
-      }),
+      requestInterceptor({ request, storage }),
     );
 
     httpClient.instance?.interceptors.response.use(
       response => response,
       async error => {
-        await responseInterceptor({
-          error,
-          storage,
-          httpClient,
-          navigation,
-        });
+        await responseInterceptor({ error, storage, httpClient, navigation });
       },
     );
   };
@@ -60,10 +52,10 @@ const App = () => {
   }, []);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView>
       <BottomSheetModalProvider>
         <DIProvider container={container}>
-          <SafeAreaView>
+          <SafeAreaView style={{ flex: 1 }}>
             <StatusBar barStyle={'light-content'} />
 
             <AppNavigator />

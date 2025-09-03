@@ -61,4 +61,12 @@ export const MainNavigator = createNativeStackNavigator<RootStackParamList>({
     [AppRouteNames.Maintenance]: BottomTabNavigator,
     [AppRouteNames.Notifications]: Screens.NotificationScreen,
   },
+  screenOptions: ({ route }) => {
+    const isNotNavigator =
+      route.name !== AppRouteNames.Auth && route.name !== AppRouteNames.Maintenance;
+
+    return {
+      headerShown: isNotNavigator,
+    };
+  },
 });
