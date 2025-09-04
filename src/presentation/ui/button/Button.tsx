@@ -8,7 +8,15 @@ import Icon from '../icon/Icon';
 
 const Button = (props: ButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
-  const { variant = 'primary', size = 'large', icon, value, disabled, ...otherProps } = props;
+  const {
+    variant = 'primary',
+    size = 'large',
+    icon,
+    value,
+    disabled,
+    textStyle,
+    ...otherProps
+  } = props;
 
   const cfg = getButtonConfig({ pressed: isPressed, disabled, variant, size });
 
@@ -28,7 +36,7 @@ const Button = (props: ButtonProps) => {
     >
       {icon && <Icon name={icon.name} size={icon.size} stroke={cfg.icon.color} />}
 
-      <Text style={cfg.text}>{value}</Text>
+      <Text style={[cfg.text, textStyle]}>{value}</Text>
     </Pressable>
   );
 };

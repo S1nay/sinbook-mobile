@@ -21,4 +21,5 @@ export interface ButtonProps extends PressableProps {
   size?: ButtonSize;
   value: string;
   icon?: IconProps;
+  textStyle?: TextStyle;
 }
