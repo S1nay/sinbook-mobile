@@ -1,12 +1,8 @@
 import { memo } from 'react';
-import { Pressable, ViewStyle } from 'react-native';
-import TurboImage, { TurboImageProps } from 'react-native-turbo-image';
+import { Pressable } from 'react-native';
+import TurboImage from 'react-native-turbo-image';
 
-interface AvatarProps extends ViewStyle {
-  uri: string;
-  size?: number;
-  imageProps?: Omit<TurboImageProps, 'style' | 'source'>;
-}
+import { AvatarProps } from './types';
 
 const Avatar = (props: AvatarProps) => {
   const { uri, size = 28, imageProps, ...otherProps } = props;
