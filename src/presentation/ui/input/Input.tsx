@@ -22,6 +22,8 @@ const Input = (props: InputProps) => {
     endIcon,
     style,
     label,
+    containerStyle,
+    labelStyle,
     onFocus,
     onBlur,
     format,
@@ -73,12 +75,12 @@ const Input = (props: InputProps) => {
     const inputProps = {
       ...otherProps,
       value,
+      editable,
       mask: mask ? Masks[mask] : '',
+      style: [cfg.input, style],
       onChangeText: handleChangeText,
       onFocus: handleFocus,
       onBlur: handleBlur,
-      editable,
-      style: [cfg.input, style],
     };
 
     const BaseInput = mask ? MaskedTextInput : TextInput;
@@ -87,7 +89,7 @@ const Input = (props: InputProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       {startIcon && (
         <Icon
           {...startIcon}
@@ -95,13 +97,19 @@ const Input = (props: InputProps) => {
           style={[styles.startIcon, cfg.startIcon]}
           stroke={cfg.endIcon.color}
           size={startIcon.size}
-          hitSlop={8}
         />
       )}
 
-      <Label label={label} isFocused={isFocused} config={cfg} value={value} />
+      <Label
+        label={label}
+        isFocused={isFocused}
+        config={cfg}
+        value={value}
+        labelStyle={labelStyle}
+      />
 
       {renderInput()}
+
       {endIcon && (
         <Icon
           {...endIcon}
@@ -109,7 +117,6 @@ const Input = (props: InputProps) => {
           style={[styles.endIcon, cfg.endIcon]}
           stroke={cfg.endIcon.color}
           size={endIcon.size}
-          hitSlop={8}
         />
       )}
     </View>

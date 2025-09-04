@@ -6,7 +6,7 @@ import styles from './styles';
 import { LabelProps } from './types';
 
 const Label = (props: LabelProps) => {
-  const { label, isFocused, config, value } = props;
+  const { label, isFocused, config, value, labelStyle } = props;
 
   return (
     <Animated.Text
@@ -20,6 +20,7 @@ const Label = (props: LabelProps) => {
         ],
         ...styles.label,
         ...config.label,
+        ...labelStyle,
       }}
     >
       {label}

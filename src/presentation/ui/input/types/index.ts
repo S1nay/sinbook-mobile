@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
-import { ViewStyle } from 'react-native';
-import { MaskedTextInputProps, MaskedTextInputRef } from 'react-native-advanced-input-mask';
+import { TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import { MaskedTextInputRef } from 'react-native-advanced-input-mask';
 
 import { Colors } from '@shared/colors';
 import { MaskVariants } from '@shared/utils/masks';
@@ -37,8 +37,7 @@ export type GetInputConfigReturnType = {
   label: ViewStyle;
 };
 
-export interface InputProps
-  extends Omit<MaskedTextInputProps, 'mask' | 'onChangeText' | 'onChange'> {
+export interface InputProps extends Omit<TextInputProps, 'mask' | 'onChangeText' | 'onChange'> {
   mask?: MaskVariants;
   format?: (value: string) => string;
   startIcon?: IconProps;
@@ -47,4 +46,6 @@ export interface InputProps
   name: string;
   variant: InputVariants;
   label: string;
+  containerStyle?: ViewStyle;
+  labelStyle?: TextStyle;
 }
