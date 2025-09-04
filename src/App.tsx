@@ -11,7 +11,6 @@ import { DIProvider } from '@core/providers/DIProvider';
 import { SocketConnectionPaths } from '@infrastructure/socket/entities';
 import { AppNavigator } from '@navigation/AppNavigator';
 
-// icons (Presentation)
 // UI Base (Inputs, Buttons, Sheets, Elements of UI) (Presentation)
 // layouts (AuthLayout, AppLayout) (Presentation)
 

@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+import { memo } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { Colors } from '@shared/colors';
@@ -42,4 +43,4 @@ const Checkbox = (props: CheckboxProps) => {
   );
 };
 
-export default Checkbox;
+export default memo(Checkbox);

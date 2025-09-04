@@ -6248,6 +6248,11 @@ react-native-svg@15.11.2:
     css-tree "^1.1.3"
     warn-once "0.1.1"
 
+react-native-turbo-image@^1.23.0:
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/react-native-turbo-image/-/react-native-turbo-image-1.23.0.tgz#5c4c68295c0e2e4e97900bbad90dd839f661c02a"
+  integrity sha512-3J2isP+pF731aKLoNhaU15aen6U2uAz8w/DOL8TsGi1/CmHAd5ZHEZ0kUW06Ow/KDm8h68t9w9o7YWJC2N47Uw==
+
 react-native-worklets@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/react-native-worklets/-/react-native-worklets-0.5.0.tgz#ed25b55f3d14b8f66db7a9a5148c609e51eca801"
