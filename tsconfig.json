@@ -23,6 +23,7 @@
       "@shared/*": ["./src/presentation/shared/*"],
       "@ui/*": ["./src/presentation/ui/*"],
       "@components/*": ["./src/presentation/components/*"],
+      "@screens/*": ["./src/presentation/screens/*"]
     }
   },
   "exclude": ["node_modules"]

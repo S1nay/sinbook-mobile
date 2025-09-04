@@ -14,10 +14,11 @@ module.exports = {
           "@shared": "./src/presentation/shared",
           "@ui": "./src/presentation/ui",
           "@components": "./src/presentation/components",
+          "@screens": "./src/presentation/screens",
         },
       },
     ],
-    'react-native-reanimated/plugin',
+    'react-native-worklets/plugin',
     ['@babel/plugin-proposal-decorators', {legacy: true}]
   ],
 };
