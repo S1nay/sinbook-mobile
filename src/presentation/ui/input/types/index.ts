@@ -13,17 +13,29 @@ export type InputState = 'default' | 'focused' | 'error' | 'disabled';
 export type InputConfig = {
   [key in InputState]: {
     input: ViewStyle;
-    startIcon: { color: ValuesOf<typeof Colors>; left: number };
-    endIcon: { color: ValuesOf<typeof Colors>; right: number };
+    startIcon: { color: ValuesOf<typeof Colors>; left?: number };
+    endIcon: { color: ValuesOf<typeof Colors>; right?: number };
   };
 } & {
-  withStartIcon: ViewStyle;
-  withEndIcon: ViewStyle;
+  withStartIcon: {
+    input: ViewStyle;
+    label: ViewStyle;
+  };
+  withEndIcon: {
+    input: ViewStyle;
+  };
 };
 
 export type GetInputConfigParams = {
   [key in Partial<Exclude<InputState, 'default'>>]: boolean;
 } & { variant: InputVariants; startIcon: boolean; endIcon: boolean };
+
+export type GetInputConfigReturnType = {
+  input: ViewStyle;
+  startIcon: { color: ValuesOf<typeof Colors>; left?: number };
+  endIcon: { color: ValuesOf<typeof Colors>; left?: number };
+  label: ViewStyle;
+};
 
 export interface InputProps
   extends Omit<MaskedTextInputProps, 'mask' | 'onChangeText' | 'onChange'> {
@@ -34,4 +46,5 @@ export interface InputProps
   ref?: RefObject<Pick<MaskedTextInputRef, 'blur' | 'focus'>>;
   name: string;
   variant: InputVariants;
+  label: string;
 }

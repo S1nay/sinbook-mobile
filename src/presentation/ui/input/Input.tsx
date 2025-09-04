@@ -7,6 +7,7 @@ import { Masks } from '@shared/utils/masks';
 import Icon from '@ui/icon';
 
 import { getInputConfig } from './config';
+import Label from './input-components/label';
 import styles from './styles';
 import { InputProps } from './types';
 
@@ -20,6 +21,7 @@ const Input = (props: InputProps) => {
     startIcon,
     endIcon,
     style,
+    label,
     onFocus,
     onBlur,
     format,
@@ -88,6 +90,7 @@ const Input = (props: InputProps) => {
     <View style={styles.container}>
       {startIcon && (
         <Icon
+          {...startIcon}
           name={startIcon.name}
           style={[styles.startIcon, cfg.startIcon]}
           stroke={cfg.endIcon.color}
@@ -95,9 +98,13 @@ const Input = (props: InputProps) => {
           hitSlop={8}
         />
       )}
+
+      <Label label={label} isFocused={isFocused} config={cfg} value={value} />
+
       {renderInput()}
       {endIcon && (
         <Icon
+          {...endIcon}
           name={endIcon.name}
           style={[styles.endIcon, cfg.endIcon]}
           stroke={cfg.endIcon.color}
