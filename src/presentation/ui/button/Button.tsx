@@ -34,7 +34,7 @@ const Button = (props: ButtonProps) => {
       style={[styles.base, cfg.container]}
       {...otherProps}
     >
-      {icon && <Icon name={icon.name} size={icon.size} stroke={cfg.icon.color} />}
+      {icon && <Icon {...icon} stroke={cfg.icon.color || icon.stroke} />}
 
       <Text style={[cfg.text, textStyle]}>{value}</Text>
     </Pressable>
