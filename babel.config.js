@@ -15,6 +15,7 @@ module.exports = {
           "@ui": "./src/presentation/ui",
           "@components": "./src/presentation/components",
           "@screens": "./src/presentation/screens",
+          "@layouts": "./src/presentation/_layouts",
         },
       },
     ],

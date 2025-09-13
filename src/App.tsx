@@ -1,6 +1,6 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useEffect, useMemo } from 'react';
-import { StatusBar, SafeAreaView, StyleSheet } from 'react-native';
+import { StatusBar } from 'react-native';
 import { hide } from 'react-native-bootsplash';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -53,20 +53,14 @@ const App = () => {
       <BottomSheetModalProvider>
         <DIProvider container={container}>
           <AuthProvider>
-            <SafeAreaView style={styles.appContainer}>
-              <StatusBar barStyle={'dark-content'} />
+            <StatusBar barStyle={'dark-content'} />
 
-              <AppNavigator />
-            </SafeAreaView>
+            <AppNavigator />
           </AuthProvider>
         </DIProvider>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
 };
-
-const styles = StyleSheet.create({
-  appContainer: { flex: 1 },
-});
 
 export default App;

@@ -23,7 +23,8 @@
       "@shared/*": ["./src/presentation/shared/*"],
       "@ui/*": ["./src/presentation/ui/*"],
       "@components/*": ["./src/presentation/components/*"],
-      "@screens/*": ["./src/presentation/screens/*"]
+      "@screens/*": ["./src/presentation/screens/*"],
+      "@layouts/*": ["./src/presentation/_layouts/*"]
     }
   },
   "exclude": ["node_modules"]
