@@ -2,6 +2,7 @@ export const Colors = {
   black: '#171A1F',
   orange: '#E1602C',
   lightOrange: '#EA916E',
+  secondaryLightOrange: '#FDF5F1',
   gray: '#323842',
   lightGray: '#BCC1CA',
   red: '#DE3B40',
