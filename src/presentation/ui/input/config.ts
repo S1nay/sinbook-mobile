@@ -16,25 +16,29 @@ const LineTransparentInputConfig: InputConfig = {
     },
     startIcon: { color: Colors.lightGray, left: 0 },
     endIcon: { color: Colors.lightGray, right: 0 },
+    label: { left: 0, translateX: 0 },
   },
   focused: {
     input: { borderBottomColor: Colors.lightOrange },
     startIcon: { color: Colors.gray },
     endIcon: { color: Colors.gray },
+    label: { left: 0, translateX: 0 },
   },
   error: {
     input: { borderBottomColor: Colors.red },
     startIcon: { color: Colors.red },
     endIcon: { color: Colors.red },
+    label: { left: 0, translateX: 0 },
   },
   disabled: {
     input: { borderBottomColor: Colors.lightGray },
     startIcon: { color: Colors.lightGray },
     endIcon: { color: Colors.lightGray },
+    label: { left: 0, translateX: 0 },
   },
   withStartIcon: {
     input: { paddingLeft: 22 },
-    label: { left: 22 },
+    label: { left: 22, translateX: -20 },
   },
   withEndIcon: {
     input: { paddingRight: 22 },
@@ -51,25 +55,29 @@ const OutlinedTransparentInputConfig: InputConfig = {
     },
     startIcon: { color: Colors.lightGray, left: 12 },
     endIcon: { color: Colors.lightGray, right: 12 },
+    label: { left: 0, translateX: 0 },
   },
   focused: {
     input: { borderColor: Colors.lightOrange },
     startIcon: { color: Colors.gray },
     endIcon: { color: Colors.gray },
+    label: { left: 0, translateX: 0 },
   },
   error: {
     input: { borderColor: Colors.red },
     startIcon: { color: Colors.red },
     endIcon: { color: Colors.red },
+    label: { left: 0, translateX: 0 },
   },
   disabled: {
     input: { borderColor: Colors.lightGray },
     startIcon: { color: Colors.lightGray },
     endIcon: { color: Colors.lightGray },
+    label: { left: 0, translateX: 0 },
   },
   withStartIcon: {
     input: { paddingLeft: 34 },
-    label: { left: 34 },
+    label: { left: 34, translateX: -20 },
   },
   withEndIcon: {
     input: { paddingRight: 34 },
@@ -85,6 +93,7 @@ const BorderlessFilledInputConfig: InputConfig = {
     },
     startIcon: { color: Colors.lightGray, left: 12 },
     endIcon: { color: Colors.lightGray, right: 12 },
+    label: { left: 0, translateX: 0 },
   },
   focused: {
     input: {
@@ -93,6 +102,7 @@ const BorderlessFilledInputConfig: InputConfig = {
     },
     startIcon: { color: Colors.gray },
     endIcon: { color: Colors.gray },
+    label: { left: 0, translateX: 0 },
   },
   error: {
     input: {
@@ -102,15 +112,17 @@ const BorderlessFilledInputConfig: InputConfig = {
     },
     startIcon: { color: Colors.red },
     endIcon: { color: Colors.red },
+    label: { left: 0, translateX: 0 },
   },
   disabled: {
     input: { borderBottomColor: Colors.lightGray },
     startIcon: { color: Colors.lightGray },
     endIcon: { color: Colors.lightGray },
+    label: { left: 0, translateX: 0 },
   },
   withStartIcon: {
     input: { paddingLeft: 34 },
-    label: { left: 34 },
+    label: { left: 34, translateX: -20 },
   },
   withEndIcon: {
     input: { paddingRight: 34 },
@@ -150,6 +162,7 @@ export const getInputConfig = (params: GetInputConfigParams): GetInputConfigRetu
       ...(disabled ? config.disabled.endIcon : {}),
     },
     label: {
+      ...config.default.label,
       ...(startIcon ? config.withStartIcon.label : {}),
     },
   };

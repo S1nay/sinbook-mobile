@@ -15,11 +15,12 @@ export type InputConfig = {
     input: ViewStyle;
     startIcon: { color: ValuesOf<typeof Colors>; left?: number };
     endIcon: { color: ValuesOf<typeof Colors>; right?: number };
+    label: Omit<ViewStyle, 'translateX'> & { translateX: number };
   };
 } & {
   withStartIcon: {
     input: ViewStyle;
-    label: ViewStyle;
+    label: Omit<ViewStyle, 'translateX'> & { translateX: number };
   };
   withEndIcon: {
     input: ViewStyle;
@@ -34,7 +35,7 @@ export type GetInputConfigReturnType = {
   input: ViewStyle;
   startIcon: { color: ValuesOf<typeof Colors>; left?: number };
   endIcon: { color: ValuesOf<typeof Colors>; left?: number };
-  label: ViewStyle;
+  label: Omit<ViewStyle, 'translateX'> & { translateX: number };
 };
 
 export interface InputProps extends Omit<TextInputProps, 'mask' | 'onChangeText' | 'onChange'> {
@@ -44,7 +45,7 @@ export interface InputProps extends Omit<TextInputProps, 'mask' | 'onChangeText'
   endIcon?: IconProps;
   ref?: RefObject<Pick<MaskedTextInputRef, 'blur' | 'focus'>>;
   name: string;
-  variant: InputVariants;
+  variant?: InputVariants;
   label: string;
   containerStyle?: ViewStyle;
   labelStyle?: TextStyle;

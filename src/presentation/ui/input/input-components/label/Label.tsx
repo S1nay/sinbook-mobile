@@ -16,7 +16,7 @@ const Label = (props: LabelProps) => {
         fontSize: isFocused || value ? 12 : 14,
         transform: [
           { translateY: isFocused || value ? -42 : -12 },
-          { translateX: isFocused || value ? -20 : 0 },
+          { translateX: isFocused || value ? config.label.translateX : 0 },
         ],
         ...styles.label,
         ...config.label,
