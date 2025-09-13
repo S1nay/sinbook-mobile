@@ -15,8 +15,6 @@ import Icon from '@ui/icon';
 import styles from './styles';
 import { AuthLayoutProps } from './types';
 
-const PADDING_TOP = 24;
-
 const AuthLayout = (props: PropsWithChildren<AuthLayoutProps>) => {
   const { title, children } = props;
   const insets = useSafeAreaInsets();
@@ -24,7 +22,7 @@ const AuthLayout = (props: PropsWithChildren<AuthLayoutProps>) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <KeyboardAvoidingView
-        style={[styles.container, { paddingTop: insets.top + PADDING_TOP }]}
+        style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <Pressable onPress={Keyboard.dismiss} style={styles.inner}>

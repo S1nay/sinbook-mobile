@@ -14,6 +14,7 @@ export default StyleSheet.create({
     flex: 1,
     gap: 24,
     paddingHorizontal: 16,
+    paddingVertical: 24,
   },
   safeArea: {
     flex: 1,
