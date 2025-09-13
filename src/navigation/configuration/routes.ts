@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { useSignedOut, useSignedIn } from '@core/providers/AuthProvider';
 import Screens from '@screens/index';
 
 import {
@@ -15,7 +16,6 @@ import type {
   BottomTabStackParamList,
   ChatStackParamList,
   ProfileStackParamList,
-  RootStackParamList,
 } from './routeParams';
 
 const ProfileNavigator = createNativeStackNavigator<ProfileStackParamList>({
@@ -45,6 +45,11 @@ const BottomTabNavigator = createBottomTabNavigator<BottomTabStackParamList>({
     [BottomTabRouteNames.Profile]: ProfileNavigator,
   },
   initialRouteName: BottomTabRouteNames.Home,
+  screenOptions: () => {
+    return {
+      headerShown: false,
+    };
+  },
 });
 
 export const AuthNavigator = createNativeStackNavigator<AuthStackParamList>({
@@ -53,13 +58,28 @@ export const AuthNavigator = createNativeStackNavigator<AuthStackParamList>({
     [AuthRouteNames.SignUp]: Screens.SignUpScreen,
   },
   initialRouteName: AuthRouteNames.SignIn,
+  screenOptions: () => {
+    return {
+      headerShown: false,
+    };
+  },
 });
 
-export const MainNavigator = createNativeStackNavigator<RootStackParamList>({
-  screens: {
-    [AppRouteNames.Auth]: AuthNavigator,
-    [AppRouteNames.Maintenance]: BottomTabNavigator,
-    [AppRouteNames.Notifications]: Screens.NotificationScreen,
+export const MainNavigator = createNativeStackNavigator({
+  groups: {
+    LoggedIn: {
+      if: useSignedIn,
+      screens: {
+        [AppRouteNames.Maintenance]: BottomTabNavigator,
+        [AppRouteNames.Notifications]: Screens.NotificationScreen,
+      },
+    },
+    LoggedOut: {
+      if: useSignedOut,
+      screens: {
+        [AppRouteNames.Auth]: AuthNavigator,
+      },
+    },
   },
   screenOptions: ({ route }) => {
     const isNotNavigator =

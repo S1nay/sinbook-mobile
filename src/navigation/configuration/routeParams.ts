@@ -28,9 +28,9 @@ export type AuthStackParamList = {
 };
 
 export type RootStackParamList = {
-  [AppRouteNames.Auth]: NavigatorScreenParams<AuthStackParamList>;
   [AppRouteNames.Maintenance]: NavigatorScreenParams<BottomTabStackParamList>;
   [AppRouteNames.Notifications]: undefined;
+  [AppRouteNames.Auth]: NavigatorScreenParams<AuthStackParamList>;
 };
 
 export type BottomTabStackParamList = {
