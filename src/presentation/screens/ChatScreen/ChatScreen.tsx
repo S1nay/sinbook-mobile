@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 
-const InboxScreen = () => {
+const ChatScreen = () => {
   return <View />;
 };
 
-export default InboxScreen;
+export default ChatScreen;

@@ -1,34 +1,39 @@
 export enum AppRouteNames {
-  //Уведомления
-  Auth = 'AuthScreen',
-  Notifications = 'NotificationsScreen',
-  Maintenance = 'MaintenanceScreen',
+  Maintenance = 'MaintenanceNavigator',
+  Auth = 'AuthNavigator',
+}
+
+// Главные роуты с авторизацией
+export enum MaintenanceRouteNames {
+  Notifications = 'Уведомления',
+  Tab = 'Таб Навигатор',
 }
 
 //Чат
 export enum ChatRouteNames {
-  InboxList = 'InboxListScreen',
-  Inbox = 'InboxScreen',
+  Chats = 'Chats',
+  Chat = 'Chat',
 }
 
 // Профиль
 export enum ProfileRouteNames {
-  ProfileDetails = 'ProfileDetailsScreen',
-  ProfileFollowList = 'ProfileFollowListScreen',
-  ProfilePosts = 'ProfilePostsScreen',
-  ProfileEdit = 'ProfileEditScreen',
+  ProfileDetails = 'Profile Details',
+  ProfileFollowList = 'Profile Follow',
+  ProfilePosts = 'Profile Posts',
+  ProfileEdit = 'Profile Edit',
 }
 
 //Авторизация
 export enum AuthRouteNames {
-  SignIn = 'SignInScreen',
-  SignUp = 'SignUpScreen',
+  SignIn = 'Sign In',
+  SignUp = 'Sign Up',
 }
 
+// Меню нижних табов
 export enum BottomTabRouteNames {
-  Home = 'HomeScreen',
-  Search = 'SearchScreen',
-  CreatePost = 'CreatePostScreen',
-  Chat = 'ChatScreen',
-  Profile = 'ProfileScreen',
+  Home = 'Sinbook',
+  Search = 'Search',
+  CreatePost = 'Create Post',
+  Chat = 'Chats',
+  Profile = 'Profile',
 }

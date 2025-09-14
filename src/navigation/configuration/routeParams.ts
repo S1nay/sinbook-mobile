@@ -6,20 +6,15 @@ import {
   AuthRouteNames,
   BottomTabRouteNames,
   ChatRouteNames,
+  MaintenanceRouteNames,
   ProfileRouteNames,
 } from './routeNames';
 
 // Типы для параметров экранов
-export type ProfileStackParamList = {
-  [ProfileRouteNames.ProfileDetails]: undefined;
-  [ProfileRouteNames.ProfilePosts]: undefined;
-  [ProfileRouteNames.ProfileEdit]: undefined;
-  [ProfileRouteNames.ProfileFollowList]: undefined;
-};
 
-export type ChatStackParamList = {
-  [ChatRouteNames.Inbox]: undefined;
-  [ChatRouteNames.InboxList]: undefined;
+export type RootStackParamList = {
+  [AppRouteNames.Maintenance]: NavigatorScreenParams<MaintenanceStackParamList>;
+  [AppRouteNames.Auth]: NavigatorScreenParams<AuthStackParamList>;
 };
 
 export type AuthStackParamList = {
@@ -27,10 +22,9 @@ export type AuthStackParamList = {
   [AuthRouteNames.SignUp]: undefined;
 };
 
-export type RootStackParamList = {
-  [AppRouteNames.Maintenance]: NavigatorScreenParams<BottomTabStackParamList>;
-  [AppRouteNames.Notifications]: undefined;
-  [AppRouteNames.Auth]: NavigatorScreenParams<AuthStackParamList>;
+export type MaintenanceStackParamList = {
+  [MaintenanceRouteNames.Tab]: NavigatorScreenParams<BottomTabStackParamList>;
+  [MaintenanceRouteNames.Notifications]: undefined;
 };
 
 export type BottomTabStackParamList = {
@@ -41,11 +35,26 @@ export type BottomTabStackParamList = {
   [BottomTabRouteNames.CreatePost]: undefined;
 };
 
+export type ProfileStackParamList = {
+  [ProfileRouteNames.ProfileDetails]: undefined;
+  [ProfileRouteNames.ProfilePosts]: undefined;
+  [ProfileRouteNames.ProfileEdit]: undefined;
+  [ProfileRouteNames.ProfileFollowList]: undefined;
+};
+
+export type ChatStackParamList = {
+  [ChatRouteNames.Chat]: undefined;
+  [ChatRouteNames.Chats]: undefined;
+};
+
 // Типы для props экранов
 export type RootStackScreenProps<T extends keyof RootStackParamList> = NativeStackScreenProps<
   RootStackParamList,
   T
 >;
+
+export type MaintenanceScreenProps<T extends keyof MaintenanceStackParamList> =
+  NativeStackScreenProps<MaintenanceStackParamList, T>;
 
 export type BottomTabScreenProps<T extends keyof BottomTabStackParamList> = NativeStackScreenProps<
   BottomTabStackParamList,

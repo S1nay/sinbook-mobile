@@ -1,7 +1,7 @@
+import ChatScreen from './ChatScreen';
+import ChatsScreen from './ChatsScreen';
 import CreatePostScreen from './CreatePostScreen';
 import HomeScreen from './HomeScreen';
-import InboxListScreen from './InboxListScreen';
-import InboxScreen from './InboxScreen';
 import NotificationScreen from './NotificationsScreen';
 import ProfileDetailsScreen from './ProfileDetailsScreen';
 import ProfileEditScreen from './ProfileEditScreen';
@@ -16,8 +16,8 @@ export default {
   ProfileEditScreen,
   ProfileFollowListScreen,
   HomeScreen,
-  InboxScreen,
-  InboxListScreen,
+  ChatScreen,
+  ChatsScreen,
   NotificationScreen,
   ProfileDetailsScreen,
   ProfilePostsScreen,
