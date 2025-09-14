@@ -22,7 +22,7 @@ export const AppNavigator = () => {
   return (
     <NavigationContainer theme={NavigationTheme}>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        {!isSignedIn ? (
+        {isSignedIn ? (
           <RootStack.Screen component={MaintenanceNavigator} name={AppRouteNames.Maintenance} />
         ) : (
           <RootStack.Screen component={AuthNavigator} name={AppRouteNames.Auth} />
