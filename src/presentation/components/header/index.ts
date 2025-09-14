@@ -1,2 +1,2 @@
 export { default } from './Header';
-export { HeaderProps } from './types';
+export { HeaderProps, TabHeaderProps } from './types';

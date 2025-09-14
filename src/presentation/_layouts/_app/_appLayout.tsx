@@ -2,13 +2,11 @@ import { PropsWithChildren, useMemo } from 'react';
 import { SafeAreaView, ScrollViewProps, View, ViewProps, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Header from '@components/header';
-
 import styles from './styles';
 import { AppLayoutProps } from './types';
 
 const AppLayout = (props: PropsWithChildren<AppLayoutProps>) => {
-  const { header, isScroll = false, children } = props;
+  const { isScroll = false, children } = props;
   const insets = useSafeAreaInsets();
 
   const scrollViewProps: ScrollViewProps = useMemo(
@@ -33,8 +31,6 @@ const AppLayout = (props: PropsWithChildren<AppLayoutProps>) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
-        <Header {...header} />
-
         {isScroll ? (
           <ScrollView {...scrollViewProps}>{children}</ScrollView>
         ) : (

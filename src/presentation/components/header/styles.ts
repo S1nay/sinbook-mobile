@@ -28,6 +28,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
     width: 30,
   },
+  headerRightIcon: {
+    alignItems: 'center',
+    height: 30,
+    justifyContent: 'center',
+    width: 30,
+  },
   title: {
     color: Colors.black,
     fontFamily: 'Inter-Bold',

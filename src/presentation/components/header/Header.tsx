@@ -1,16 +1,26 @@
-import { useNavigation } from '@react-navigation/native';
+import { getHeaderTitle } from '@react-navigation/elements';
 import { useCallback, useEffect } from 'react';
 import { BackHandler, Keyboard, Pressable, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { MaintenanceRouteNames } from '@navigation/configuration';
 import { Colors } from '@shared/colors';
 import Icon from '@ui/icon/Icon';
 
 import styles from './styles';
-import { HeaderProps } from './types';
+import { HeaderProps, TabHeaderProps } from './types';
 
-const Header = (props: HeaderProps) => {
-  const { leftIcon = 'logo', rightIcon, title, onBackPress } = props;
-  const navigation = useNavigation();
+type AppHeaderProps = HeaderProps | TabHeaderProps;
+
+const Header = (props: AppHeaderProps) => {
+  const {
+    isShowBackIcon = false,
+    isShowNotificationIcon = true,
+    navigation,
+    options,
+    route,
+  } = props;
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', onBackPressHandler);
@@ -21,41 +31,53 @@ const Header = (props: HeaderProps) => {
   const onBackPressHandler = () => {
     Keyboard.dismiss();
 
-    if (onBackPress) {
-      onBackPress();
-    } else if (navigation.canGoBack()) {
+    if (navigation.canGoBack()) {
       navigation.goBack();
     }
 
     return true;
   };
 
-  const LeftIcon = useCallback(() => {
-    const isLogo = leftIcon !== 'leftArrow';
+  const onPressNotification = () => navigation.navigate(MaintenanceRouteNames.Notifications);
 
+  const LeftIcon = useCallback(() => {
     return (
       <Pressable
         hitSlop={8}
         style={styles.headerLeftIcon}
-        onPress={!isLogo ? onBackPressHandler : undefined}
+        onPress={isShowBackIcon ? onBackPressHandler : undefined}
       >
         <Icon
-          name={leftIcon}
-          size={isLogo ? 30 : 12}
-          fill={isLogo ? Colors.black : Colors.lightGray}
+          name={isShowBackIcon ? 'leftArrow' : 'logo'}
+          size={!isShowBackIcon ? 30 : 16}
+          fill={!isShowBackIcon ? Colors.black : Colors.lightGray}
         />
       </Pressable>
     );
-  }, [leftIcon]);
+  }, [isShowBackIcon]);
+
+  const headerTitle =
+    typeof options.headerTitle !== 'function'
+      ? (props: React.ComponentProps<typeof Text>) => (
+          <Text style={styles.title} {...props}>
+            {getHeaderTitle(options, route.name)}
+          </Text>
+        )
+      : options.headerTitle;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.headerLeftContainer}>
         <LeftIcon />
 
-        <Text style={styles.title}>{title}</Text>
+        {headerTitle?.({ children: getHeaderTitle(options, route.name), ...props.options })}
       </View>
-      {rightIcon && <Icon {...rightIcon} />}
+
+      {isShowNotificationIcon && (
+        <Pressable style={styles.headerRightIcon} onPress={onPressNotification}>
+          <Icon name="bell" size={24} stroke={Colors.black} />
+        </Pressable>
+      )}
     </View>
   );
 };
