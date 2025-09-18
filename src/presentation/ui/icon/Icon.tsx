@@ -1,7 +1,8 @@
 import { memo } from 'react';
 
+import { icons } from '@shared/icons';
+
 import { IconProps } from './types';
-import { icons } from '../../shared/icons';
 
 const Icon = (props: IconProps) => {
   const { name, size, ...otherProps } = props;
