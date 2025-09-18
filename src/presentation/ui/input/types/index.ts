@@ -1,5 +1,5 @@
 import { RefObject } from 'react';
-import { TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import { TextInputProps, ViewStyle } from 'react-native';
 import { MaskedTextInputRef } from 'react-native-advanced-input-mask';
 
 import { Colors } from '@shared/colors';
@@ -13,14 +13,12 @@ export type InputState = 'default' | 'focused' | 'error' | 'disabled';
 export type InputConfig = {
   [key in InputState]: {
     input: ViewStyle;
-    startIcon: { color: ValuesOf<typeof Colors>; left?: number };
-    endIcon: { color: ValuesOf<typeof Colors>; right?: number };
-    label: Omit<ViewStyle, 'translateX'> & { translateX: number };
+    startIcon: { color: ValuesOf<typeof Colors>; left?: number; top?: number };
+    endIcon: { color: ValuesOf<typeof Colors>; right?: number; top?: number };
   };
 } & {
   withStartIcon: {
     input: ViewStyle;
-    label: Omit<ViewStyle, 'translateX'> & { translateX: number };
   };
   withEndIcon: {
     input: ViewStyle;
@@ -35,18 +33,16 @@ export type GetInputConfigReturnType = {
   input: ViewStyle;
   startIcon: { color: ValuesOf<typeof Colors>; left?: number };
   endIcon: { color: ValuesOf<typeof Colors>; left?: number };
-  label: Omit<ViewStyle, 'translateX'> & { translateX: number };
 };
 
-export interface InputProps extends Omit<TextInputProps, 'mask' | 'onChangeText' | 'onChange'> {
+export interface InputProps extends Omit<TextInputProps, 'mask' | 'onChange'> {
   mask?: MaskVariants;
   format?: (value: string) => string;
   startIcon?: IconProps;
   endIcon?: IconProps;
   ref?: RefObject<Pick<MaskedTextInputRef, 'blur' | 'focus'>>;
-  name: string;
   variant?: InputVariants;
   label: string;
   containerStyle?: ViewStyle;
-  labelStyle?: TextStyle;
+  error?: string;
 }

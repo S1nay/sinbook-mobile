@@ -1,6 +1,5 @@
 import { memo, useCallback, useImperativeHandle, useRef, useState } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
-import { View, NativeSyntheticEvent, TextInputFocusEventData, TextInput } from 'react-native';
+import { View, NativeSyntheticEvent, TextInputFocusEventData, TextInput, Text } from 'react-native';
 import { MaskedTextInput, MaskedTextInputRef } from 'react-native-advanced-input-mask';
 
 import { Masks } from '@shared/utils/masks';
@@ -14,7 +13,6 @@ import { InputProps } from './types';
 const Input = (props: InputProps) => {
   const {
     ref,
-    name,
     mask,
     editable = true,
     variant = 'line-transparent',
@@ -23,7 +21,9 @@ const Input = (props: InputProps) => {
     style,
     label,
     containerStyle,
-    labelStyle,
+    onChangeText,
+    value,
+    error,
     onFocus,
     onBlur,
     format,
@@ -31,18 +31,12 @@ const Input = (props: InputProps) => {
   } = props;
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<MaskedTextInputRef>(null);
-  const { control } = useFormContext();
-
-  const {
-    field: { onChange, value },
-    fieldState: { error },
-  } = useController({ name, control });
 
   const cfg = getInputConfig({
     variant,
     focused: isFocused,
     disabled: !editable,
-    error: !!error?.message,
+    error: !!error,
     startIcon: !!startIcon,
     endIcon: !!endIcon,
   });
@@ -56,7 +50,7 @@ const Input = (props: InputProps) => {
     (val: string) => {
       const formattedValue = format?.(val) || val;
 
-      onChange?.(formattedValue);
+      onChangeText?.(formattedValue);
     },
     [value],
   );
@@ -89,36 +83,34 @@ const Input = (props: InputProps) => {
   };
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      {startIcon && (
-        <Icon
-          {...startIcon}
-          name={startIcon.name}
-          style={[styles.startIcon, cfg.startIcon]}
-          stroke={cfg.endIcon.color}
-          size={startIcon.size}
-        />
-      )}
+    <View>
+      <View style={[styles.container, containerStyle]}>
+        {startIcon && (
+          <Icon
+            {...startIcon}
+            name={startIcon.name}
+            style={[styles.startIcon, cfg.startIcon]}
+            stroke={cfg.endIcon.color}
+            size={startIcon.size}
+          />
+        )}
 
-      <Label
-        label={label}
-        isFocused={isFocused}
-        config={cfg}
-        value={value}
-        labelStyle={labelStyle}
-      />
+        {variant === 'line-transparent' && <Label label={label} isError={!!error} />}
 
-      {renderInput()}
+        {renderInput()}
 
-      {endIcon && (
-        <Icon
-          {...endIcon}
-          name={endIcon.name}
-          style={[styles.endIcon, cfg.endIcon]}
-          stroke={cfg.endIcon.color}
-          size={endIcon.size}
-        />
-      )}
+        {endIcon && (
+          <Icon
+            {...endIcon}
+            name={endIcon.name}
+            style={[styles.endIcon, cfg.endIcon]}
+            stroke={cfg.endIcon.color}
+            size={endIcon.size}
+          />
+        )}
+      </View>
+
+      {!!error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 };
