@@ -1,5 +1,5 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useRef } from 'react';
 import { StatusBar } from 'react-native';
 import { hide } from 'react-native-bootsplash';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -12,8 +12,6 @@ import { DIProvider } from '@core/providers/DIProvider';
 import { SocketConnectionPaths } from '@infrastructure/socket/entities';
 import { AppNavigator } from '@navigation/AppNavigator';
 
-// layouts (AuthLayout, AppLayout) (Presentation)
-
 const socketConnections = [
   SocketConnectionPaths.CHAT,
   SocketConnectionPaths.CHATS,
@@ -21,10 +19,10 @@ const socketConnections = [
 ];
 
 const App = () => {
-  const httpClient = useMemo(() => container.get(Identifiers.SinbookHttpClient), []);
-  const storage = useMemo(() => container.get(Identifiers.MMKVStorage), []);
-  const socketManager = useMemo(() => container.get(Identifiers.SocketManager), []);
-  const navigation = useMemo(() => container.get(Identifiers.NavigationService), []);
+  const httpClient = useRef(container.get(Identifiers.SinbookHttpClient)).current;
+  const storage = useRef(container.get(Identifiers.MMKVStorage)).current;
+  const socketManager = useRef(container.get(Identifiers.SocketManager)).current;
+  const navigation = useRef(container.get(Identifiers.NavigationService)).current;
 
   const setInterceptors = () => {
     httpClient.instance?.interceptors.request.use(request =>
