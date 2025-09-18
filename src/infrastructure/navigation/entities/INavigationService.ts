@@ -1,12 +1,15 @@
-import { NavigationState, ParamListRoute } from '@react-navigation/native';
+import { NavigationContainerRef, NavigationState, ParamListRoute } from '@react-navigation/native';
 import type {
   NavigationAction,
   ParamListBase,
   PartialState,
   Route,
 } from '@react-navigation/routers';
+import { RefObject } from 'react';
 
 export interface INavigationService<RootStackParamList extends ParamListBase> {
+  navigationRef: RefObject<NavigationContainerRef<RootStackParamList> | null>;
+
   navigate<RouteName extends keyof RootStackParamList>(
     ...args: RouteName extends unknown
       ? undefined extends RootStackParamList[RouteName]

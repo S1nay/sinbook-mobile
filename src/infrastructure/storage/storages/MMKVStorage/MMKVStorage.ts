@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { Configuration, MMKV } from 'react-native-mmkv';
 
-import type { IStorage } from '../entities';
+import type { IStorage } from '@infrastructure/storage/entities';
 
 @injectable()
 class MMKVStorage implements IStorage {
@@ -33,6 +33,10 @@ class MMKVStorage implements IStorage {
 
   delete(key: string): void {
     return this.mmkv.delete(key);
+  }
+
+  clear() {
+    return this.mmkv.clearAll();
   }
 }
 
