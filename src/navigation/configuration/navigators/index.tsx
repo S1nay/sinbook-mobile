@@ -3,14 +3,25 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import BottomTabBar, { BottomTabBarProps } from '@components/bottom-tab-bar';
 import Header from '@components/header';
-import Screens from '@screens/index';
+import ChatScreen from '@screens/chat-screen';
+import ChatsScreen from '@screens/chats-screen';
+import CreatePostScreen from '@screens/create-post-screen';
+import HomeScreen from '@screens/home-screen';
+import LoginScreen from '@screens/login-screen';
+import NotificationsScreen from '@screens/notifications-screen';
+import ProfileDetailsScreen from '@screens/profile-details-screen';
+import ProfileEditScreen from '@screens/profile-edit-screen';
+import ProfileFollowListScreen from '@screens/profile-follow-list-screen';
+import ProfilePostsScreen from '@screens/profile-posts-screen';
+import RegisterScreen from '@screens/register-screen';
+import SearchScreen from '@screens/search-screen';
 
 import {
   ChatRouteNames,
   ProfileRouteNames,
   BottomTabRouteNames,
-  AuthRouteNames,
   MaintenanceRouteNames,
+  AuthRouteNames,
 } from '../routeNames';
 import type {
   AuthStackParamList,
@@ -30,21 +41,15 @@ const ProfileNavigator = () => {
       initialRouteName={ProfileRouteNames.ProfileDetails}
     >
       <ProfileStack.Screen
-        component={Screens.ProfileDetailsScreen}
+        component={ProfileDetailsScreen}
         name={ProfileRouteNames.ProfileDetails}
       />
+      <ProfileStack.Screen component={ProfileEditScreen} name={ProfileRouteNames.ProfileEdit} />
       <ProfileStack.Screen
-        component={Screens.ProfileEditScreen}
-        name={ProfileRouteNames.ProfileEdit}
-      />
-      <ProfileStack.Screen
-        component={Screens.ProfileFollowListScreen}
+        component={ProfileFollowListScreen}
         name={ProfileRouteNames.ProfileFollowList}
       />
-      <ProfileStack.Screen
-        component={Screens.ProfilePostsScreen}
-        name={ProfileRouteNames.ProfilePosts}
-      />
+      <ProfileStack.Screen component={ProfilePostsScreen} name={ProfileRouteNames.ProfilePosts} />
     </ProfileStack.Navigator>
   );
 };
@@ -60,14 +65,14 @@ const ChatNavigator = () => {
     >
       <ChatStack.Screen
         options={{ header: props => <Header {...props} /> }}
-        component={Screens.ChatsScreen}
+        component={ChatsScreen}
         name={ChatRouteNames.Chats}
       />
       <ChatStack.Screen
         options={{
           header: props => <Header {...props} isShowBackIcon isShowNotificationIcon={false} />,
         }}
-        component={Screens.ChatScreen}
+        component={ChatScreen}
         name={ChatRouteNames.Chat}
       />
     </ChatStack.Navigator>
@@ -94,9 +99,9 @@ const TabNavigator = () => {
       }}
       initialRouteName={BottomTabRouteNames.Home}
     >
-      <TabStack.Screen component={Screens.HomeScreen} name={BottomTabRouteNames.Home} />
-      <TabStack.Screen component={Screens.SearchScreen} name={BottomTabRouteNames.Search} />
-      <TabStack.Screen component={Screens.CreatePostScreen} name={BottomTabRouteNames.CreatePost} />
+      <TabStack.Screen component={HomeScreen} name={BottomTabRouteNames.Home} />
+      <TabStack.Screen component={SearchScreen} name={BottomTabRouteNames.Search} />
+      <TabStack.Screen component={CreatePostScreen} name={BottomTabRouteNames.CreatePost} />
       <TabStack.Screen component={ChatNavigator} name={BottomTabRouteNames.Chat} />
       <TabStack.Screen component={ProfileNavigator} name={BottomTabRouteNames.Profile} />
     </TabStack.Navigator>
@@ -109,8 +114,8 @@ const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 export const AuthNavigator = () => {
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-      <AuthStack.Screen component={Screens.SignInScreen} name={AuthRouteNames.SignIn} />
-      <AuthStack.Screen component={Screens.SignUpScreen} name={AuthRouteNames.SignUp} />
+      <AuthStack.Screen component={LoginScreen} name={AuthRouteNames.Login} />
+      <AuthStack.Screen component={RegisterScreen} name={AuthRouteNames.Register} />
     </AuthStack.Navigator>
   );
 };
@@ -127,7 +132,7 @@ export const MaintenanceNavigator = () => {
         name={MaintenanceRouteNames.Tab}
       />
       <MaintenanceStack.Screen
-        component={Screens.NotificationScreen}
+        component={NotificationsScreen}
         name={MaintenanceRouteNames.Notifications}
         options={{
           headerTitle: 'Notifications',

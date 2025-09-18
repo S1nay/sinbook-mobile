@@ -18,8 +18,8 @@ export type RootStackParamList = {
 };
 
 export type AuthStackParamList = {
-  [AuthRouteNames.SignIn]: undefined;
-  [AuthRouteNames.SignUp]: undefined;
+  [AuthRouteNames.Login]: undefined;
+  [AuthRouteNames.Register]: undefined;
 };
 
 export type MaintenanceStackParamList = {
