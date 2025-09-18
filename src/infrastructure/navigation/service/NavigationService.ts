@@ -18,8 +18,12 @@ import { INavigationService } from '@infrastructure/navigation/entities';
 class NavigationServiceImpl<RootStackParamList extends ParamListBase>
   implements INavigationService<RootStackParamList>
 {
-  private navigationRef: NavigationContainerRefWithCurrent<RootStackParamList> =
+  private _navigationRef: NavigationContainerRefWithCurrent<RootStackParamList> =
     createNavigationContainerRef<RootStackParamList>();
+
+  get navigationRef(): NavigationContainerRefWithCurrent<RootStackParamList> {
+    return this._navigationRef;
+  }
 
   navigate<RouteName extends keyof RootStackParamList>(
     ...args: RouteName extends unknown
