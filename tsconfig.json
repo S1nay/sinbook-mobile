@@ -11,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "moduleResolution": "Node",
     "types": ["@types/react"],
     "resolveJsonModule": true,
@@ -24,7 +25,7 @@
       "@ui/*": ["./src/presentation/ui/*"],
       "@components/*": ["./src/presentation/components/*"],
       "@screens/*": ["./src/presentation/screens/*"],
-      "@layouts/*": ["./src/presentation/_layouts/*"]
+      "@layouts/*": ["./src/presentation/_layouts/*"],
     }
   },
   "exclude": ["node_modules"]

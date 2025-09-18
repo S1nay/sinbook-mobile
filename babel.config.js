@@ -20,6 +20,7 @@ module.exports = {
       },
     ],
     'react-native-worklets/plugin',
-    ['@babel/plugin-proposal-decorators', {legacy: true}]
+    ['@babel/plugin-proposal-decorators', {legacy: true}],
+    'babel-plugin-transform-typescript-metadata'
   ],
 };
