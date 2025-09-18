@@ -6,8 +6,8 @@ import { AppRouteNames } from '@navigation/configuration';
 import {
   IRequestInterceptor,
   IResponseInterceptor,
-  IRefreshTokenDTO,
-  IRefreshTokenResponse,
+  IRefreshTokenResponseDto,
+  IRefreshTokenRequestDto,
 } from './interfaces';
 
 const requestInterceptor = async ({ request, storage }: IRequestInterceptor) => {
@@ -34,7 +34,7 @@ const responseInterceptor = async ({
     try {
       const refresh = storage.getString(UserStorageKeys.REFRESH_TOKEN);
 
-      const { data } = await httpClient.post<IRefreshTokenResponse, IRefreshTokenDTO>(
+      const { data } = await httpClient.post<IRefreshTokenResponseDto, IRefreshTokenRequestDto>(
         '/auth/refresh',
         { refresh: refresh ?? '' },
       );

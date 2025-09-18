@@ -1,23 +1,33 @@
-import { PropsWithChildren, useMemo } from 'react';
+import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 
 import { Identifiers } from '@core/di/identifiers';
+import { useDIContainer } from '@core/hooks';
 import { UserStorageKeys } from '@infrastructure/storage/entities';
 
 import AuthContext from './AuthContext';
-import { useDIContainer } from '../DIProvider';
 
 const AuthProvider = (props: PropsWithChildren<unknown>) => {
   const { children } = props;
   const container = useDIContainer();
+  const [isAuth, setIsAuth] = useState(false);
   const storage = container?.get(Identifiers.MMKVStorage);
 
-  const token = storage?.getBoolean(UserStorageKeys.ACCESS_TOKEN);
+  useEffect(() => {
+    const isRememberMe = storage?.getBoolean(UserStorageKeys.IS_REMEMBER_ME);
+
+    isRememberMe ? setIsAuth(true) : storage.clear();
+  }, []);
+
+  const authorize = () => {
+    setIsAuth(true);
+  };
 
   const values = useMemo(
     () => ({
-      isSignedIn: token !== null,
+      isAuth,
+      authorize,
     }),
-    [token],
+    [isAuth],
   );
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

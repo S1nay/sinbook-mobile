@@ -1,8 +1,8 @@
 import EnvConfig from 'react-native-config';
 import { Mode } from 'react-native-mmkv';
 
-import HttpClients from '@infrastructure/http';
-import SocketManager from '@infrastructure/socket';
+import HttpClients from '@infrastructure/http/clients';
+import SocketManager from '@infrastructure/socket/manager';
 import Storages from '@infrastructure/storage/storages';
 
 const SinbookHttpClientImpl = new HttpClients.AxiosHttpClient({

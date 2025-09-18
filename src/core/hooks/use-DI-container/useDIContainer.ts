@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 
-import DIContext from './DIContext';
+import { DIContext } from '@core/providers/DIProvider';
 
 const useDIContainer = () => {
   const container = useContext(DIContext);
 
   if (!container) {
-    console.error('DIContext is not initialized');
+    throw new Error('DIContext is not initialized');
   }
 
   return container;
