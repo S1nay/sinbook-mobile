@@ -9,7 +9,9 @@ class LogoutUseCase {
   async execute(): Promise<void> {
     try {
       this.authRepository.removeAccessToken();
+      this.authRepository.removeIsRememberMe();
       this.authRepository.removeRefreshToken();
+      this.authRepository.removeUserData();
     } catch (e: unknown) {
       console.error(e);
     }

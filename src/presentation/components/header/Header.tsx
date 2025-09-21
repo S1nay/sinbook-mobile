@@ -3,7 +3,6 @@ import { useCallback, useEffect } from 'react';
 import { BackHandler, Keyboard, Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { MaintenanceRouteNames } from '@navigation/configuration';
 import { Colors } from '@shared/colors';
 import Icon from '@ui/icon/Icon';
 
@@ -15,7 +14,9 @@ type AppHeaderProps = HeaderProps | TabHeaderProps;
 const Header = (props: AppHeaderProps) => {
   const {
     isShowBackIcon = false,
-    isShowNotificationIcon = true,
+    rightIcon = 'bell',
+    isShowRightIcon = true,
+    onPressRightIcon,
     navigation,
     options,
     route,
@@ -38,8 +39,6 @@ const Header = (props: AppHeaderProps) => {
     return true;
   };
 
-  const onPressNotification = () => navigation.navigate(MaintenanceRouteNames.Notifications);
-
   const LeftIcon = useCallback(() => {
     return (
       <Pressable
@@ -55,6 +54,14 @@ const Header = (props: AppHeaderProps) => {
       </Pressable>
     );
   }, [isShowBackIcon]);
+
+  const RightIcon = useCallback(() => {
+    return (
+      <Pressable style={styles.headerRightIcon} onPress={onPressRightIcon}>
+        <Icon name={rightIcon} size={24} stroke={Colors.black} />
+      </Pressable>
+    );
+  }, [route.name]);
 
   const headerTitle =
     typeof options.headerTitle !== 'function'
@@ -73,11 +80,7 @@ const Header = (props: AppHeaderProps) => {
         {headerTitle?.({ children: getHeaderTitle(options, route.name), ...props.options })}
       </View>
 
-      {isShowNotificationIcon && (
-        <Pressable style={styles.headerRightIcon} onPress={onPressNotification}>
-          <Icon name="bell" size={24} stroke={Colors.black} />
-        </Pressable>
-      )}
+      {isShowRightIcon && <RightIcon />}
     </View>
   );
 };

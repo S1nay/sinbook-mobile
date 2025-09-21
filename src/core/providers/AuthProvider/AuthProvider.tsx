@@ -22,10 +22,15 @@ const AuthProvider = (props: PropsWithChildren<unknown>) => {
     setIsAuth(true);
   };
 
+  const unauthorize = () => {
+    setIsAuth(false);
+  };
+
   const values = useMemo(
     () => ({
       isAuth,
       authorize,
+      unauthorize,
     }),
     [isAuth],
   );

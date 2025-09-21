@@ -3,10 +3,14 @@ import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 
 export interface HeaderProps extends NativeStackHeaderProps {
   isShowBackIcon?: boolean;
-  isShowNotificationIcon?: boolean;
+  rightIcon?: 'logout' | 'bell';
+  isShowRightIcon?: boolean;
+  onPressRightIcon?: PureFunction;
 }
 
 export interface TabHeaderProps extends BottomTabHeaderProps {
   isShowBackIcon?: boolean;
-  isShowNotificationIcon?: boolean;
+  rightIcon?: 'logout' | 'bell';
+  isShowRightIcon?: boolean;
+  onPressRightIcon?: PureFunction;
 }
