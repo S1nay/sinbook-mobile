@@ -1,10 +1,11 @@
 import { memo, useState } from 'react';
-import { Pressable, Text } from 'react-native';
+import { ActivityIndicator, Pressable, StyleProp, Text, ViewStyle } from 'react-native';
+
+import Icon from '@ui/icon';
 
 import { getButtonConfig } from './config';
 import styles from './styles';
 import { ButtonProps } from './types';
-import Icon from '../icon/Icon';
 
 const Button = (props: ButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -15,6 +16,8 @@ const Button = (props: ButtonProps) => {
     value,
     disabled,
     textStyle,
+    style,
+    isLoading = false,
     ...otherProps
   } = props;
 
@@ -31,12 +34,13 @@ const Button = (props: ButtonProps) => {
     <Pressable
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      style={[styles.base, cfg.container]}
+      style={[styles.base, cfg.container, style as StyleProp<ViewStyle>]}
       {...otherProps}
     >
       {icon && <Icon {...icon} stroke={cfg.icon.color || icon.stroke} />}
 
       <Text style={[cfg.text, textStyle]}>{value}</Text>
+      {isLoading && <ActivityIndicator color={cfg.loader.color} size={16} />}
     </Pressable>
   );
 };

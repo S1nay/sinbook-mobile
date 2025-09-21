@@ -1,8 +1,8 @@
 import EnvConfig from 'react-native-config';
 import { Mode } from 'react-native-mmkv';
 
-import HttpClients from '@infrastructure/http';
-import SocketManager from '@infrastructure/socket';
+import HttpClients from '@infrastructure/http/clients';
+import SocketManager from '@infrastructure/socket/manager';
 import Storages from '@infrastructure/storage/storages';
 
 const SinbookHttpClientImpl = new HttpClients.AxiosHttpClient({
@@ -15,11 +15,10 @@ const SinbookHttpClientImpl = new HttpClients.AxiosHttpClient({
 });
 
 const RootStorageImpl = new Storages.MMKVStorage({
-  id: EnvConfig.STORAGE_ID ?? '',
+  id: EnvConfig.STORAGE_ID!,
   mode: Mode.SINGLE_PROCESS,
   encryptionKey: EnvConfig.STORAGE_ENCRYPTION_KEY,
   readOnly: false,
-  path: './',
 });
 
 const SocketManagerImpl = new SocketManager(EnvConfig.API_URL?.slice(0, -4));

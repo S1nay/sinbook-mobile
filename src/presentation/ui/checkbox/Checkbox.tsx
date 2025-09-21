@@ -21,8 +21,8 @@ const Checkbox = (props: CheckboxProps) => {
   } = props;
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      <Pressable
+    <Pressable style={[styles.container, containerStyle]} onPress={onCheck}>
+      <View
         {...otherProps}
         style={[
           styles.checkbox,
@@ -33,13 +33,12 @@ const Checkbox = (props: CheckboxProps) => {
           },
           style,
         ]}
-        onPress={onCheck}
       >
         {value && <Icon name="check" size={iconSize} stroke={Colors.white} />}
-      </Pressable>
+      </View>
 
       <Text style={[styles.label, labelStyle]}>{label}</Text>
-    </View>
+    </Pressable>
   );
 };
 

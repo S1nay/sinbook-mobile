@@ -7,3 +7,13 @@ declare module '*.svg' {
 
 declare type PureFunction = () => void;
 declare type ValuesOf<T> = T[keyof T];
+
+declare interface Binding {
+  identifier: ServiceIdentifier<unknown>;
+  implementation: Newable<unknown>;
+  scope?: 'singleton';
+}
+
+declare interface UseCase {
+  execute(...args: unknown[]): Promise<unknown>;
+}

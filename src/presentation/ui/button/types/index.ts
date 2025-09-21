@@ -13,6 +13,7 @@ export type ButtonConfig = {
     container: ViewStyle;
     text: TextStyle;
     icon: { color: ValuesOf<typeof Colors> };
+    loader: { color: ValuesOf<typeof Colors> };
   };
 };
 
@@ -22,4 +23,5 @@ export interface ButtonProps extends PressableProps {
   value: string;
   icon?: IconProps;
   textStyle?: TextStyle;
+  isLoading?: boolean;
 }

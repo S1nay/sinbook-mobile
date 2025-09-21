@@ -1,9 +1,13 @@
+import 'reflect-metadata';
 import { Container } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
+import { AuthRepositoryImpl } from '@data/repositories';
+import { IAuthRepository } from '@domain/repositories';
+import { combineUseCases } from '@domain/use-cases';
 import type { IHttpClient } from '@infrastructure/http/entities';
-import NavigationServiceImpl from '@infrastructure/navigation-service';
-import type { INavigationService } from '@infrastructure/navigation-service/entities';
+import type { INavigationService } from '@infrastructure/navigation/entities';
+import NavigationServiceImpl from '@infrastructure/navigation/service';
 import { ISocketManager } from '@infrastructure/socket/entities';
 import type { IStorage } from '@infrastructure/storage/entities';
 import type { RootStackParamList } from '@navigation/configuration/routeParams';
@@ -27,5 +31,13 @@ container
 /* -- Websocket -- */
 
 container.bind<ISocketManager>(Identifiers.SocketManager).toConstantValue(SocketManagerImpl);
+
+/* -- Repositories -- */
+
+container.bind<IAuthRepository>(IAuthRepository.$).to(AuthRepositoryImpl).inSingletonScope();
+
+/* -- Use Cases -- */
+
+combineUseCases(container);
 
 export default container;

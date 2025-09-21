@@ -6,6 +6,7 @@ import {
   Pressable,
   SafeAreaView,
   Text,
+  View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -30,7 +31,7 @@ const AuthLayout = (props: PropsWithChildren<AuthLayoutProps>) => {
 
           <Text style={styles.title}>{title}</Text>
 
-          {children}
+          <View style={styles.content}>{children}</View>
         </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>

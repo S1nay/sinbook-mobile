@@ -8,20 +8,23 @@ const PrimaryButtonConfig: ButtonConfig = {
     container: { backgroundColor: Colors.black },
     text: { color: Colors.white },
     icon: { color: Colors.white },
+    loader: { color: Colors.white },
   },
   pressed: {
     container: { backgroundColor: Colors.gray },
     text: { color: Colors.white },
     icon: { color: Colors.white },
+    loader: { color: Colors.white },
   },
   disabled: {
     container: { backgroundColor: Colors.lightGray },
     text: { color: Colors.white },
     icon: { color: Colors.white },
+    loader: { color: Colors.white },
   },
 };
 
-const SecondaryButtonConfig = {
+const SecondaryButtonConfig: ButtonConfig = {
   default: {
     container: {
       backgroundColor: Colors.transparent,
@@ -30,16 +33,19 @@ const SecondaryButtonConfig = {
     },
     text: { color: Colors.lightOrange },
     icon: { color: Colors.lightOrange },
+    loader: { color: Colors.lightGray },
   },
   pressed: {
     container: { borderColor: Colors.orange },
     text: { color: Colors.orange },
     icon: { color: Colors.orange },
+    loader: { color: Colors.lightGray },
   },
   disabled: {
     container: { borderColor: Colors.lightGray },
     text: { color: Colors.lightGray },
     icon: { color: Colors.lightGray },
+    loader: { color: Colors.lightGray },
   },
 };
 
@@ -52,7 +58,7 @@ export const getButtonConfig = (params: {
   const { variant, pressed, disabled, size } = params;
 
   const sizes: Record<ButtonSize, ViewStyle> = {
-    large: { width: 343, paddingVertical: 11 },
+    large: { width: '100%', paddingVertical: 11 },
     small: { width: 95, paddingVertical: 7 },
   };
 
@@ -79,6 +85,9 @@ export const getButtonConfig = (params: {
       ...config.default.icon,
       ...(pressed ? config.pressed.icon : {}),
       ...(disabled ? config.disabled.icon : {}),
+    },
+    loader: {
+      ...config.disabled.loader,
     },
   };
 };

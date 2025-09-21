@@ -1,16 +1,31 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ParamListBase } from '@react-navigation/native';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 
 import BottomTabBar, { BottomTabBarProps } from '@components/bottom-tab-bar';
 import Header from '@components/header';
-import Screens from '@screens/index';
+import ChatScreen from '@screens/chat-screen';
+import ChatsScreen from '@screens/chats-screen';
+import CreatePostScreen from '@screens/create-post-screen';
+import HomeScreen from '@screens/home-screen';
+import LoginScreen from '@screens/login-screen';
+import NotificationsScreen from '@screens/notifications-screen';
+import ProfileDetailsScreen from '@screens/profile-details-screen';
+import ProfileEditScreen from '@screens/profile-edit-screen';
+import ProfileFollowListScreen from '@screens/profile-follow-list-screen';
+import ProfilePostsScreen from '@screens/profile-posts-screen';
+import RegisterScreen from '@screens/register-screen';
+import SearchScreen from '@screens/search-screen';
 
 import {
   ChatRouteNames,
   ProfileRouteNames,
   BottomTabRouteNames,
-  AuthRouteNames,
   MaintenanceRouteNames,
+  AuthRouteNames,
 } from '../routeNames';
 import type {
   AuthStackParamList,
@@ -19,30 +34,37 @@ import type {
   MaintenanceStackParamList,
   ProfileStackParamList,
 } from '../routeParams';
+import { defaultHeader } from './defaultHeader';
 
 // Profile Navigator
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
 
 const ProfileNavigator = () => {
   return (
-    <ProfileStack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName={ProfileRouteNames.ProfileDetails}
-    >
+    <ProfileStack.Navigator initialRouteName={ProfileRouteNames.ProfileDetails}>
       <ProfileStack.Screen
-        component={Screens.ProfileDetailsScreen}
+        component={ProfileDetailsScreen}
         name={ProfileRouteNames.ProfileDetails}
       />
       <ProfileStack.Screen
-        component={Screens.ProfileEditScreen}
+        options={params =>
+          defaultHeader<ParamListBase, NativeStackNavigationProp<ParamListBase>>(params)
+        }
+        component={ProfileEditScreen}
         name={ProfileRouteNames.ProfileEdit}
       />
       <ProfileStack.Screen
-        component={Screens.ProfileFollowListScreen}
+        options={params =>
+          defaultHeader<ParamListBase, NativeStackNavigationProp<ParamListBase>>(params)
+        }
+        component={ProfileFollowListScreen}
         name={ProfileRouteNames.ProfileFollowList}
       />
       <ProfileStack.Screen
-        component={Screens.ProfilePostsScreen}
+        options={params =>
+          defaultHeader<ParamListBase, NativeStackNavigationProp<ParamListBase>>(params)
+        }
+        component={ProfilePostsScreen}
         name={ProfileRouteNames.ProfilePosts}
       />
     </ProfileStack.Navigator>
@@ -54,20 +76,17 @@ const ChatStack = createNativeStackNavigator<ChatStackParamList>();
 
 const ChatNavigator = () => {
   return (
-    <ChatStack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName={ChatRouteNames.Chats}
-    >
+    <ChatStack.Navigator initialRouteName={ChatRouteNames.Chats}>
       <ChatStack.Screen
-        options={{ header: props => <Header {...props} /> }}
-        component={Screens.ChatsScreen}
+        options={params =>
+          defaultHeader<ParamListBase, NativeStackNavigationProp<ParamListBase>>(params)
+        }
+        component={ChatsScreen}
         name={ChatRouteNames.Chats}
       />
       <ChatStack.Screen
-        options={{
-          header: props => <Header {...props} isShowBackIcon isShowNotificationIcon={false} />,
-        }}
-        component={Screens.ChatScreen}
+        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
+        component={ChatScreen}
         name={ChatRouteNames.Chat}
       />
     </ChatStack.Navigator>
@@ -81,9 +100,8 @@ const TabNavigator = () => {
   return (
     <TabStack.Navigator
       screenOptions={({ route }) => ({
-        header: props => (
-          <Header {...props} isShowBackIcon={route.name === BottomTabRouteNames.CreatePost} />
-        ),
+        headerShown:
+          route.name !== BottomTabRouteNames.Profile && route.name !== BottomTabRouteNames.Chat,
       })}
       tabBar={props => {
         const currentRoute = props.state.routes.find((_, index) => index === props.state.index);
@@ -94,9 +112,33 @@ const TabNavigator = () => {
       }}
       initialRouteName={BottomTabRouteNames.Home}
     >
-      <TabStack.Screen component={Screens.HomeScreen} name={BottomTabRouteNames.Home} />
-      <TabStack.Screen component={Screens.SearchScreen} name={BottomTabRouteNames.Search} />
-      <TabStack.Screen component={Screens.CreatePostScreen} name={BottomTabRouteNames.CreatePost} />
+      <TabStack.Screen
+        options={params =>
+          defaultHeader<BottomTabStackParamList, BottomTabNavigationProp<BottomTabStackParamList>>(
+            params,
+          )
+        }
+        component={HomeScreen}
+        name={BottomTabRouteNames.Home}
+      />
+      <TabStack.Screen
+        options={params =>
+          defaultHeader<BottomTabStackParamList, BottomTabNavigationProp<BottomTabStackParamList>>(
+            params,
+          )
+        }
+        component={SearchScreen}
+        name={BottomTabRouteNames.Search}
+      />
+      <TabStack.Screen
+        options={params =>
+          defaultHeader<BottomTabStackParamList, BottomTabNavigationProp<BottomTabStackParamList>>(
+            params,
+          )
+        }
+        component={CreatePostScreen}
+        name={BottomTabRouteNames.CreatePost}
+      />
       <TabStack.Screen component={ChatNavigator} name={BottomTabRouteNames.Chat} />
       <TabStack.Screen component={ProfileNavigator} name={BottomTabRouteNames.Profile} />
     </TabStack.Navigator>
@@ -109,8 +151,8 @@ const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 export const AuthNavigator = () => {
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-      <AuthStack.Screen component={Screens.SignInScreen} name={AuthRouteNames.SignIn} />
-      <AuthStack.Screen component={Screens.SignUpScreen} name={AuthRouteNames.SignUp} />
+      <AuthStack.Screen component={LoginScreen} name={AuthRouteNames.Login} />
+      <AuthStack.Screen component={RegisterScreen} name={AuthRouteNames.Register} />
     </AuthStack.Navigator>
   );
 };
@@ -127,11 +169,11 @@ export const MaintenanceNavigator = () => {
         name={MaintenanceRouteNames.Tab}
       />
       <MaintenanceStack.Screen
-        component={Screens.NotificationScreen}
+        component={NotificationsScreen}
         name={MaintenanceRouteNames.Notifications}
         options={{
           headerTitle: 'Notifications',
-          header: props => <Header {...props} isShowNotificationIcon={false} isShowBackIcon />,
+          header: props => <Header {...props} isShowRightIcon={false} isShowBackIcon />,
         }}
       />
     </MaintenanceStack.Navigator>

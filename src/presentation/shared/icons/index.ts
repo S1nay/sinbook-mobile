@@ -10,6 +10,7 @@ import LeftArrow from './svg/LeftArrow.svg';
 import Like from './svg/Like.svg';
 import Lock from './svg/Lock.svg';
 import Logo from './svg/Logo.svg';
+import Logout from './svg/Logout.svg';
 import Mail from './svg/Mail.svg';
 import MessageArrow from './svg/MessageArrow.svg';
 import Pencil from './svg/Pencil.svg';
@@ -40,4 +41,5 @@ export const icons = {
   trash: Trash,
   user: User,
   logo: Logo,
+  logout: Logout,
 } as const;

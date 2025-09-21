@@ -1,9 +1,11 @@
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { io, Socket } from 'socket.io-client';
 
-import { type ISocketClient, type ISocketConfig, SocketDefaultEvents } from '../entities';
-
-// TODO Подумать как передавать токен
+import {
+  type ISocketClient,
+  type ISocketConfig,
+  SocketDefaultEvents,
+} from '@infrastructure/socket/entities';
 
 class WebSocketIOClient implements ISocketClient<Socket> {
   private _instance: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;

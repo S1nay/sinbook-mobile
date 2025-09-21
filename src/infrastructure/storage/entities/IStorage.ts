@@ -7,4 +7,6 @@ export interface IStorage {
   set<T extends string | number | boolean | ArrayBuffer>(key: string, value: T): void;
 
   delete(key: string): void;
+
+  clear(): void;
 }

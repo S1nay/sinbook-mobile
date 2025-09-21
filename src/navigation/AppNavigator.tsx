@@ -1,10 +1,10 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { useSignedIn } from '@core/providers/AuthProvider';
+import { Identifiers } from '@core/di/identifiers';
+import { useAuth, useDIContainer } from '@core/hooks';
+import { AppRouteNames, AuthNavigator, MaintenanceNavigator } from '@navigation/configuration';
 import { Colors } from '@shared/colors';
-
-import { AppRouteNames, AuthNavigator, MaintenanceNavigator } from './configuration';
 
 const NavigationTheme = {
   ...DefaultTheme,
@@ -17,12 +17,13 @@ const NavigationTheme = {
 const RootStack = createNativeStackNavigator();
 
 export const AppNavigator = () => {
-  const isSignedIn = useSignedIn();
+  const { isAuth } = useAuth();
+  const navigationService = useDIContainer().get(Identifiers.NavigationService);
 
   return (
-    <NavigationContainer theme={NavigationTheme}>
+    <NavigationContainer theme={NavigationTheme} ref={navigationService.navigationRef}>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        {isSignedIn ? (
+        {isAuth ? (
           <RootStack.Screen component={MaintenanceNavigator} name={AppRouteNames.Maintenance} />
         ) : (
           <RootStack.Screen component={AuthNavigator} name={AppRouteNames.Auth} />

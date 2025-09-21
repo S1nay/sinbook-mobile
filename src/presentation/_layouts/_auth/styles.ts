@@ -7,6 +7,10 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     flex: 1,
   },
+  content: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
   icon: {
     alignSelf: 'center',
   },

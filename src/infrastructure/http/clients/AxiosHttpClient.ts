@@ -1,7 +1,13 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { injectable } from 'inversify';
 
-import { IHttpClient, IHttpConfig, IHttpRequestConfig, IHttpResponse } from '../entities';
+import {
+  IHttpClient,
+  IHttpConfig,
+  IHttpError,
+  IHttpRequestConfig,
+  IHttpResponse,
+} from '@infrastructure/http/entities';
 
 @injectable()
 class AxiosHttpClient implements IHttpClient<AxiosInstance> {
@@ -50,7 +56,7 @@ class AxiosHttpClient implements IHttpClient<AxiosInstance> {
   }
 
   private async response<T>(request: Promise<AxiosResponse<T>>): Promise<IHttpResponse<T>> {
-    let response: IHttpResponse<T> = {};
+    let response = {} as IHttpResponse<T>;
 
     try {
       const data = await request;
@@ -60,13 +66,9 @@ class AxiosHttpClient implements IHttpClient<AxiosInstance> {
         status: data.status,
       };
     } catch (e: unknown) {
-      if (e instanceof AxiosError) {
-        response.status = e.status;
+      const error = e as AxiosError<IHttpError>;
 
-        if (e.response) {
-          response.data = e.response.data as T;
-        }
-      }
+      throw new AxiosError(error.message, error.code, error.config, error.request, error.response);
     }
 
     return response;

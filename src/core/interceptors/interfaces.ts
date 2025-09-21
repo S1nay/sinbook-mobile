@@ -1,7 +1,7 @@
 import { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
 
 import { IHttpClient } from '@infrastructure/http/entities';
-import { INavigationService } from '@infrastructure/navigation-service/entities';
+import { INavigationService } from '@infrastructure/navigation/entities';
 import { IStorage } from '@infrastructure/storage/entities';
 import { RootStackParamList } from '@navigation/configuration';
 
@@ -21,9 +21,10 @@ export interface IResponseInterceptor<T> {
   navigation: INavigationService<RootStackParamList>;
 }
 
-export interface IRefreshTokenDTO {
+export interface IRefreshTokenRequestDto {
   refresh: string;
 }
-export interface IRefreshTokenResponse {
+
+export interface IRefreshTokenResponseDto {
   access: string;
 }

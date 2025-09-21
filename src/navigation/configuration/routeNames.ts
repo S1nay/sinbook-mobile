@@ -25,8 +25,8 @@ export enum ProfileRouteNames {
 
 //Авторизация
 export enum AuthRouteNames {
-  SignIn = 'Sign In',
-  SignUp = 'Sign Up',
+  Login = 'Sign In',
+  Register = 'Sign Up',
 }
 
 // Меню нижних табов
