@@ -31,7 +31,7 @@ const AuthLayout = (props: PropsWithChildren<AuthLayoutProps>) => {
 
           <Text style={styles.title}>{title}</Text>
 
-          <View>{children}</View>
+          <View style={styles.content}>{children}</View>
         </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>
