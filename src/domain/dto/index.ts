@@ -1,4 +1,5 @@
+import { IAuthResponseDTO } from './IAuthResponseDto';
 import { ILoginRequestDTO } from './ILoginRequestDto';
-import { ILoginResponseDTO } from './ILoginResponseDto';
+import { IRegisterRequestDTO } from './IRegisterRequestDto';
 
-export { ILoginRequestDTO, ILoginResponseDTO };
+export { ILoginRequestDTO, IAuthResponseDTO, IRegisterRequestDTO };

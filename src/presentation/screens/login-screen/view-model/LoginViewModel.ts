@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 
-import { LoginFormExternalErrors } from '@components/forms/login-form';
+import { LoginFormData, LoginFormExternalErrors } from '@components/forms/login-form';
 import { transformHttpFieldErrors } from '@core/helpers';
 import { AuthUseCases } from '@domain/use-cases';
 import { IHttpError } from '@infrastructure/http/entities';
@@ -10,7 +10,7 @@ import { IHttpError } from '@infrastructure/http/entities';
 import { ILoginViewModel } from './ILoginViewModel';
 
 @injectable()
-class LoginViewModelImpl implements ILoginViewModel {
+class LoginViewModel implements ILoginViewModel {
   private _isLoading: boolean = false;
   private _formErrors: LoginFormExternalErrors | null = null;
   private _error: string = '';
@@ -33,13 +33,13 @@ class LoginViewModelImpl implements ILoginViewModel {
     return this._isSuccess;
   }
 
-  login(email: string, password: string, isRememberMe: boolean) {
+  login(data: LoginFormData) {
     this._isLoading = true;
     this._formErrors = null;
     this._error = '';
 
     this.loginUseCase
-      .execute({ email, password }, isRememberMe)
+      .execute({ email: data.email, password: data.password }, data.isRememberMe)
       .then(() => {
         this._isSuccess = true;
       })
@@ -60,4 +60,4 @@ class LoginViewModelImpl implements ILoginViewModel {
   }
 }
 
-export default LoginViewModelImpl;
+export default LoginViewModel;

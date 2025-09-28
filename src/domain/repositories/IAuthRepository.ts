@@ -1,10 +1,11 @@
 import { ServiceIdentifier } from 'inversify';
 
-import { ILoginRequestDTO, ILoginResponseDTO } from '@domain/dto';
+import { IAuthResponseDTO, ILoginRequestDTO, IRegisterRequestDTO } from '@domain/dto';
 import { IUser } from '@domain/models';
 
 export interface IAuthRepository {
-  login: (dto: ILoginRequestDTO) => Promise<ILoginResponseDTO>;
+  login(dto: ILoginRequestDTO): Promise<IAuthResponseDTO>;
+  register(dto: IRegisterRequestDTO): Promise<IAuthResponseDTO>;
 
   saveAccessToken(value: string): void;
   removeAccessToken(): void;

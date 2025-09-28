@@ -40,7 +40,7 @@ const LoginView = () => {
 
   const onSubmit = (formData: LoginFormData) => {
     Keyboard.dismiss();
-    login(formData.email, formData.password, formData.isRememberMe);
+    login(formData);
   };
 
   const navigateToRegistration = () => navigation.navigate(AuthRouteNames.Register);
