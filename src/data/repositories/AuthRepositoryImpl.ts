@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
 import { getDataFromHttpResponse } from '@core/helpers';
-import { ILoginResponseDTO, ILoginRequestDTO } from '@domain/dto';
+import { IAuthResponseDTO, ILoginRequestDTO, IRegisterRequestDTO } from '@domain/dto';
 import { IUser } from '@domain/models';
 import { IAuthRepository } from '@domain/repositories';
 import { IHttpClient } from '@infrastructure/http/entities';
@@ -15,9 +15,15 @@ class AuthRepositoryImpl implements IAuthRepository {
     @inject(Identifiers.SinbookHttpClient) private httpClient: IHttpClient,
   ) {}
 
-  async login(dto: ILoginRequestDTO): Promise<ILoginResponseDTO> {
+  async login(dto: ILoginRequestDTO): Promise<IAuthResponseDTO> {
     return this.httpClient
-      .post<ILoginResponseDTO, ILoginRequestDTO>('/auth/sign-in', dto)
+      .post<IAuthResponseDTO, ILoginRequestDTO>('/auth/sign-in', dto)
+      .then(getDataFromHttpResponse);
+  }
+
+  async register(dto: IRegisterRequestDTO): Promise<IAuthResponseDTO> {
+    return this.httpClient
+      .post<IAuthResponseDTO, IRegisterRequestDTO>('/auth/sign-up', dto)
       .then(getDataFromHttpResponse);
   }
 

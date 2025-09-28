@@ -131,11 +131,9 @@ const TabNavigator = () => {
         name={BottomTabRouteNames.Search}
       />
       <TabStack.Screen
-        options={params =>
-          defaultHeader<BottomTabStackParamList, BottomTabNavigationProp<BottomTabStackParamList>>(
-            params,
-          )
-        }
+        options={() => ({
+          header: props => <Header {...props} isShowRightIcon={false} isShowBackIcon />,
+        })}
         component={CreatePostScreen}
         name={BottomTabRouteNames.CreatePost}
       />
@@ -172,7 +170,6 @@ export const MaintenanceNavigator = () => {
         component={NotificationsScreen}
         name={MaintenanceRouteNames.Notifications}
         options={{
-          headerTitle: 'Notifications',
           header: props => <Header {...props} isShowRightIcon={false} isShowBackIcon />,
         }}
       />

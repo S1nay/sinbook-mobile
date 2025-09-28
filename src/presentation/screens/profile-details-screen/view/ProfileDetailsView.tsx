@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { View } from 'react-native';
 
@@ -28,4 +29,4 @@ const ProfileDetailsView = () => {
   return <View />;
 };
 
-export default ProfileDetailsView;
+export default observer(ProfileDetailsView);

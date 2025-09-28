@@ -1,3 +1,5 @@
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { PropsWithChildren } from 'react';
 import {
   Keyboard,
@@ -10,6 +12,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { AppRouteNames } from '@navigation/configuration';
 import { Colors } from '@shared/colors';
 import Icon from '@ui/icon';
 
@@ -18,7 +21,14 @@ import { AuthLayoutProps } from './types';
 
 const AuthLayout = (props: PropsWithChildren<AuthLayoutProps>) => {
   const { title, children } = props;
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase, string, undefined>>();
   const insets = useSafeAreaInsets();
+
+  const onLog = () => {
+    if (__DEV__) {
+      navigation.navigate(AppRouteNames.Log);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -27,7 +37,7 @@ const AuthLayout = (props: PropsWithChildren<AuthLayoutProps>) => {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <Pressable onPress={Keyboard.dismiss} style={styles.inner}>
-          <Icon name="logo" size={96} style={styles.icon} fill={Colors.black} />
+          <Icon name="logo" size={96} style={styles.icon} fill={Colors.black} onLongPress={onLog} />
 
           <Text style={styles.title}>{title}</Text>
 

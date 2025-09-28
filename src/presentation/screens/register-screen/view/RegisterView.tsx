@@ -6,31 +6,33 @@ import { Keyboard, Text, View } from 'react-native';
 
 import Forms from '@components/forms';
 import {
-  LoginFormData,
-  LoginFormRef,
-  LoginFormValidationSchema,
-} from '@components/forms/login-form';
+  RegisterFormData,
+  RegisterFormRef,
+  RegisterFormValidationSchema,
+} from '@components/forms/register-form';
 import { useAuth, useDIContainer } from '@core/hooks';
 import AuthLayout from '@layouts/_auth';
 import { AuthRouteNames, AuthScreenProps } from '@navigation/configuration';
 import Button from '@ui/button';
 import ErrorMessage from '@ui/error';
 
-import { ILoginViewModel } from '../view-model';
 import styles from './styles';
+import { IRegisterViewModel } from '../view-model';
 
-const LoginFormDefaultValues: LoginFormData = {
+const RegisterFormDefaultValues: RegisterFormData = {
+  biography: '',
   email: '',
+  name: '',
+  nickName: '',
   password: '',
-  isRememberMe: false,
 };
 
-const LoginView = () => {
+const RegisterView = () => {
   const container = useDIContainer();
-  const { login, formErrors, error, isLoading, isSuccess } = container.get(ILoginViewModel.$);
-  const form = useRef<LoginFormRef>(null);
+  const { register, formErrors, error, isLoading, isSuccess } = container.get(IRegisterViewModel.$);
+  const form = useRef<RegisterFormRef>(null);
   const { authorize } = useAuth();
-  const navigation = useNavigation<AuthScreenProps<AuthRouteNames.Login>['navigation']>();
+  const navigation = useNavigation<AuthScreenProps<AuthRouteNames.Register>['navigation']>();
 
   useEffect(() => {
     if (isSuccess) {
@@ -38,45 +40,45 @@ const LoginView = () => {
     }
   }, [isSuccess]);
 
-  const onSubmit = (formData: LoginFormData) => {
+  const onSubmit = (formData: RegisterFormData) => {
     Keyboard.dismiss();
-    login(formData);
+    register(formData);
   };
 
-  const navigateToRegistration = () => navigation.navigate(AuthRouteNames.Register);
+  const navigateToLogin = () => navigation.navigate(AuthRouteNames.Login);
 
   const handleSubmitForm = useCallback(() => {
     form.current?.handleSubmit(onSubmit)();
   }, [form.current]);
 
   return (
-    <AuthLayout title="Sign In">
+    <AuthLayout title="Sign Up">
       <View>
         {error && <ErrorMessage message={error} style={styles.errorContainer} />}
 
-        <Forms.LoginForm
-          ref={form}
+        <Forms.RegisterForm
           externalErrors={formErrors}
+          ref={form}
           formParams={{
-            defaultValues: LoginFormDefaultValues,
-            resolver: zodResolver(LoginFormValidationSchema()),
+            defaultValues: RegisterFormDefaultValues,
+            resolver: zodResolver(RegisterFormValidationSchema()),
           }}
         />
 
         <Button
           isLoading={isLoading}
           style={styles.submitButton}
-          value="Sign In"
+          value="Sign Up"
           onPress={handleSubmitForm}
           disabled={isLoading}
         />
       </View>
 
-      <Text style={styles.bottomText} onPress={navigateToRegistration}>
-        Don&apos;t have an account? <Text style={styles.registrationText}>Sign up</Text>
+      <Text style={styles.bottomText} onPress={navigateToLogin}>
+        Already have an account? <Text style={styles.loginText}>Sign in</Text>
       </Text>
     </AuthLayout>
   );
 };
 
-export default observer(LoginView);
+export default observer(RegisterView);

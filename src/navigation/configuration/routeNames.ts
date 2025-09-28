@@ -1,6 +1,7 @@
 export enum AppRouteNames {
   Maintenance = 'MaintenanceNavigator',
   Auth = 'AuthNavigator',
+  Log = 'Network Logs',
 }
 
 // Главные роуты с авторизацией

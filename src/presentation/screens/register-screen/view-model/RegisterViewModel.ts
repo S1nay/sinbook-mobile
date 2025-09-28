@@ -2,28 +2,28 @@ import { AxiosError } from 'axios';
 import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 
-import { LoginFormData, LoginFormExternalErrors } from '@components/forms/login-form';
+import { RegisterFormData, RegisterFormExternalErrors } from '@components/forms/register-form';
 import { transformHttpFieldErrors } from '@core/helpers';
 import { AuthUseCases } from '@domain/use-cases';
 import { IHttpError } from '@infrastructure/http/entities';
 
-import { ILoginViewModel } from './ILoginViewModel';
+import { IRegisterViewModel } from './IRegisterViewModel';
 
 @injectable()
-class LoginViewModel implements ILoginViewModel {
+class RegisterViewModel implements IRegisterViewModel {
   private _isLoading: boolean = false;
-  private _formErrors: LoginFormExternalErrors | null = null;
+  private _formErrors: RegisterFormExternalErrors | null = null;
   private _error: string = '';
   private _isSuccess: boolean = false;
 
-  constructor(@inject(AuthUseCases.$Login) private loginUseCase: UseCase) {
+  constructor(@inject(AuthUseCases.$Register) private registerUseCase: UseCase) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
   get isLoading(): boolean {
     return this._isLoading;
   }
-  get formErrors(): LoginFormExternalErrors | null {
+  get formErrors(): RegisterFormExternalErrors | null {
     return this._formErrors;
   }
   get error(): string {
@@ -33,13 +33,13 @@ class LoginViewModel implements ILoginViewModel {
     return this._isSuccess;
   }
 
-  login(data: LoginFormData) {
+  register(data: RegisterFormData) {
     this._isLoading = true;
     this._formErrors = null;
     this._error = '';
 
-    this.loginUseCase
-      .execute({ email: data.email, password: data.password }, data.isRememberMe)
+    this.registerUseCase
+      .execute(data)
       .then(() => {
         this._isSuccess = true;
       })
@@ -48,7 +48,7 @@ class LoginViewModel implements ILoginViewModel {
           const { data } = response;
 
           if (Array.isArray(data.message)) {
-            this._formErrors = transformHttpFieldErrors<LoginFormExternalErrors>(data.message);
+            this._formErrors = transformHttpFieldErrors<RegisterFormExternalErrors>(data.message);
           } else {
             this._error = data.message;
           }
@@ -60,4 +60,4 @@ class LoginViewModel implements ILoginViewModel {
   }
 }
 
-export default LoginViewModel;
+export default RegisterViewModel;
