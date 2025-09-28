@@ -15,6 +15,7 @@ import {
 export type RootStackParamList = {
   [AppRouteNames.Maintenance]: NavigatorScreenParams<MaintenanceStackParamList>;
   [AppRouteNames.Auth]: NavigatorScreenParams<AuthStackParamList>;
+  [AppRouteNames.Log]: undefined;
 };
 
 export type AuthStackParamList = {

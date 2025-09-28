@@ -1,5 +1,5 @@
 import { PropsWithChildren, useMemo } from 'react';
-import { SafeAreaView, ScrollViewProps, View, ViewProps, ScrollView } from 'react-native';
+import { ScrollViewProps, View, ViewProps, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import styles from './styles';
@@ -29,15 +29,15 @@ const AppLayout = (props: PropsWithChildren<AppLayoutProps>) => {
   );
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
+    <View style={styles.global}>
+      <View style={[styles.container, { paddingBottom: insets.bottom }]}>
         {isScroll ? (
           <ScrollView {...scrollViewProps}>{children}</ScrollView>
         ) : (
           <View {...viewProps}>{children}</View>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

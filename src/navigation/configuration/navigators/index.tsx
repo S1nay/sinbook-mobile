@@ -172,7 +172,6 @@ export const MaintenanceNavigator = () => {
         component={NotificationsScreen}
         name={MaintenanceRouteNames.Notifications}
         options={{
-          headerTitle: 'Notifications',
           header: props => <Header {...props} isShowRightIcon={false} isShowBackIcon />,
         }}
       />

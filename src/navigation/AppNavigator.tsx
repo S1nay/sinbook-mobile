@@ -1,9 +1,11 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import Header from '@components/header';
 import { Identifiers } from '@core/di/identifiers';
 import { useAuth, useDIContainer } from '@core/hooks';
 import { AppRouteNames, AuthNavigator, MaintenanceNavigator } from '@navigation/configuration';
+import LogScreen from '@screens/log-screen';
 import { Colors } from '@shared/colors';
 
 const NavigationTheme = {
@@ -22,12 +24,23 @@ export const AppNavigator = () => {
 
   return (
     <NavigationContainer theme={NavigationTheme} ref={navigationService.navigationRef}>
-      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+      <RootStack.Navigator
+        screenOptions={{ headerShown: false }}
+        initialRouteName={isAuth ? AppRouteNames.Maintenance : AppRouteNames.Auth}
+      >
         {isAuth ? (
           <RootStack.Screen component={MaintenanceNavigator} name={AppRouteNames.Maintenance} />
         ) : (
           <RootStack.Screen component={AuthNavigator} name={AppRouteNames.Auth} />
         )}
+        <RootStack.Screen
+          component={LogScreen}
+          name={AppRouteNames.Log}
+          options={{
+            headerShown: true,
+            header: props => <Header {...props} isShowRightIcon={false} isShowBackIcon />,
+          }}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );

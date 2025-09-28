@@ -8,10 +8,11 @@ export default StyleSheet.create({
     flex: 1,
   },
   content: {
+    flex: 1,
     paddingHorizontal: 16,
     paddingVertical: 24,
   },
-  safeArea: {
+  global: {
     flex: 1,
   },
 });
