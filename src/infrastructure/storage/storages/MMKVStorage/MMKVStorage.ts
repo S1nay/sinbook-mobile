@@ -10,6 +10,11 @@ class MMKVStorage implements IStorage {
   constructor(config: Configuration) {
     this.mmkv = new MMKV(config);
   }
+  getObject<T extends object>(key: string): T | null {
+    const objectString = this.mmkv.getString(key);
+
+    return objectString ? JSON.parse(objectString) : null;
+  }
 
   getString(key: string): string | null {
     return this.mmkv.getString(key) || null;

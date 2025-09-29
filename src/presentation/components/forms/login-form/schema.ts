@@ -14,5 +14,4 @@ export const LoginFormValidationSchema = () =>
       .nonempty(LoginFormErrorMessages.REQUIRED)
       .email(LoginFormErrorMessages.INCORRECT_EMAIL),
     [LoginFormKeys.PASSWORD]: z.string().nonempty(LoginFormErrorMessages.REQUIRED),
-    [LoginFormKeys.IS_REMEMBER_ME]: z.boolean(),
   });

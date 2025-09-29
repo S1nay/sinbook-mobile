@@ -2,7 +2,6 @@ import { useEffect, useImperativeHandle } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
-import Checkbox from '@ui/checkbox/Checkbox';
 import Input from '@ui/input';
 import SecurityInput from '@ui/security-input';
 
@@ -56,14 +55,6 @@ const LoginForm = (props: LoginFormProps) => {
             onBlur={onBlur}
             startIcon={{ name: 'lock', size: 16 }}
           />
-        )}
-      />
-
-      <Controller
-        name={LoginFormKeys.IS_REMEMBER_ME}
-        control={form.control}
-        render={({ field: { value, onChange } }) => (
-          <Checkbox value={value} onCheck={() => onChange(!value)} label="Remember me" />
         )}
       />
     </View>

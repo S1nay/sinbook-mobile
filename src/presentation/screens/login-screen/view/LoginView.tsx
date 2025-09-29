@@ -22,7 +22,6 @@ import styles from './styles';
 const LoginFormDefaultValues: LoginFormData = {
   email: '',
   password: '',
-  isRememberMe: false,
 };
 
 const LoginView = () => {

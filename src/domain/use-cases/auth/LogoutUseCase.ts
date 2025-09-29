@@ -1,17 +1,19 @@
 import { inject, injectable, ServiceIdentifier } from 'inversify';
 
-import { IAuthRepository } from '@domain/repositories';
+import { IAuthRepository, IUserRepository } from '@domain/repositories';
 
 @injectable()
 class LogoutUseCase {
-  constructor(@inject(IAuthRepository.$) private authRepository: IAuthRepository) {}
+  constructor(
+    @inject(IAuthRepository.$) private authRepository: IAuthRepository,
+    @inject(IUserRepository.$) private userRepository: IUserRepository,
+  ) {}
 
   async execute(): Promise<void> {
     try {
-      this.authRepository.removeAccessToken();
-      this.authRepository.removeIsRememberMe();
-      this.authRepository.removeRefreshToken();
-      this.authRepository.removeUserData();
+      this.authRepository.removeTokensFromStorage();
+      this.userRepository.removeUserFromStorage();
+      this.userRepository.removeUserFromStore();
     } catch (e: unknown) {
       console.error(e);
     }

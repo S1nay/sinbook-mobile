@@ -3,6 +3,7 @@ export interface IStorage {
   getBoolean(key: string): boolean | null;
   getNumber(key: string): number | null;
   getArray(key: string): ArrayBufferLike | null;
+  getObject<T extends object>(key: string): T | null;
 
   set<T extends string | number | boolean | ArrayBuffer>(key: string, value: T): void;
 
