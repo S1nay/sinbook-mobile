@@ -44,6 +44,10 @@ class AxiosHttpClient implements IHttpClient<AxiosInstance> {
     return this.response<T>(this.axios.put<T>(url, data, config));
   }
 
+  patch<T, D>(url: string, data?: D, config?: IHttpRequestConfig): Promise<IHttpResponse<T>> {
+    return this.response<T>(this.axios.patch<T>(url, data, config));
+  }
+
   delete<T>(url: string, config?: IHttpRequestConfig): Promise<IHttpResponse<T>> {
     return this.response<T>(this.axios.delete<T>(url, config));
   }

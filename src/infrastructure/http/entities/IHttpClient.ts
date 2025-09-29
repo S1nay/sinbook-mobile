@@ -14,6 +14,11 @@ export interface IHttpClient<I = unknown> {
     data?: D,
     config?: IHttpRequestConfig,
   ) => Promise<IHttpResponse<T>>;
+  patch: <T = unknown, D = unknown>(
+    url: string,
+    data?: D,
+    config?: IHttpRequestConfig,
+  ) => Promise<IHttpResponse<T>>;
   delete: <T = unknown>(url: string, config?: IHttpRequestConfig) => Promise<IHttpResponse<T>>;
   updateHeaders: (headers: Record<string, string>) => void;
 }
