@@ -2,7 +2,7 @@ import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 
 import { Identifiers } from '@core/di/identifiers';
 import { useDIContainer } from '@core/hooks';
-import { UserStorageKeys } from '@infrastructure/storage/entities';
+import { AuthStorageKeys } from '@data/storage';
 
 import AuthContext from './AuthContext';
 
@@ -13,9 +13,11 @@ const AuthProvider = (props: PropsWithChildren<unknown>) => {
   const storage = container?.get(Identifiers.MMKVStorage);
 
   useEffect(() => {
-    const isRememberMe = storage?.getBoolean(UserStorageKeys.IS_REMEMBER_ME);
+    const token = storage?.getBoolean(AuthStorageKeys.ACCESS_TOKEN);
 
-    isRememberMe ? setIsAuth(true) : storage.clear();
+    if (token) {
+      setIsAuth(true);
+    }
   }, []);
 
   const authorize = () => {

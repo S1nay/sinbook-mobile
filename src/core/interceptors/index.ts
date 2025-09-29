@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 
-import { UserStorageKeys } from '@infrastructure/storage/entities';
+import { AuthStorageKeys } from '@data/storage';
 import { AppRouteNames } from '@navigation/configuration';
 
 import {
@@ -11,7 +11,7 @@ import {
 } from './interfaces';
 
 const requestInterceptor = async ({ request, storage }: IRequestInterceptor) => {
-  const accessToken = storage.getString(UserStorageKeys.ACCESS_TOKEN);
+  const accessToken = storage.getString(AuthStorageKeys.ACCESS_TOKEN);
 
   if (accessToken) {
     request.headers['Authorization'] = `Bearer ${accessToken}`;
@@ -32,7 +32,7 @@ const responseInterceptor = async ({
     originalRequest._retry = true;
 
     try {
-      const refresh = storage.getString(UserStorageKeys.REFRESH_TOKEN);
+      const refresh = storage.getString(AuthStorageKeys.REFRESH_TOKEN);
 
       const { data } = await httpClient.post<IRefreshTokenResponseDto, IRefreshTokenRequestDto>(
         '/auth/refresh',
@@ -40,7 +40,7 @@ const responseInterceptor = async ({
       );
 
       if (data) {
-        storage.set<string>(UserStorageKeys.ACCESS_TOKEN, data.access);
+        storage.set<string>(AuthStorageKeys.ACCESS_TOKEN, data.access);
 
         httpClient.updateHeaders({ Authorization: 'Bearer ' + data.access });
 
@@ -49,8 +49,8 @@ const responseInterceptor = async ({
     } catch (refreshError) {
       console.error('Token refresh failed:', refreshError);
 
-      storage.delete(UserStorageKeys.ACCESS_TOKEN);
-      storage.delete(UserStorageKeys.REFRESH_TOKEN);
+      storage.delete(AuthStorageKeys.ACCESS_TOKEN);
+      storage.delete(AuthStorageKeys.REFRESH_TOKEN);
 
       navigation.reset({
         index: 0,
