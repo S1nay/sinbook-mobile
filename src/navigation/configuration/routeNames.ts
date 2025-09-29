@@ -13,7 +13,7 @@ export enum MaintenanceRouteNames {
 //Чат
 export enum ChatRouteNames {
   Chats = 'Chats',
-  Chat = 'Chat',
+  Chat = 'User Chat',
 }
 
 // Профиль
@@ -35,6 +35,6 @@ export enum BottomTabRouteNames {
   Home = 'Sinbook',
   Search = 'Search',
   CreatePost = 'Create Post',
-  Chat = 'Chats',
+  Chat = 'Chat',
   Profile = 'Profile',
 }
