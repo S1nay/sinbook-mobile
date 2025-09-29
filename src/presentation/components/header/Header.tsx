@@ -3,6 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { BackHandler, Keyboard, Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { AppRouteNames } from '@navigation/configuration';
 import { Colors } from '@shared/colors';
 import Icon from '@ui/icon/Icon';
 
@@ -37,6 +38,12 @@ const Header = (props: AppHeaderProps) => {
     }
 
     return true;
+  };
+
+  const onOpenLog = () => {
+    if (__DEV__) {
+      navigation.navigate(AppRouteNames.Log);
+    }
   };
 
   const LeftIcon = useCallback(() => {
@@ -77,7 +84,9 @@ const Header = (props: AppHeaderProps) => {
       <View style={styles.headerLeftContainer}>
         <LeftIcon />
 
-        {headerTitle?.({ children: getHeaderTitle(options, route.name), ...props.options })}
+        <Pressable onLongPress={onOpenLog}>
+          {headerTitle?.({ children: getHeaderTitle(options, route.name), ...props.options })}
+        </Pressable>
       </View>
 
       {isShowRightIcon && <RightIcon />}
