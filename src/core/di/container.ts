@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Container } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
-import { AuthApi, IAuthApi } from '@data/api';
+import { AuthApi, IAuthApi, IUserApi, UserApi } from '@data/api';
 import { AuthRepository, UserRepository } from '@data/repositories';
 import { AuthStorage, IAuthStorage, IUserStorage, UserStorage } from '@data/storage';
 import { IUserStore, UserStore } from '@data/store';
@@ -22,6 +22,7 @@ const container: Container = new Container();
 /* -- Api's -- */
 
 container.bind<IAuthApi>(IAuthApi.$).to(AuthApi).inSingletonScope();
+container.bind<IUserApi>(IUserApi.$).to(UserApi).inSingletonScope();
 
 /* -- Store's -- */
 container.bind<IUserStore>(IUserStore.$).to(UserStore).inSingletonScope();
