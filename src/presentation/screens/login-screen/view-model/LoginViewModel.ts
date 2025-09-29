@@ -39,7 +39,7 @@ class LoginViewModel implements ILoginViewModel {
     this._error = '';
 
     this.loginUseCase
-      .execute({ email: data.email, password: data.password }, data.isRememberMe)
+      .execute(data)
       .then(() => {
         this._isSuccess = true;
       })
