@@ -15,7 +15,7 @@ import { injectable } from 'inversify';
 import { INavigationService } from '@infrastructure/navigation/entities';
 
 @injectable()
-class NavigationServiceImpl<RootStackParamList extends ParamListBase>
+class NavigationService<RootStackParamList extends ParamListBase>
   implements INavigationService<RootStackParamList>
 {
   private _navigationRef: NavigationContainerRefWithCurrent<RootStackParamList> =
@@ -63,4 +63,4 @@ class NavigationServiceImpl<RootStackParamList extends ParamListBase>
   }
 }
 
-export default NavigationServiceImpl;
+export default NavigationService;
