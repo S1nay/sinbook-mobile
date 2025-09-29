@@ -1,24 +1,21 @@
 import { inject, injectable, ServiceIdentifier } from 'inversify';
 
 import { ILoginRequestDTO } from '@domain/dto';
-import { IAuthRepository } from '@domain/repositories';
+import { IAuthRepository, IUserRepository } from '@domain/repositories';
 
 @injectable()
 class LoginUseCase {
-  constructor(@inject(IAuthRepository.$) private authRepository: IAuthRepository) {}
+  constructor(
+    @inject(IAuthRepository.$) private authRepository: IAuthRepository,
+    @inject(IUserRepository.$) private userRepository: IUserRepository,
+  ) {}
 
-  async execute(signInDto: ILoginRequestDTO, isRememberMe: boolean): Promise<boolean> {
-    const response = await this.authRepository.login(signInDto);
+  async execute(signInDto: ILoginRequestDTO): Promise<boolean> {
+    const { access, refresh, user } = await this.authRepository.login(signInDto);
 
-    const { user, access, refresh } = response;
-
-    this.authRepository.saveAccessToken(access);
-    this.authRepository.saveRefreshToken(refresh);
-    this.authRepository.saveUserData(user);
-
-    if (isRememberMe) {
-      this.authRepository.setIsRememberMe(true);
-    }
+    this.authRepository.saveTokensToStorage(access, refresh);
+    this.userRepository.saveUserInStorage(user);
+    this.userRepository.setUserToStore(user);
 
     return true;
   }
