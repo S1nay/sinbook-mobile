@@ -1,4 +1,4 @@
-import { inject, injectable, ServiceIdentifier } from 'inversify';
+import { inject, injectable } from 'inversify';
 
 import { IRegisterRequestDTO } from '@domain/dto';
 import { IAuthRepository, IUserRepository } from '@domain/repositories';
@@ -22,7 +22,3 @@ class RegisterUseCase {
 }
 
 export default RegisterUseCase;
-
-export namespace registerUseCase {
-  export const $: ServiceIdentifier<RegisterUseCase> = Symbol('registerUseCase');
-}
