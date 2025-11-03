@@ -37,7 +37,7 @@ export type BottomTabStackParamList = {
 };
 
 export type ProfileStackParamList = {
-  [ProfileRouteNames.ProfileDetails]: undefined;
+  [ProfileRouteNames.ProfileDetails]?: { userId: number };
   [ProfileRouteNames.ProfilePosts]: undefined;
   [ProfileRouteNames.ProfileEdit]: undefined;
   [ProfileRouteNames.ProfileFollowList]: undefined;
