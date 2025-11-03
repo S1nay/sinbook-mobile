@@ -4,9 +4,10 @@ import { Mode } from 'react-native-mmkv';
 import HttpClients from '@infrastructure/http/clients';
 import SocketManager from '@infrastructure/socket/manager';
 import Storages from '@infrastructure/storage/storages';
+import getCorrectUrl from '@shared/utils/getConnectUrl';
 
 const SinbookHttpClientImpl = new HttpClients.AxiosHttpClient({
-  baseUrl: EnvConfig.API_URL,
+  baseUrl: getCorrectUrl(EnvConfig.API_URL),
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
