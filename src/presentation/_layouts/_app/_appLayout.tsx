@@ -6,7 +6,13 @@ import styles from './styles';
 import { AppLayoutProps } from './types';
 
 const AppLayout = (props: PropsWithChildren<AppLayoutProps>) => {
-  const { isScroll = false, children } = props;
+  const {
+    isScroll = false,
+    children,
+    scrollViewProps: additionalScrollViewProps,
+    viewProps: additionalViewProps,
+    disableBottomInsets = false,
+  } = props;
   const insets = useSafeAreaInsets();
 
   const scrollViewProps: ScrollViewProps = useMemo(
@@ -17,20 +23,22 @@ const AppLayout = (props: PropsWithChildren<AppLayoutProps>) => {
       automaticallyAdjustContentInsets: true,
       contentInsetAdjustmentBehavior: 'always',
       showsVerticalScrollIndicator: false,
+      ...additionalScrollViewProps,
     }),
-    [],
+    [additionalScrollViewProps],
   );
 
   const viewProps: ViewProps = useMemo(
     () => ({
       style: styles.content,
+      ...viewProps,
     }),
-    [],
+    [additionalViewProps],
   );
 
   return (
     <View style={styles.global}>
-      <View style={[styles.container, { paddingBottom: insets.bottom }]}>
+      <View style={[styles.container, !disableBottomInsets && { paddingBottom: insets.bottom }]}>
         {isScroll ? (
           <ScrollView {...scrollViewProps}>{children}</ScrollView>
         ) : (
