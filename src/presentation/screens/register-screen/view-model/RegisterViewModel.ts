@@ -16,7 +16,9 @@ class RegisterViewModel implements IRegisterViewModel {
   private _error: string = '';
   private _isSuccess: boolean = false;
 
-  constructor(@inject(AuthUseCases.$Register) private registerUseCase: UseCase) {
+  constructor(
+    @inject(AuthUseCases.$Register) private registerUseCase: UseCase<RegisterFormData, boolean>,
+  ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
@@ -33,29 +35,45 @@ class RegisterViewModel implements IRegisterViewModel {
     return this._isSuccess;
   }
 
+  private set isSuccess(value: boolean) {
+    this._isSuccess = value;
+  }
+
+  private set formErrors(value: RegisterFormExternalErrors | null) {
+    this._formErrors = value;
+  }
+
+  private set error(value: string) {
+    this._error = value;
+  }
+
+  private set isLoading(value: boolean) {
+    this._isLoading = value;
+  }
+
   register(data: RegisterFormData) {
-    this._isLoading = true;
-    this._formErrors = null;
-    this._error = '';
+    this.isLoading = true;
+    this.formErrors = null;
+    this.error = '';
 
     this.registerUseCase
       .execute(data)
       .then(() => {
-        this._isSuccess = true;
+        this.isSuccess = true;
       })
       .catch(({ response }: AxiosError<IHttpError>) => {
         if (response) {
           const { data } = response;
 
           if (Array.isArray(data.message)) {
-            this._formErrors = transformHttpFieldErrors<RegisterFormExternalErrors>(data.message);
+            this.formErrors = transformHttpFieldErrors<RegisterFormExternalErrors>(data.message);
           } else {
-            this._error = data.message;
+            this.error = data.message;
           }
         }
       })
       .finally(() => {
-        this._isLoading = false;
+        this.isLoading = false;
       });
   }
 }

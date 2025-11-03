@@ -16,46 +16,65 @@ class LoginViewModel implements ILoginViewModel {
   private _error: string = '';
   private _isSuccess: boolean = false;
 
-  constructor(@inject(AuthUseCases.$Login) private loginUseCase: UseCase) {
+  constructor(@inject(AuthUseCases.$Login) private loginUseCase: UseCase<LoginFormData, boolean>) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
   get isLoading(): boolean {
     return this._isLoading;
   }
+
   get formErrors(): LoginFormExternalErrors | null {
     return this._formErrors;
   }
+
   get error(): string {
     return this._error;
   }
+
   get isSuccess(): boolean {
     return this._isSuccess;
   }
 
+  private set isSuccess(value: boolean) {
+    this._isSuccess = value;
+  }
+
+  private set formErrors(value: LoginFormExternalErrors | null) {
+    this._formErrors = value;
+  }
+
+  private set error(value: string) {
+    this._error = value;
+  }
+
+  private set isLoading(value: boolean) {
+    this._isLoading = value;
+  }
+
   login(data: LoginFormData) {
-    this._isLoading = true;
-    this._formErrors = null;
-    this._error = '';
+    this.isLoading = true;
+    this.formErrors = null;
+    this.error = '';
 
     this.loginUseCase
       .execute(data)
       .then(() => {
-        this._isSuccess = true;
+        this.isSuccess = true;
       })
       .catch(({ response }: AxiosError<IHttpError>) => {
         if (response) {
           const { data } = response;
 
           if (Array.isArray(data.message)) {
-            this._formErrors = transformHttpFieldErrors<LoginFormExternalErrors>(data.message);
+            this.formErrors = transformHttpFieldErrors<LoginFormExternalErrors>(data.message);
           } else {
-            this._error = data.message;
+            this.error = data.message;
           }
         }
       })
       .finally(() => {
-        this._isLoading = false;
+        this.isLoading = false;
       });
   }
 }
