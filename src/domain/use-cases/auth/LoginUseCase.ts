@@ -1,4 +1,4 @@
-import { inject, injectable, ServiceIdentifier } from 'inversify';
+import { inject, injectable } from 'inversify';
 
 import { ILoginRequestDTO } from '@domain/dto';
 import { IAuthRepository, IUserRepository } from '@domain/repositories';
@@ -22,7 +22,3 @@ class LoginUseCase {
 }
 
 export default LoginUseCase;
-
-export namespace loginUseCase {
-  export const $: ServiceIdentifier<LoginUseCase> = Symbol('loginUseCase');
-}

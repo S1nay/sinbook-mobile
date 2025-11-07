@@ -4,7 +4,7 @@ import LoginUseCase from './LoginUseCase';
 import LogoutUseCase from './LogoutUseCase';
 import RegisterUseCase from './RegisterUseCase';
 
-export { LoginUseCase, LogoutUseCase };
+export { LoginUseCase, LogoutUseCase, RegisterUseCase };
 
 export namespace AuthUseCases {
   export const $Login: ServiceIdentifier<LoginUseCase> = Symbol('LoginUseCase');

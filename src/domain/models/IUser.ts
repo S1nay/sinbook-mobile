@@ -8,4 +8,7 @@ export interface IUser {
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
+  followersCount: number;
+  followsCount: number;
+  postsCount: number;
 }

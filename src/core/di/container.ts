@@ -2,11 +2,13 @@ import 'reflect-metadata';
 import { Container } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
-import { AuthApi, IAuthApi } from '@data/api';
-import { AuthRepository, UserRepository } from '@data/repositories';
+import { AuthApi, IAuthApi, IUserApi, UserApi } from '@data/api';
+import PostApi, { IPostApi } from '@data/api/post';
+import { AuthRepository, PostRepository, UserRepository } from '@data/repositories';
 import { AuthStorage, IAuthStorage, IUserStorage, UserStorage } from '@data/storage';
 import { IUserStore, UserStore } from '@data/store';
 import { IAuthRepository, IUserRepository } from '@domain/repositories';
+import { IPostRepository } from '@domain/repositories/IPostRepository';
 import { combineUseCases } from '@domain/use-cases';
 import type { IHttpClient } from '@infrastructure/http/entities';
 import type { INavigationService } from '@infrastructure/navigation/entities';
@@ -22,6 +24,8 @@ const container: Container = new Container();
 /* -- Api's -- */
 
 container.bind<IAuthApi>(IAuthApi.$).to(AuthApi).inSingletonScope();
+container.bind<IUserApi>(IUserApi.$).to(UserApi).inSingletonScope();
+container.bind<IPostApi>(IPostApi.$).to(PostApi).inSingletonScope();
 
 /* -- Store's -- */
 container.bind<IUserStore>(IUserStore.$).to(UserStore).inSingletonScope();
@@ -51,6 +55,7 @@ container.bind<ISocketManager>(Identifiers.SocketManager).toConstantValue(Socket
 
 container.bind<IAuthRepository>(IAuthRepository.$).to(AuthRepository).inSingletonScope();
 container.bind<IUserRepository>(IUserRepository.$).to(UserRepository).inSingletonScope();
+container.bind<IPostRepository>(IPostRepository.$).to(PostRepository).inSingletonScope();
 
 /* -- Use Cases -- */
 

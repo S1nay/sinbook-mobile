@@ -1,4 +1,4 @@
-import { inject, injectable, ServiceIdentifier } from 'inversify';
+import { inject, injectable } from 'inversify';
 
 import { IAuthRepository, IUserRepository } from '@domain/repositories';
 
@@ -9,19 +9,13 @@ class LogoutUseCase {
     @inject(IUserRepository.$) private userRepository: IUserRepository,
   ) {}
 
-  async execute(): Promise<void> {
-    try {
-      this.authRepository.removeTokensFromStorage();
-      this.userRepository.removeUserFromStorage();
-      this.userRepository.removeUserFromStore();
-    } catch (e: unknown) {
-      console.error(e);
-    }
+  async execute(): Promise<boolean> {
+    this.authRepository.removeTokensFromStorage();
+    this.userRepository.removeUserFromStorage();
+    this.userRepository.removeUserFromStore();
+
+    return true;
   }
 }
 
 export default LogoutUseCase;
-
-export namespace logoutUseCase {
-  export const $: ServiceIdentifier<LogoutUseCase> = Symbol('logoutUseCase');
-}

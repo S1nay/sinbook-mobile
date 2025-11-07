@@ -5,10 +5,13 @@ import { IUser } from '@domain/models';
 export interface IUserRepository {
   saveUserInStorage(user: IUser): void;
   removeUserFromStorage(): void;
+  getSavedUser(): IUser | null;
 
   setUserToStore(user: IUser): void;
   removeUserFromStore(): void;
-  getUser(): IUser | null;
+  getLocalUser(): IUser | null;
+
+  getUser(id: number): Promise<IUser>;
 }
 
 export namespace IUserRepository {
