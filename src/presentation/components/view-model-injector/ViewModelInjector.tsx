@@ -3,7 +3,7 @@ import { PropsWithChildren, useEffect, useRef } from 'react';
 
 import { bindInContainer } from '@core/helpers';
 import { useDIContainer } from '@core/hooks';
-import { DIProvider } from '@core/providers/DIProvider';
+import { DIProvider } from '@core/providers/di-provider';
 
 interface ViewModelInjectorProps {
   viewModels: Array<Binding>;
