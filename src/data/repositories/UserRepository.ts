@@ -4,6 +4,7 @@ import { getDataFromHttpResponse } from '@core/helpers';
 import { IUserApi } from '@data/api';
 import { IUserStorage } from '@data/storage';
 import { IUserStore } from '@data/store';
+import { IPatchUserRequestDto } from '@domain/dto';
 import { IUser } from '@domain/models';
 import { IUserRepository } from '@domain/repositories';
 
@@ -41,6 +42,10 @@ class UserRepository implements IUserRepository {
 
   async getUser(id: number): Promise<IUser> {
     return this.userApi.getUser(id).then(getDataFromHttpResponse);
+  }
+
+  async patchUser(dto: Partial<IPatchUserRequestDto>): Promise<IUser> {
+    return this.userApi.updateUser(dto).then(getDataFromHttpResponse);
   }
 }
 

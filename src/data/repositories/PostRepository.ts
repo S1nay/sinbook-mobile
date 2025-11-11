@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
 
 import { getDataFromHttpResponse } from '@core/helpers';
-import { IPostApi } from '@data/api/post';
+import { IPostApi } from '@data/api';
 import { ICreatePostRequestDto } from '@domain/dto';
 import { IPagination, IPost } from '@domain/models';
-import { IPostRepository } from '@domain/repositories/IPostRepository';
+import { IPostRepository } from '@domain/repositories';
 
 @injectable()
 class PostRepository implements IPostRepository {
