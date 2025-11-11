@@ -57,10 +57,7 @@ class ProfileEditViewModel implements IProfileEditViewModel {
           const { data } = response;
           const errorMessage = data.message as string;
 
-          Toast.show({
-            text1: errorMessage,
-            type: Toasts.Error,
-          });
+          Toast.show({ text1: errorMessage, type: Toasts.Error });
         }
       })
       .finally(() => {
@@ -84,22 +81,14 @@ class ProfileEditViewModel implements IProfileEditViewModel {
           routes: [{ name: ProfileRouteNames.ProfileDetails }],
         });
 
-        Toast.show({
-          text1: 'Данные были успешно обновлены',
-          type: Toasts.Success,
-          position: 'bottom',
-          visibilityTime: 4000,
-        });
+        Toast.show({ text1: 'Данные были успешно обновлены', type: Toasts.Success });
       })
       .catch(({ response }: AxiosError<IHttpError>) => {
         if (response) {
           const { data } = response;
           const errorMessage = data.message as string;
 
-          Toast.show({
-            text1: errorMessage,
-            type: Toasts.Error,
-          });
+          Toast.show({ text1: errorMessage, type: Toasts.Error });
         }
       })
       .finally(() => {

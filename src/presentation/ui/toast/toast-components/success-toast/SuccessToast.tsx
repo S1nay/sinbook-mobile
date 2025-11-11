@@ -5,10 +5,9 @@ import { Colors } from '@shared/colors';
 import Icon from '@ui/icon';
 
 import styles from './styles';
-import { BaseToastProps } from '../../types';
 import CountdownBar from '../countdown-bar';
 
-const SuccessToast = (props: ToastConfigParams<BaseToastProps>) => {
+const SuccessToast = (props: ToastConfigParams<void>) => {
   const { text1, isVisible } = props;
 
   return (
@@ -19,7 +18,7 @@ const SuccessToast = (props: ToastConfigParams<BaseToastProps>) => {
       </View>
 
       <CountdownBar
-        duration={4000}
+        duration={3000}
         style={styles.countdownBar}
         borderRadius={0}
         height={3}

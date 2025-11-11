@@ -61,7 +61,7 @@ const App = () => {
               <AppNavigator />
 
               <BottomSheetModalWrapper />
-              <Toast config={ToastConfig} />
+              <Toast position={'bottom'} visibilityTime={3000} config={ToastConfig} />
             </AuthProvider>
           </DIProvider>
         </BottomSheetModalProvider>
