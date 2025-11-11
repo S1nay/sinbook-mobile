@@ -9,8 +9,8 @@ import Toast from 'react-native-toast-message';
 import container from '@core/di/container';
 import { Identifiers } from '@core/di/identifiers';
 import { requestInterceptor, responseInterceptor } from '@core/interceptors';
-import { AuthProvider } from '@core/providers/AuthProvider';
-import { DIProvider } from '@core/providers/DIProvider';
+import { AuthProvider } from '@core/providers/auth-provider';
+import { DIProvider } from '@core/providers/di-provider';
 import { SocketConnectionPaths } from '@infrastructure/socket/entities';
 import { AppNavigator } from '@navigation/AppNavigator';
 import BottomSheetModalWrapper from '@ui/bottom-sheet';
@@ -53,18 +53,18 @@ const App = () => {
   return (
     <GestureHandlerRootView>
       <SafeAreaProvider>
-      <BottomSheetModalProvider>
-        <DIProvider container={container}>
-          <AuthProvider>
-            <StatusBar barStyle={'dark-content'} />
+        <BottomSheetModalProvider>
+          <DIProvider container={container}>
+            <AuthProvider>
+              <StatusBar barStyle={'dark-content'} />
 
-            <AppNavigator />
+              <AppNavigator />
 
               <BottomSheetModalWrapper />
               <Toast config={ToastConfig} />
-          </AuthProvider>
-        </DIProvider>
-      </BottomSheetModalProvider>
+            </AuthProvider>
+          </DIProvider>
+        </BottomSheetModalProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
