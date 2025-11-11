@@ -6,7 +6,7 @@ export default StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: Colors.white,
-    boxShadow: [{ offsetX: 0, offsetY: -4, blurRadius: 9, color: '#F3F4F6' }],
+    boxShadow: [{ offsetX: 0, offsetY: -4, blurRadius: 9, color: Colors.secondaryWhite }],
     flexDirection: 'row',
     height: 70,
   },
