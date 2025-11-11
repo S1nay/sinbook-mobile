@@ -1,6 +1,8 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import { IUser } from '@domain/models';
+
 import {
   AppRouteNames,
   AuthRouteNames,
@@ -37,9 +39,14 @@ export type BottomTabStackParamList = {
 };
 
 export type ProfileStackParamList = {
-  [ProfileRouteNames.ProfileDetails]?: { userId: number };
+  [ProfileRouteNames.ProfileDetails]?: {
+    userId: number;
+    userIsUpdated?: boolean;
+  };
   [ProfileRouteNames.ProfilePosts]: undefined;
-  [ProfileRouteNames.ProfileEdit]: undefined;
+  [ProfileRouteNames.ProfileEdit]: {
+    user: IUser;
+  };
   [ProfileRouteNames.ProfileFollowList]: undefined;
 };
 

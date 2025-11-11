@@ -46,13 +46,7 @@ const ProfileNavigator = () => {
         component={ProfileDetailsScreen}
         name={ProfileRouteNames.ProfileDetails}
       />
-      <ProfileStack.Screen
-        options={params =>
-          defaultHeader<ParamListBase, NativeStackNavigationProp<ParamListBase>>(params)
-        }
-        component={ProfileEditScreen}
-        name={ProfileRouteNames.ProfileEdit}
-      />
+      <ProfileStack.Screen component={ProfileEditScreen} name={ProfileRouteNames.ProfileEdit} />
       <ProfileStack.Screen
         options={params =>
           defaultHeader<ParamListBase, NativeStackNavigationProp<ParamListBase>>(params)
