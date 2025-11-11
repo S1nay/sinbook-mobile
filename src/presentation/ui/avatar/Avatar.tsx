@@ -13,7 +13,12 @@ const Avatar = (props: PropsWithChildren<AvatarProps>) => {
   return (
     <Pressable {...otherProps}>
       {uri ? (
-        <TurboImage {...imageProps} source={{ uri }} style={{ width: size, height: size }} />
+        <TurboImage
+          {...imageProps}
+          source={{ uri }}
+          rounded
+          style={{ width: size, height: size }}
+        />
       ) : (
         <Image
           source={AVATAR_PLACEHOLDER}
