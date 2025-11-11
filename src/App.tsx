@@ -3,6 +3,8 @@ import { useEffect, useRef } from 'react';
 import { StatusBar } from 'react-native';
 import { hide } from 'react-native-bootsplash';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import container from '@core/di/container';
 import { Identifiers } from '@core/di/identifiers';
@@ -11,6 +13,8 @@ import { AuthProvider } from '@core/providers/AuthProvider';
 import { DIProvider } from '@core/providers/DIProvider';
 import { SocketConnectionPaths } from '@infrastructure/socket/entities';
 import { AppNavigator } from '@navigation/AppNavigator';
+import BottomSheetModalWrapper from '@ui/bottom-sheet';
+import ToastConfig from '@ui/toast';
 
 const socketConnections = [
   SocketConnectionPaths.CHAT,
@@ -48,15 +52,20 @@ const App = () => {
 
   return (
     <GestureHandlerRootView>
+      <SafeAreaProvider>
       <BottomSheetModalProvider>
         <DIProvider container={container}>
           <AuthProvider>
             <StatusBar barStyle={'dark-content'} />
 
             <AppNavigator />
+
+              <BottomSheetModalWrapper />
+              <Toast config={ToastConfig} />
           </AuthProvider>
         </DIProvider>
       </BottomSheetModalProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 };

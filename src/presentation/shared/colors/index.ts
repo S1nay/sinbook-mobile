@@ -10,4 +10,5 @@ export const Colors = {
   white: '#FFFFFF',
   secondaryWhite: '#F3F4F6',
   transparent: 'transparent',
+  green: '#76bf4c',
 } as const;
