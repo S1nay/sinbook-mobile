@@ -1,7 +1,6 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useEffect, useRef } from 'react';
 import { StatusBar } from 'react-native';
-import { hide } from 'react-native-bootsplash';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
@@ -41,7 +40,6 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
-      await hide({ fade: true });
       setInterceptors();
 
       socketConnections.forEach(path => {
@@ -61,6 +59,7 @@ const App = () => {
               <AppNavigator />
 
               <BottomSheetModalWrapper />
+
               <Toast position={'bottom'} visibilityTime={3000} config={ToastConfig} />
             </AuthProvider>
           </DIProvider>
