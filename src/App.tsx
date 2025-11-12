@@ -1,16 +1,19 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useEffect, useRef } from 'react';
 import { StatusBar } from 'react-native';
-import { hide } from 'react-native-bootsplash';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import container from '@core/di/container';
 import { Identifiers } from '@core/di/identifiers';
 import { requestInterceptor, responseInterceptor } from '@core/interceptors';
-import { AuthProvider } from '@core/providers/AuthProvider';
-import { DIProvider } from '@core/providers/DIProvider';
+import { AuthProvider } from '@core/providers/auth-provider';
+import { DIProvider } from '@core/providers/di-provider';
 import { SocketConnectionPaths } from '@infrastructure/socket/entities';
 import { AppNavigator } from '@navigation/AppNavigator';
+import BottomSheetModalWrapper from '@ui/bottom-sheet';
+import ToastConfig from '@ui/toast';
 
 const socketConnections = [
   SocketConnectionPaths.CHAT,
@@ -37,7 +40,6 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
-      await hide({ fade: true });
       setInterceptors();
 
       socketConnections.forEach(path => {
@@ -48,15 +50,21 @@ const App = () => {
 
   return (
     <GestureHandlerRootView>
-      <BottomSheetModalProvider>
-        <DIProvider container={container}>
-          <AuthProvider>
-            <StatusBar barStyle={'dark-content'} />
+      <SafeAreaProvider>
+        <BottomSheetModalProvider>
+          <DIProvider container={container}>
+            <AuthProvider>
+              <StatusBar barStyle={'dark-content'} />
 
-            <AppNavigator />
-          </AuthProvider>
-        </DIProvider>
-      </BottomSheetModalProvider>
+              <AppNavigator />
+
+              <BottomSheetModalWrapper />
+
+              <Toast position={'bottom'} visibilityTime={3000} config={ToastConfig} />
+            </AuthProvider>
+          </DIProvider>
+        </BottomSheetModalProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 };

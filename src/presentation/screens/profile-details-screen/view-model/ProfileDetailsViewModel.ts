@@ -2,8 +2,7 @@ import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
-import { AuthUseCases, UserUseCases } from '@domain/use-cases';
-import { PostUseCases } from '@domain/use-cases/post';
+import { AuthUseCases, UserUseCases, PostUseCases } from '@domain/use-cases';
 
 import { IProfileDetailsViewModel } from './IProfileDetailsViewModel';
 

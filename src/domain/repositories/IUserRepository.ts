@@ -1,5 +1,6 @@
 import { ServiceIdentifier } from 'inversify';
 
+import { IPatchUserRequestDto } from '@domain/dto';
 import { IUser } from '@domain/models';
 
 export interface IUserRepository {
@@ -12,6 +13,7 @@ export interface IUserRepository {
   getLocalUser(): IUser | null;
 
   getUser(id: number): Promise<IUser>;
+  patchUser(dto: Partial<IPatchUserRequestDto>): Promise<IUser>;
 }
 
 export namespace IUserRepository {

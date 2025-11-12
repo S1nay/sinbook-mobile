@@ -11,7 +11,7 @@ export default StyleSheet.create({
         blurRadius: 6,
         offsetX: 0,
         offsetY: 4,
-        color: '#F3F4F6',
+        color: Colors.secondaryWhite,
       },
     ],
     flexDirection: 'row',

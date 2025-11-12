@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { DIContext } from '@core/providers/DIProvider';
+import { DIContext } from '@core/providers/di-provider';
 
 const useDIContainer = () => {
   const container = useContext(DIContext);

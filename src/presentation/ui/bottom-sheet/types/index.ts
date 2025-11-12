@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 
 export interface IBottomSheetModalParams {
   modal: ReactElement | null;
-  config: Omit<BottomSheetModalProps, 'children'> | null;
+  config?: Omit<BottomSheetModalProps, 'children'> | null;
 }
 
 export type BottomSheetModalShowFunc = (params: IBottomSheetModalParams) => void;

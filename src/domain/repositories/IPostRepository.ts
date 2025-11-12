@@ -1,6 +1,6 @@
 import { ServiceIdentifier } from 'inversify';
 
-import { ICreatePostRequestDto } from '@domain/dto/ICreatePostDto';
+import { ICreatePostRequestDto } from '@domain/dto';
 import { IPagination, IPost } from '@domain/models';
 
 export interface IPostRepository {

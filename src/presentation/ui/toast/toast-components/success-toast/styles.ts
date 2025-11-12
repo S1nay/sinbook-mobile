@@ -1,0 +1,31 @@
+import { StyleSheet } from 'react-native';
+
+import { Colors } from '@shared/colors';
+
+export default StyleSheet.create({
+  container: {
+    backgroundColor: Colors.green,
+    borderRadius: 12,
+    gap: 8,
+    height: 50,
+    justifyContent: 'center',
+    overflow: 'hidden',
+    paddingHorizontal: 12,
+    width: '95%',
+  },
+  content: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 8,
+  },
+  countdownBar: {
+    bottom: 0,
+    position: 'absolute',
+    width: '110%',
+  },
+  success: {
+    color: Colors.white,
+    fontFamily: 'Inter-Regular',
+    fontSize: 14,
+  },
+});

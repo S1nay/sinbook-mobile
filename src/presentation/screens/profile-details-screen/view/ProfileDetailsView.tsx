@@ -26,13 +26,9 @@ const ProfileDetailsView = () => {
   );
   const { unauthorize } = useAuth();
 
-  const handleLogout = () => {
-    logout(unauthorize);
-  };
-
   useEffect(() => {
     getUserData(params?.userId);
-  }, []);
+  }, [params?.userIsUpdated]);
 
   useEffect(() => {
     if (user) {
@@ -47,14 +43,28 @@ const ProfileDetailsView = () => {
     });
   }, [user]);
 
+  const navigateToProfileEdit = () => {
+    if (user) {
+      navigation.navigate(ProfileRouteNames.ProfileEdit, { user });
+    }
+  };
+
+  const handleLogout = () => {
+    logout(unauthorize);
+  };
+
   return (
     <AppLayout isScroll disableBottomInsets>
       {user ? (
         <View style={styles.container}>
           <ProfileInfo user={user} />
-          <Button value="Edit Profile" icon={{ name: 'pencil', size: 16 }} />
+          <Button
+            value="Edit Profile"
+            icon={{ name: 'pencil', size: 16 }}
+            onPress={navigateToProfileEdit}
+          />
 
-          {posts.length && postsMeta ? (
+          {posts.length > 0 && postsMeta ? (
             <ProfilePostGrid posts={posts} postsMeta={postsMeta} />
           ) : (
             <ProfilePostGridPlaceholder />

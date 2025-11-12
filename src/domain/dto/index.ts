@@ -1,6 +1,13 @@
 import { IAuthResponseDTO } from './IAuthResponseDto';
-import { ICreatePostRequestDto } from './ICreatePostDto';
+import { ICreatePostRequestDto } from './ICreatePostRequestDto';
 import { ILoginRequestDTO } from './ILoginRequestDto';
+import { IPatchUserRequestDto } from './IPatchUserRequestDto';
 import { IRegisterRequestDTO } from './IRegisterRequestDto';
 
-export { ILoginRequestDTO, IAuthResponseDTO, IRegisterRequestDTO, ICreatePostRequestDto };
+export {
+  ILoginRequestDTO,
+  IAuthResponseDTO,
+  IRegisterRequestDTO,
+  ICreatePostRequestDto,
+  IPatchUserRequestDto,
+};
