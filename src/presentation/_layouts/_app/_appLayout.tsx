@@ -31,7 +31,7 @@ const AppLayout = (props: PropsWithChildren<AppLayoutProps>) => {
   const viewProps: ViewProps = useMemo(
     () => ({
       style: styles.content,
-      ...viewProps,
+      ...additionalViewProps,
     }),
     [additionalViewProps],
   );

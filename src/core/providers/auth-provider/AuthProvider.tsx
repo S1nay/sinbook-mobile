@@ -15,7 +15,7 @@ const AuthProvider = (props: PropsWithChildren<unknown>) => {
 
   useEffect(() => {
     (async () => {
-      const token = storage?.getBoolean(AuthStorageKeys.ACCESS_TOKEN);
+      const token = storage?.getString(AuthStorageKeys.ACCESS_TOKEN);
 
       if (token) {
         setIsAuth(true);
