@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
+import { IHttpResponse, IHttpClient } from '@core/interfaces/http';
 import { ICreatePostRequestDto } from '@domain/dto';
 import { IPagination, IPost } from '@domain/models';
-import { IHttpClient, IHttpResponse } from '@infrastructure/http/entities';
 
 import { IPostApi } from './IPostApi';
 

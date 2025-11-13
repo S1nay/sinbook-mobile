@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { getDataFromHttpResponse } from '@core/helpers';
+import { getDataFromHttpResponse, getErrorFromHttpResponse } from '@core/helpers';
 import { IUserApi } from '@data/api';
 import { IUserStorage } from '@data/storage';
 import { IUserStore } from '@data/store';
@@ -41,11 +41,14 @@ class UserRepository implements IUserRepository {
   }
 
   async getUser(id: number): Promise<IUser> {
-    return this.userApi.getUser(id).then(getDataFromHttpResponse);
+    return this.userApi.getUser(id).then(getDataFromHttpResponse).catch(getErrorFromHttpResponse);
   }
 
   async patchUser(dto: Partial<IPatchUserRequestDto>): Promise<IUser> {
-    return this.userApi.updateUser(dto).then(getDataFromHttpResponse);
+    return this.userApi
+      .updateUser(dto)
+      .then(getDataFromHttpResponse)
+      .catch(getErrorFromHttpResponse);
   }
 }
 

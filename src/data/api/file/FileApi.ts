@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
+import { IHttpResponse, IHttpClient } from '@core/interfaces/http';
 import { IFile } from '@domain/models';
-import { IHttpClient, IHttpResponse } from '@infrastructure/http/entities';
 
 import { IFileApi } from './IFileApi';
 

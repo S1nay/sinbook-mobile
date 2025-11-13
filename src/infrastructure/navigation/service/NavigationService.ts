@@ -12,7 +12,7 @@ import type {
 } from '@react-navigation/routers';
 import { injectable } from 'inversify';
 
-import { INavigationService } from '@infrastructure/navigation/entities';
+import { INavigationService } from '@core/interfaces/navigation';
 
 @injectable()
 class NavigationService<RootStackParamList extends ParamListBase>

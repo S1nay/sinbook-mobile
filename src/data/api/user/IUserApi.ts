@@ -1,8 +1,8 @@
 import { ServiceIdentifier } from 'inversify';
 
+import { IHttpResponse } from '@core/interfaces/http';
 import { IPatchUserRequestDto } from '@domain/dto';
 import { IUser } from '@domain/models';
-import { IHttpResponse } from '@infrastructure/http/entities';
 
 export interface IUserApi {
   getUser(id: number): Promise<IHttpResponse<IUser>>;

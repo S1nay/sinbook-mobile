@@ -1,7 +1,7 @@
 import { ServiceIdentifier } from 'inversify';
 
+import { IHttpResponse } from '@core/interfaces/http';
 import { IFile } from '@domain/models';
-import { IHttpResponse } from '@infrastructure/http/entities';
 
 export interface IFileApi {
   uploadAvatar(dto: FormData): Promise<IHttpResponse<IFile>>;

@@ -1,7 +1,7 @@
 import { ServiceIdentifier } from 'inversify';
 
+import { IHttpResponse } from '@core/interfaces/http';
 import { IAuthResponseDTO, ILoginRequestDTO, IRegisterRequestDTO } from '@domain/dto';
-import { IHttpResponse } from '@infrastructure/http/entities';
 
 export interface IAuthApi {
   signIn(dto: ILoginRequestDTO): Promise<IHttpResponse<IAuthResponseDTO>>;

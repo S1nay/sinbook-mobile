@@ -17,3 +17,5 @@ declare interface Binding {
 declare interface UseCase<T, K> {
   execute(...args: T[]): Promise<K>;
 }
+
+declare type ApiErrorMessage = string | Array<{ field: string; error: string }>;

@@ -1,11 +1,9 @@
-import { AxiosError } from 'axios';
 import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 
 import { LoginFormData, LoginFormExternalErrors } from '@components/forms/login-form';
 import { transformHttpFieldErrors } from '@core/helpers';
 import { AuthUseCases } from '@domain/use-cases';
-import { IHttpError } from '@infrastructure/http/entities';
 
 import { ILoginViewModel } from './ILoginViewModel';
 
@@ -62,15 +60,11 @@ class LoginViewModel implements ILoginViewModel {
       .then(() => {
         this.isSuccess = true;
       })
-      .catch(({ response }: AxiosError<IHttpError>) => {
-        if (response) {
-          const { data } = response;
-
-          if (Array.isArray(data.message)) {
-            this.formErrors = transformHttpFieldErrors<LoginFormExternalErrors>(data.message);
-          } else {
-            this.error = data.message;
-          }
+      .catch((error: ApiErrorMessage) => {
+        if (Array.isArray(error)) {
+          this.formErrors = transformHttpFieldErrors<LoginFormExternalErrors>(error);
+        } else {
+          this.error = error;
         }
       })
       .finally(() => {

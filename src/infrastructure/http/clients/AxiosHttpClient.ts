@@ -7,7 +7,7 @@ import {
   IHttpError,
   IHttpRequestConfig,
   IHttpResponse,
-} from '@infrastructure/http/entities';
+} from '@core/interfaces/http';
 
 @injectable()
 class AxiosHttpClient implements IHttpClient<AxiosInstance> {

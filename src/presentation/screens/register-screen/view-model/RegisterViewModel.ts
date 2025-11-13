@@ -1,11 +1,9 @@
-import { AxiosError } from 'axios';
 import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 
 import { RegisterFormData, RegisterFormExternalErrors } from '@components/forms/register-form';
 import { transformHttpFieldErrors } from '@core/helpers';
 import { AuthUseCases } from '@domain/use-cases';
-import { IHttpError } from '@infrastructure/http/entities';
 
 import { IRegisterViewModel } from './IRegisterViewModel';
 
@@ -61,15 +59,11 @@ class RegisterViewModel implements IRegisterViewModel {
       .then(() => {
         this.isSuccess = true;
       })
-      .catch(({ response }: AxiosError<IHttpError>) => {
-        if (response) {
-          const { data } = response;
-
-          if (Array.isArray(data.message)) {
-            this.formErrors = transformHttpFieldErrors<RegisterFormExternalErrors>(data.message);
-          } else {
-            this.error = data.message;
-          }
+      .catch((error: ApiErrorMessage) => {
+        if (Array.isArray(error)) {
+          this.formErrors = transformHttpFieldErrors<RegisterFormExternalErrors>(error);
+        } else {
+          this.error = error;
         }
       })
       .finally(() => {

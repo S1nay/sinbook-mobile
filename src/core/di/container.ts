@@ -2,6 +2,10 @@ import 'reflect-metadata';
 import { Container } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
+import { IHttpClient } from '@core/interfaces/http';
+import { INavigationService } from '@core/interfaces/navigation';
+import { ISocketManager } from '@core/interfaces/socket';
+import { IStorage } from '@core/interfaces/storage';
 import {
   AuthApi,
   FileApi,
@@ -22,11 +26,7 @@ import {
   IPostRepository,
 } from '@domain/repositories';
 import { combineUseCases } from '@domain/use-cases';
-import type { IHttpClient } from '@infrastructure/http/entities';
-import type { INavigationService } from '@infrastructure/navigation/entities';
 import NavigationService from '@infrastructure/navigation/service';
-import { ISocketManager } from '@infrastructure/socket/entities';
-import type { IStorage } from '@infrastructure/storage/entities';
 import type { RootStackParamList } from '@navigation/configuration/routeParams';
 
 import { SinbookHttpClientImpl, RootStorageImpl, SocketManagerImpl } from './implementations';

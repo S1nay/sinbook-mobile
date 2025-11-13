@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { inject } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import { Asset } from 'react-native-image-picker';
@@ -6,11 +5,10 @@ import Toast from 'react-native-toast-message';
 
 import { EditProfileFormData } from '@components/forms/edit-profile-form';
 import { Identifiers } from '@core/di/identifiers';
+import { INavigationService } from '@core/interfaces/navigation';
 import { IPatchUserRequestDto } from '@domain/dto';
 import { IFile } from '@domain/models';
 import { FileUseCases, UserUseCases } from '@domain/use-cases';
-import { IHttpError } from '@infrastructure/http/entities';
-import { INavigationService } from '@infrastructure/navigation/entities';
 import { ProfileRouteNames, ProfileStackParamList } from '@navigation/configuration';
 import { Toasts } from '@ui/toast';
 
@@ -52,13 +50,8 @@ class ProfileEditViewModel implements IProfileEditViewModel {
     return this.postAvatarUseCase
       .execute(image)
       .then()
-      .catch(({ response }: AxiosError<IHttpError>) => {
-        if (response) {
-          const { data } = response;
-          const errorMessage = data.message as string;
-
-          Toast.show({ text1: errorMessage, type: Toasts.Error });
-        }
+      .catch((error: ApiErrorMessage) => {
+        Toast.show({ text1: error as string, type: Toasts.Error });
       })
       .finally(() => {
         this.isLoading = false;
@@ -83,13 +76,8 @@ class ProfileEditViewModel implements IProfileEditViewModel {
 
         Toast.show({ text1: 'Данные были успешно обновлены', type: Toasts.Success });
       })
-      .catch(({ response }: AxiosError<IHttpError>) => {
-        if (response) {
-          const { data } = response;
-          const errorMessage = data.message as string;
-
-          Toast.show({ text1: errorMessage, type: Toasts.Error });
-        }
+      .catch((error: ApiErrorMessage) => {
+        Toast.show({ text1: error as string, type: Toasts.Error });
       })
       .finally(() => {
         this.isLoading = false;

@@ -1,4 +1,4 @@
-import { IHttpResponse } from '@infrastructure/http/entities';
+import { IHttpResponse } from '@core/interfaces/http';
 
 const getDataFromHttpResponse = <T = unknown>(response: IHttpResponse<T>) => response.data;
 

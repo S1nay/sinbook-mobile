@@ -1,10 +1,10 @@
 import { AxiosInstance } from 'axios';
 import { ServiceIdentifier } from 'inversify';
 
-import type { IHttpClient } from '@infrastructure/http/entities';
-import type { INavigationService } from '@infrastructure/navigation/entities';
-import { ISocketManager } from '@infrastructure/socket/entities';
-import type { IStorage } from '@infrastructure/storage/entities';
+import { IHttpClient } from '@core/interfaces/http';
+import { INavigationService } from '@core/interfaces/navigation';
+import { ISocketManager } from '@core/interfaces/socket';
+import { IStorage } from '@core/interfaces/storage';
 import type { RootStackParamList } from '@navigation/configuration/routeParams';
 
 export namespace Identifiers {

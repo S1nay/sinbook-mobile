@@ -1,8 +1,8 @@
 import { ServiceIdentifier } from 'inversify';
 
+import { IHttpResponse } from '@core/interfaces/http';
 import { ICreatePostRequestDto } from '@domain/dto';
 import { IPagination, IPost } from '@domain/models';
-import { IHttpResponse } from '@infrastructure/http/entities';
 
 export interface IPostApi {
   getPosts(params: Record<string, string>): Promise<IHttpResponse<IPagination<IPost>>>;

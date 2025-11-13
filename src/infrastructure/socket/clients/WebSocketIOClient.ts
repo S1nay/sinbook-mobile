@@ -5,7 +5,7 @@ import {
   type ISocketClient,
   type ISocketConfig,
   SocketDefaultEvents,
-} from '@infrastructure/socket/entities';
+} from '@core/interfaces/socket';
 
 class WebSocketIOClient implements ISocketClient<Socket> {
   private _instance: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;

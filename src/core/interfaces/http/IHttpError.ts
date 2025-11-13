@@ -1,5 +1,5 @@
 export interface IHttpError {
-  message: string | Array<{ field: string; error: string }>;
+  message: ApiErrorMessage;
   error: string;
   status: number;
   path: string;

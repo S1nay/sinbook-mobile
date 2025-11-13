@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import { Configuration, MMKV } from 'react-native-mmkv';
 
-import type { IStorage } from '@infrastructure/storage/entities';
+import type { IStorage } from '@core/interfaces/storage';
 
 @injectable()
 class MMKVStorage implements IStorage {
