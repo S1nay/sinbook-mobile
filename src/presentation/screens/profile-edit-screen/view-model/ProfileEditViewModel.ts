@@ -5,6 +5,7 @@ import Toast from 'react-native-toast-message';
 
 import { EditProfileFormData } from '@components/forms/edit-profile-form';
 import { Identifiers } from '@core/di/identifiers';
+import { IHttpError } from '@core/interfaces/http';
 import { INavigationService } from '@core/interfaces/navigation';
 import { IPatchUserRequestDto } from '@domain/dto';
 import { IFile } from '@domain/models';
@@ -50,8 +51,8 @@ class ProfileEditViewModel implements IProfileEditViewModel {
     return this.postAvatarUseCase
       .execute(image)
       .then()
-      .catch((error: ApiErrorMessage) => {
-        Toast.show({ text1: error as string, type: Toasts.Error });
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
       })
       .finally(() => {
         this.isLoading = false;
@@ -76,8 +77,8 @@ class ProfileEditViewModel implements IProfileEditViewModel {
 
         Toast.show({ text1: 'Данные были успешно обновлены', type: Toasts.Success });
       })
-      .catch((error: ApiErrorMessage) => {
-        Toast.show({ text1: error as string, type: Toasts.Error });
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
       })
       .finally(() => {
         this.isLoading = false;

@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx';
 
 import { RegisterFormData, RegisterFormExternalErrors } from '@components/forms/register-form';
 import { transformHttpFieldErrors } from '@core/helpers';
+import { IHttpError } from '@core/interfaces/http';
 import { AuthUseCases } from '@domain/use-cases';
 
 import { IRegisterViewModel } from './IRegisterViewModel';
@@ -59,11 +60,11 @@ class RegisterViewModel implements IRegisterViewModel {
       .then(() => {
         this.isSuccess = true;
       })
-      .catch((error: ApiErrorMessage) => {
-        if (Array.isArray(error)) {
-          this.formErrors = transformHttpFieldErrors<RegisterFormExternalErrors>(error);
+      .catch(({ message }: IHttpError) => {
+        if (Array.isArray(message)) {
+          this.formErrors = transformHttpFieldErrors<RegisterFormExternalErrors>(message);
         } else {
-          this.error = error;
+          this.error = message;
         }
       })
       .finally(() => {

@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx';
 
 import { LoginFormData, LoginFormExternalErrors } from '@components/forms/login-form';
 import { transformHttpFieldErrors } from '@core/helpers';
+import { IHttpError } from '@core/interfaces/http';
 import { AuthUseCases } from '@domain/use-cases';
 
 import { ILoginViewModel } from './ILoginViewModel';
@@ -60,11 +61,11 @@ class LoginViewModel implements ILoginViewModel {
       .then(() => {
         this.isSuccess = true;
       })
-      .catch((error: ApiErrorMessage) => {
-        if (Array.isArray(error)) {
-          this.formErrors = transformHttpFieldErrors<LoginFormExternalErrors>(error);
+      .catch(({ message }: IHttpError) => {
+        if (Array.isArray(message)) {
+          this.formErrors = transformHttpFieldErrors<LoginFormExternalErrors>(message);
         } else {
-          this.error = error;
+          this.error = message;
         }
       })
       .finally(() => {
