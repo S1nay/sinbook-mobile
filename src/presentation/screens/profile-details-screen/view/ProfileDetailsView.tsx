@@ -1,7 +1,7 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
-import { View } from 'react-native';
+import { useCallback, useEffect } from 'react';
+import { RefreshControl, View } from 'react-native';
 
 import Header from '@components/header';
 import { useAuth, useDIContainer } from '@core/hooks';
@@ -26,15 +26,15 @@ const ProfileDetailsView = () => {
   );
   const { unauthorize } = useAuth();
 
-  useEffect(() => {
-    getUserData(params?.userId);
-  }, [params?.userIsUpdated]);
-
-  useEffect(() => {
-    if (user) {
-      getUserPosts(user.id);
-    }
-  }, [user]);
+  useFocusEffect(
+    useCallback(() => {
+      getUserData(params?.userId).then(user => {
+        if (user) {
+          getUserPosts(user.id);
+        }
+      });
+    }, [params?.userId]),
+  );
 
   useEffect(() => {
     navigation.setOptions({
@@ -42,6 +42,10 @@ const ProfileDetailsView = () => {
       header: props => <Header {...props} rightIcon="logout" onPressRightIcon={handleLogout} />,
     });
   }, [user]);
+
+  const handleRefreshProfile = () => {
+    if (user) Promise.all([getUserData(user.id), getUserPosts(user.id)]);
+  };
 
   const navigateToProfileEdit = () => {
     if (user) {
@@ -54,7 +58,13 @@ const ProfileDetailsView = () => {
   };
 
   return (
-    <AppLayout isScroll disableBottomInsets>
+    <AppLayout
+      isScroll
+      disableBottomInsets
+      scrollViewProps={{
+        refreshControl: <RefreshControl refreshing={false} onRefresh={handleRefreshProfile} />,
+      }}
+    >
       {user ? (
         <View style={styles.container}>
           <ProfileInfo user={user} />

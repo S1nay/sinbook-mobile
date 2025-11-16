@@ -10,7 +10,7 @@ import { INavigationService } from '@core/interfaces/navigation';
 import { IPatchUserRequestDto } from '@domain/dto';
 import { IFile } from '@domain/models';
 import { FileUseCases, UserUseCases } from '@domain/use-cases';
-import { ProfileRouteNames, ProfileStackParamList } from '@navigation/configuration';
+import { ProfileStackParamList } from '@navigation/configuration';
 import { Toasts } from '@ui/toast';
 
 import { IProfileEditViewModel } from './IProfileEditViewModel';
@@ -70,10 +70,7 @@ class ProfileEditViewModel implements IProfileEditViewModel {
         avatarPath: avatarUrl || data.avatarPath,
       })
       .then(() => {
-        this.navigationService.reset({
-          index: 0,
-          routes: [{ name: ProfileRouteNames.ProfileDetails }],
-        });
+        this.navigationService.goBack();
 
         Toast.show({ text1: 'Данные были успешно обновлены', type: Toasts.Success });
       })
