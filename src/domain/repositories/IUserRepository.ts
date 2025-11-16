@@ -1,16 +1,18 @@
 import { ServiceIdentifier } from 'inversify';
 
 import { IPatchUserRequestDto } from '@domain/dto';
-import { IUser } from '@domain/models';
+import { AuthUser, IUser } from '@domain/models';
 
 export interface IUserRepository {
-  saveUserInStorage(user: IUser): void;
-  removeUserFromStorage(): void;
-  getSavedUser(): IUser | null;
+  // session
+  getUserSession(): IUser | null;
+  setUserSession(user: IUser | null): void;
+  clearUserSession(): void;
 
-  setUserToStore(user: IUser): void;
-  removeUserFromStore(): void;
-  getLocalUser(): IUser | null;
+  // persistent
+  loadUserFromStorage(): AuthUser | null;
+  persistUser(user: AuthUser): void;
+  clearPersistedUser(): void;
 
   getUser(id: number): Promise<IUser>;
   patchUser(dto: Partial<IPatchUserRequestDto>): Promise<IUser>;

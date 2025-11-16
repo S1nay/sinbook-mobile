@@ -12,3 +12,5 @@ export interface IUser {
   followsCount: number;
   postsCount: number;
 }
+
+export type AuthUser = Omit<IUser, 'followersCount' | 'followsCount' | 'postsCount'>;

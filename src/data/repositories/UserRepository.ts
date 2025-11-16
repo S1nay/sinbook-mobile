@@ -16,30 +16,29 @@ class UserRepository implements IUserRepository {
     @inject(IUserApi.$) private userApi: IUserApi,
   ) {}
 
-  saveUserInStorage(user: IUser): void {
-    this.userStorage.saveUserData(user);
+  /* session */
+  getUserSession(): IUser | null {
+    return this.userStore.userData;
   }
-
-  removeUserFromStorage(): void {
-    this.userStorage.removeUserData();
-  }
-
-  getSavedUser(): IUser | null {
-    return this.userStorage.getUserData();
-  }
-
-  setUserToStore(user: IUser): void {
+  setUserSession(user: IUser | null): void {
     this.userStore.setUserData(user);
   }
-
-  removeUserFromStore(): void {
+  clearUserSession(): void {
     this.userStore.setUserData(null);
   }
 
-  getLocalUser(): IUser | null {
-    return this.userStore.userData;
+  /* persistent */
+  loadUserFromStorage(): IUser | null {
+    return this.userStorage.getUserData();
+  }
+  persistUser(user: IUser): void {
+    this.userStorage.saveUserData(user);
+  }
+  clearPersistedUser(): void {
+    this.userStorage.removeUserData();
   }
 
+  /* api */
   async getUser(id: number): Promise<IUser> {
     return this.userApi.getUser(id).then(getDataFromHttpResponse).catch(getErrorFromHttpResponse);
   }

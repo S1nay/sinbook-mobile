@@ -11,8 +11,7 @@ class LogoutUseCase {
 
   async execute(): Promise<boolean> {
     this.authRepository.removeTokensFromStorage();
-    this.userRepository.removeUserFromStorage();
-    this.userRepository.removeUserFromStore();
+    this.userRepository.clearPersistedUser();
 
     return true;
   }

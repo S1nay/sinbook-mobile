@@ -13,15 +13,15 @@ class GetUserUseCase {
 
       return fetchedUser;
     } else {
-      const localUser = this.userRepository.getLocalUser();
+      const sessionUser = this.userRepository.getUserSession();
 
-      if (!localUser) {
-        const savedUser = this.userRepository.getSavedUser()!;
-        const fetchedUser = await this.userRepository.getUser(savedUser.id);
-        this.userRepository.setUserToStore(fetchedUser);
+      if (!sessionUser) {
+        const storageUser = this.userRepository.loadUserFromStorage()!;
+        const fetchedUser = await this.userRepository.getUser(storageUser.id);
+        this.userRepository.setUserSession(fetchedUser);
         return fetchedUser;
       } else {
-        return localUser;
+        return sessionUser;
       }
     }
   }
