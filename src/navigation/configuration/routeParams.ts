@@ -41,7 +41,6 @@ export type BottomTabStackParamList = {
 export type ProfileStackParamList = {
   [ProfileRouteNames.ProfileDetails]?: {
     userId: number;
-    userIsUpdated?: boolean;
   };
   [ProfileRouteNames.ProfilePosts]: undefined;
   [ProfileRouteNames.ProfileEdit]: {
