@@ -59,13 +59,14 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._posts = value;
   }
 
-  getUserData(id?: number) {
+  async getUserData(id?: number) {
     this.isLoading = true;
 
-    this.getUserUseCase
+    return this.getUserUseCase
       .execute(id)
       .then(user => {
         this.user = user;
+        return user;
       })
       .catch()
       .finally(() => {
