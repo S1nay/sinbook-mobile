@@ -1,5 +1,6 @@
+import PostStore, { IPostStore } from './post';
 import UserStore, { IUserStore } from './user';
 
-export { UserStore };
+export { UserStore, PostStore };
 
-export { IUserStore };
+export { IUserStore, IPostStore };

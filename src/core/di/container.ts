@@ -18,7 +18,7 @@ import {
 } from '@data/api';
 import { AuthRepository, FileRepository, PostRepository, UserRepository } from '@data/repositories';
 import { AuthStorage, IAuthStorage, IUserStorage, UserStorage } from '@data/storage';
-import { IUserStore, UserStore } from '@data/store';
+import { IPostStore, IUserStore, PostStore, UserStore } from '@data/store';
 import {
   IAuthRepository,
   IUserRepository,
@@ -42,6 +42,7 @@ container.bind<IFileApi>(IFileApi.$).to(FileApi).inSingletonScope();
 
 /* -- Store's -- */
 container.bind<IUserStore>(IUserStore.$).to(UserStore).inSingletonScope();
+container.bind<IPostStore>(IPostStore.$).to(PostStore).inSingletonScope();
 
 /* -- Storage's -- */
 
