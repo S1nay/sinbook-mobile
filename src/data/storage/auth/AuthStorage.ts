@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
-import { IStorage } from '@infrastructure/storage/entities';
+import { IStorage } from '@core/interfaces/storage';
 
 import { AuthStorageKeys } from './AuthStorageKeys';
 import { IAuthStorage } from './IAuthStorage';

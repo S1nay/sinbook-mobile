@@ -13,17 +13,16 @@ class GetUserUseCase {
 
       return fetchedUser;
     } else {
-      let localUser = this.userRepository.getLocalUser();
+      const localUser = this.userRepository.getLocalUser();
 
       if (!localUser) {
         const savedUser = this.userRepository.getSavedUser()!;
-        this.userRepository.setUserToStore(savedUser);
-        localUser = savedUser;
+        const fetchedUser = await this.userRepository.getUser(savedUser.id);
+        this.userRepository.setUserToStore(fetchedUser);
+        return fetchedUser;
+      } else {
+        return localUser;
       }
-
-      const fetchedUser = await this.userRepository.getUser(localUser.id);
-
-      return fetchedUser;
     }
   }
 }

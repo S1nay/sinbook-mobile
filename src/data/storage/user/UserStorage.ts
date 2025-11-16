@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
+import { IStorage } from '@core/interfaces/storage';
 import { IUser } from '@domain/models';
-import { IStorage } from '@infrastructure/storage/entities';
 
 import { IUserStorage } from './IUserStorage';
 import { UserStorageKeys } from './UserStorageKeys';
