@@ -9,6 +9,9 @@ export interface IPostRepository {
   updatePost(id: number): Promise<IPost>;
   deletePost(id: number): Promise<void>;
   createPost(dto: ICreatePostRequestDto): Promise<IPost>;
+
+  getLoggedInUserPosts(): IPagination<IPost> | null;
+  setLoggedInUserPosts(posts: IPagination<IPost> | null): void;
 }
 
 export namespace IPostRepository {
