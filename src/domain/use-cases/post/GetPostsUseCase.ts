@@ -1,17 +1,36 @@
 import { inject, injectable } from 'inversify';
 
 import { IPagination, IPost } from '@domain/models';
-import { IPostRepository } from '@domain/repositories/IPostRepository';
+import { IUserRepository, IPostRepository } from '@domain/repositories';
 import { GetPostsRequestParams } from '@domain/request-params';
 
 @injectable()
 class GetPostsUseCase {
-  constructor(@inject(IPostRepository.$) private postRepository: IPostRepository) {}
+  constructor(
+    @inject(IPostRepository.$) private postRepository: IPostRepository,
+    @inject(IUserRepository.$) private userRepository: IUserRepository,
+  ) {}
 
   async execute(params?: GetPostsRequestParams): Promise<IPagination<IPost>> {
-    const posts = await this.postRepository.getPosts(params);
+    const sessionUser = this.userRepository.getUserSession();
 
-    return posts;
+    if (sessionUser?.id === params?.userId) {
+      const userPosts = this.postRepository.getLoggedInUserPosts();
+
+      if (!userPosts) {
+        const fetchedPosts = await this.postRepository.getPosts(params);
+
+        this.postRepository.setLoggedInUserPosts(fetchedPosts);
+
+        return fetchedPosts;
+      } else {
+        return userPosts;
+      }
+    } else {
+      const fetchedPosts = await this.postRepository.getPosts(params);
+
+      return fetchedPosts;
+    }
   }
 }
 
