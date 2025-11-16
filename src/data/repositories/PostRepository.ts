@@ -5,12 +5,13 @@ import { IPostApi } from '@data/api';
 import { ICreatePostRequestDto } from '@domain/dto';
 import { IPagination, IPost } from '@domain/models';
 import { IPostRepository } from '@domain/repositories';
+import { GetPostsRequestParams } from '@domain/request-params';
 
 @injectable()
 class PostRepository implements IPostRepository {
   constructor(@inject(IPostApi.$) private postApi: IPostApi) {}
 
-  async getPosts(params: Record<string, string>): Promise<IPagination<IPost>> {
+  async getPosts(params?: GetPostsRequestParams): Promise<IPagination<IPost>> {
     return this.postApi
       .getPosts(params)
       .then(getDataFromHttpResponse)
