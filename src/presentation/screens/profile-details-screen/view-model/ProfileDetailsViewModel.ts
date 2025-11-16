@@ -73,7 +73,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
       });
   }
 
-  getUserPosts(userId?: number) {
+  getUserPosts(userId: number) {
     this.isLoading = true;
 
     this.getPostsUseCase
