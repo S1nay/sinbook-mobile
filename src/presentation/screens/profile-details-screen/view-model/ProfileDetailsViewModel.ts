@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
+import { GetPostsRequestParams, GetUserRequestParams } from '@domain/request-params';
 import { AuthUseCases, UserUseCases, PostUseCases } from '@domain/use-cases';
 
 import { IProfileDetailsViewModel } from './IProfileDetailsViewModel';
@@ -17,10 +18,10 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     @inject(AuthUseCases.$Logout)
     private logoutUseCase: UseCase<void, void>,
     @inject(UserUseCases.$GetUser)
-    private getUserUseCase: UseCase<number | undefined, IUser>,
+    private getUserUseCase: UseCase<GetUserRequestParams & { isRefetching: boolean }, IUser>,
     @inject(PostUseCases.$GetPosts)
     private getPostsUseCase: UseCase<
-      Record<string, number | string | undefined>,
+      GetPostsRequestParams & { isRefetching: boolean },
       IPagination<IPost>
     >,
   ) {
@@ -59,11 +60,11 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._posts = value;
   }
 
-  async getUserData(id?: number) {
+  async getUserData(id?: number, isRefetching = false): Promise<IUser> {
     this.isLoading = true;
 
     return this.getUserUseCase
-      .execute(id)
+      .execute({ id, isRefetching })
       .then(user => {
         this.user = user;
         return user;
@@ -74,11 +75,11 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
       });
   }
 
-  getUserPosts(userId: number) {
+  getUserPosts(userId: number, isRefetching = false) {
     this.isLoading = true;
 
     this.getPostsUseCase
-      .execute({ userId })
+      .execute({ userId, isRefetching })
       .then(data => {
         this.posts = data.results;
         this.postsMeta = data.meta;

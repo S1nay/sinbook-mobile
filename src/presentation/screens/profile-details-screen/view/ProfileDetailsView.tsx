@@ -21,7 +21,7 @@ const ProfileDetailsView = () => {
   const navigation =
     useNavigation<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['navigation']>();
   const { params } = useRoute<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['route']>();
-  const { logout, user, getUserData, getUserPosts, posts, postsMeta } = container.get(
+  const { logout, user, getUserData, getUserPosts, posts, postsMeta, isLoading } = container.get(
     IProfileDetailsViewModel.$,
   );
   const { unauthorize } = useAuth();
@@ -44,7 +44,10 @@ const ProfileDetailsView = () => {
   }, [user]);
 
   const handleRefreshProfile = () => {
-    if (user) Promise.all([getUserData(user.id), getUserPosts(user.id)]);
+    if (user) {
+      getUserData(user.id, true);
+      getUserPosts(user.id, true);
+    }
   };
 
   const navigateToProfileEdit = () => {
@@ -62,10 +65,10 @@ const ProfileDetailsView = () => {
       isScroll
       disableBottomInsets
       scrollViewProps={{
-        refreshControl: <RefreshControl refreshing={false} onRefresh={handleRefreshProfile} />,
+        refreshControl: <RefreshControl refreshing={isLoading} onRefresh={handleRefreshProfile} />,
       }}
     >
-      {user ? (
+      {user && !isLoading ? (
         <View style={styles.container}>
           <ProfileInfo user={user} />
           <Button
@@ -74,7 +77,7 @@ const ProfileDetailsView = () => {
             onPress={navigateToProfileEdit}
           />
 
-          {posts.length > 0 && postsMeta ? (
+          {posts.length > 0 && postsMeta && !isLoading ? (
             <ProfilePostGrid posts={posts} postsMeta={postsMeta} />
           ) : (
             <ProfilePostGridPlaceholder />

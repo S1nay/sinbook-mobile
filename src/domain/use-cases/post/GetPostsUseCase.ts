@@ -11,14 +11,17 @@ class GetPostsUseCase {
     @inject(IUserRepository.$) private userRepository: IUserRepository,
   ) {}
 
-  async execute(params?: GetPostsRequestParams): Promise<IPagination<IPost>> {
+  async execute(
+    params: GetPostsRequestParams & { isRefetching: boolean },
+  ): Promise<IPagination<IPost>> {
+    const { isRefetching, userId, ...otherParams } = params;
     const sessionUser = this.userRepository.getUserSession();
 
-    if (sessionUser?.id === params?.userId) {
+    if (sessionUser?.id === userId && !isRefetching) {
       const userPosts = this.postRepository.getLoggedInUserPosts();
 
       if (!userPosts) {
-        const fetchedPosts = await this.postRepository.getPosts(params);
+        const fetchedPosts = await this.postRepository.getPosts({ userId, ...otherParams });
 
         this.postRepository.setLoggedInUserPosts(fetchedPosts);
 
@@ -27,7 +30,7 @@ class GetPostsUseCase {
         return userPosts;
       }
     } else {
-      const fetchedPosts = await this.postRepository.getPosts(params);
+      const fetchedPosts = await this.postRepository.getPosts({ userId, ...otherParams });
 
       return fetchedPosts;
     }

@@ -2,14 +2,17 @@ import { inject, injectable } from 'inversify';
 
 import { IUser } from '@domain/models';
 import { IUserRepository } from '@domain/repositories';
+import { GetUserRequestParams } from '@domain/request-params';
 
 @injectable()
 class GetUserUseCase {
   constructor(@inject(IUserRepository.$) private userRepository: IUserRepository) {}
 
-  async execute(userId?: number): Promise<IUser> {
-    if (userId) {
-      const fetchedUser = await this.userRepository.getUser(userId);
+  async execute(params: GetUserRequestParams & { isRefetching: boolean }): Promise<IUser> {
+    const { id, isRefetching } = params;
+
+    if (id || (id && isRefetching)) {
+      const fetchedUser = await this.userRepository.getUser(id);
 
       return fetchedUser;
     } else {

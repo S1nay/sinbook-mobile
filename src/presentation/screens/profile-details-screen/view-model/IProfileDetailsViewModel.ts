@@ -8,8 +8,8 @@ export interface IProfileDetailsViewModel {
   postsMeta: IMeta | null;
   isLoading: boolean;
 
-  getUserData(id?: number): Promise<IUser>;
-  getUserPosts(userId: number): void;
+  getUserData(id?: number, isRefetching?: boolean): Promise<IUser>;
+  getUserPosts(userId: number, isRefetching?: boolean): void;
   logout: (callback: PureFunction) => void;
 }
 
