@@ -1,3 +1,4 @@
+import { StackActions } from '@react-navigation/native';
 import { inject } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import { Asset } from 'react-native-image-picker';
@@ -10,7 +11,7 @@ import { INavigationService } from '@core/interfaces/navigation';
 import { IPatchUserRequestDto } from '@domain/dto';
 import { IFile } from '@domain/models';
 import { FileUseCases, UserUseCases } from '@domain/use-cases';
-import { ProfileStackParamList } from '@navigation/configuration';
+import { ProfileRouteNames, ProfileStackParamList } from '@navigation/configuration';
 import { Toasts } from '@ui/toast';
 
 import { IProfileEditViewModel } from './IProfileEditViewModel';
@@ -70,7 +71,9 @@ class ProfileEditViewModel implements IProfileEditViewModel {
         avatarPath: avatarUrl || data.avatarPath,
       })
       .then(() => {
-        this.navigationService.goBack();
+        this.navigationService.dispatch(
+          StackActions.popTo(ProfileRouteNames.ProfileDetails, { userIsUpdated: true }),
+        );
 
         Toast.show({ text1: 'Данные были успешно обновлены', type: Toasts.Success });
       })
