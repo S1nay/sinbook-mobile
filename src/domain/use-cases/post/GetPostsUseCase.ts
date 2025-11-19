@@ -12,28 +12,34 @@ class GetPostsUseCase {
   ) {}
 
   async execute(
-    params: GetPostsRequestParams & { isRefetching: boolean },
+    params: GetPostsRequestParams & { isRefetching: boolean; isPagination?: boolean },
   ): Promise<IPagination<IPost>> {
-    const { isRefetching, userId, ...otherParams } = params;
+    const { isRefetching, userId, isPagination, ...otherParams } = params;
     const sessionUser = this.userRepository.getUserSession();
 
-    if (sessionUser?.id === userId && !isRefetching) {
-      const userPosts = this.postRepository.getLoggedInUserPosts();
+    const isOwnProfile = Boolean(sessionUser && userId && sessionUser.id === userId);
 
-      if (!userPosts) {
-        const fetchedPosts = await this.postRepository.getPosts({ userId, ...otherParams });
-
-        this.postRepository.setLoggedInUserPosts(fetchedPosts);
-
-        return fetchedPosts;
-      } else {
-        return userPosts;
-      }
-    } else {
-      const fetchedPosts = await this.postRepository.getPosts({ userId, ...otherParams });
-
-      return fetchedPosts;
+    if (isOwnProfile && !isRefetching && !isPagination) {
+      const cachedPosts = this.postRepository.getLoggedInUserPosts();
+      if (cachedPosts) return cachedPosts;
     }
+
+    const fetchedPosts = await this.postRepository.getPosts({ userId, ...otherParams });
+
+    if (isOwnProfile) {
+      if (isPagination) {
+        const cachedPosts = this.postRepository.getLoggedInUserPosts();
+
+        this.postRepository.setLoggedInUserPosts({
+          ...fetchedPosts,
+          results: [...(cachedPosts?.results || []), ...fetchedPosts.results],
+        });
+      } else {
+        this.postRepository.setLoggedInUserPosts(fetchedPosts);
+      }
+    }
+
+    return fetchedPosts;
   }
 }
 
