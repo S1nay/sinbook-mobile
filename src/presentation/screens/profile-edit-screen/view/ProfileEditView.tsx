@@ -73,6 +73,7 @@ const ProfileEditView = () => {
           icon={{ name: 'pencil', size: 16 }}
           onPress={handleSubmitForm}
           isLoading={isLoading}
+          disabled={isLoading}
         />
       </View>
     </AppLayout>
