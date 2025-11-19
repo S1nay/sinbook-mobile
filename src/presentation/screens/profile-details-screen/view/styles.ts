@@ -1,12 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    gap: 22,
-  },
-  placeholderContainer: {
+  profileHeader: {
     flex: 1,
-    gap: 24,
+    gap: 22,
+    marginBottom: 12,
   },
 });
