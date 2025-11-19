@@ -21,7 +21,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     private getUserUseCase: UseCase<GetUserRequestParams & { isRefetching: boolean }, IUser>,
     @inject(PostUseCases.$GetPosts)
     private getPostsUseCase: UseCase<
-      GetPostsRequestParams & { isRefetching: boolean },
+      GetPostsRequestParams & { isRefetching: boolean; isPagination?: boolean },
       IPagination<IPost>
     >,
   ) {
@@ -60,7 +60,9 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._posts = value;
   }
 
-  async getUserData(id?: number, isRefetching = false): Promise<IUser> {
+  async getUserData(params: GetUserRequestParams & { isRefetching: boolean }): Promise<IUser> {
+    const { isRefetching = false, id } = params;
+
     this.isLoading = true;
 
     return this.getUserUseCase
@@ -75,18 +77,22 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
       });
   }
 
-  getUserPosts(userId: number, isRefetching = false) {
-    this.isLoading = true;
+  async getUserPosts(
+    params: GetPostsRequestParams & { isRefetching: boolean; isPagination: boolean },
+  ): Promise<void> {
+    const { userId, isRefetching = false, isPagination = false, ...otherParams } = params;
 
-    this.getPostsUseCase
-      .execute({ userId, isRefetching })
+    if (!isPagination) this.isLoading = true;
+
+    return this.getPostsUseCase
+      .execute({ userId, isRefetching, isPagination, ...otherParams })
       .then(data => {
-        this.posts = data.results;
+        this.posts = isPagination ? [...this.posts, ...data.results] : data.results;
         this.postsMeta = data.meta;
       })
       .catch()
       .finally(() => {
-        this.isLoading = false;
+        if (!isPagination) this.isLoading = false;
       });
   }
 
