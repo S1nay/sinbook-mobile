@@ -8,7 +8,7 @@ const NUMBER_OF_COLUMNS = 3;
 const GAP = 5;
 const SIZE = SCREEN_WIDTH / NUMBER_OF_COLUMNS - NUMBER_OF_COLUMNS * GAP;
 
-const ProfilePostGridPlaceholder = () => {
+const GridPlaceholder = () => {
   const renderPlaceholders = (item: number, index: number) => (
     <SkeletonPlaceholder.Item key={item + index} width={SIZE} height={SIZE} />
   );
@@ -22,4 +22,4 @@ const ProfilePostGridPlaceholder = () => {
   );
 };
 
-export default ProfilePostGridPlaceholder;
+export default GridPlaceholder;
