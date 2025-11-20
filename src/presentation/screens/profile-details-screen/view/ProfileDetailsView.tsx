@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { ActivityIndicator, FlatList, Pressable } from 'react-native';
 import TurboImage from 'react-native-turbo-image';
 
 import Header from '@components/header';
@@ -9,15 +9,14 @@ import { useAuth, useDIContainer, usePagination } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
 import { ProfileRouteNames, ProfileScreenProps } from '@navigation/configuration';
+import { Colors } from '@shared/colors';
 import getCorrectUrl from '@shared/utils/getConnectUrl';
-import Button from '@ui/button';
 import Grid, { GridRenderItemInfo } from '@ui/grid';
 
-import { IProfileDetailsViewModel } from '../view-model';
-import styles from './styles';
 import GridPlaceholder from '../components/grid-placeholder';
 import ProfileInfo from '../components/profile-info';
-import ProfileInfoPlaceholder from '../components/profile-info-placeholder';
+import { IProfileDetailsViewModel } from '../view-model';
+import styles from './styles';
 
 const GRID_GAP = 4;
 const GRID_NUM_OF_COLUMNS = 3;
@@ -30,6 +29,9 @@ const ProfileDetailsView = () => {
   const { logout, user, getUserData, getUserPosts, posts, postsMeta, isLoading } = container.get(
     IProfileDetailsViewModel.$,
   );
+
+  const gridRef = useRef<FlatList | null>(null);
+
   const { unauthorize } = useAuth();
 
   useEffect(() => {
@@ -74,49 +76,40 @@ const ProfileDetailsView = () => {
     }
   };
 
-  const onNavigateToProfileEdit = () => {
-    if (user) {
-      navigation.navigate(ProfileRouteNames.ProfileEdit, { user });
-    }
-  };
-
   const handleLogout = () => {
     logout(unauthorize);
+  };
+
+  const onNavigateToProfilePosts = () => {
+    navigation.navigate(ProfileRouteNames.ProfilePosts);
   };
 
   const renderPost = ({ item: post, style }: GridRenderItemInfo<IPost>) => {
     const uri = getCorrectUrl(post.images[0])!;
 
-    return <TurboImage source={{ uri }} style={style} />;
+    return (
+      <Pressable onPress={onNavigateToProfilePosts}>
+        <TurboImage source={{ uri }} style={style} />
+      </Pressable>
+    );
   };
 
   return (
-    <AppLayout disableBottomInsets>
+    <AppLayout>
       <Grid
         data={posts}
+        ref={gridRef}
         renderItem={renderPost}
         keyExtractor={(item: IPost) => item.id.toString()}
-        ListHeaderComponent={
-          <View style={styles.profileHeader}>
-            {user ? (
-              <>
-                <ProfileInfo user={user} />
-                <Button
-                  value="Edit Profile"
-                  icon={{ name: 'pencil', size: 16 }}
-                  onPress={onNavigateToProfileEdit}
-                />
-              </>
-            ) : (
-              <ProfileInfoPlaceholder />
-            )}
-          </View>
-        }
-        ListEmptyComponent={<GridPlaceholder />}
-        ListFooterComponent={isLoadMore ? <ActivityIndicator size={'small'} /> : undefined}
         refreshing={isLoading}
         gap={GRID_GAP}
+        contentContainerStyle={styles.content}
         numberOfColumns={GRID_NUM_OF_COLUMNS}
+        ListHeaderComponent={<ProfileInfo user={user} gridRef={gridRef} />}
+        ListEmptyComponent={<GridPlaceholder />}
+        ListFooterComponent={
+          isLoadMore ? <ActivityIndicator size={'small'} color={Colors.black} /> : undefined
+        }
         onRefresh={onRefresh}
         isLoadMore={isLoadMore}
         onLoadMore={onLoadMore}
