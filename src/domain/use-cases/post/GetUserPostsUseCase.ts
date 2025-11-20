@@ -5,7 +5,7 @@ import { IUserRepository, IPostRepository } from '@domain/repositories';
 import { GetPostsRequestParams } from '@domain/request-params';
 
 @injectable()
-class GetPostsUseCase {
+class GetUserPostsUseCase {
   constructor(
     @inject(IPostRepository.$) private postRepository: IPostRepository,
     @inject(IUserRepository.$) private userRepository: IUserRepository,
@@ -14,14 +14,16 @@ class GetPostsUseCase {
   async execute(
     params: GetPostsRequestParams & { isRefetching: boolean; isPagination?: boolean },
   ): Promise<IPagination<IPost>> {
-    const { isRefetching, userId, isPagination, ...otherParams } = params;
-    const sessionUser = this.userRepository.getUserSession();
+    const { isRefetching, isPagination, userId, ...otherParams } = params;
 
+    const sessionUser = this.userRepository.getUserSession();
     const isOwnProfile = Boolean(sessionUser && userId && sessionUser.id === userId);
 
     if (isOwnProfile && !isRefetching && !isPagination) {
       const cachedPosts = this.postRepository.getLoggedInUserPosts();
-      if (cachedPosts) return cachedPosts;
+      if (cachedPosts) {
+        return cachedPosts;
+      }
     }
 
     const fetchedPosts = await this.postRepository.getPosts({ userId, ...otherParams });
@@ -30,10 +32,16 @@ class GetPostsUseCase {
       if (isPagination) {
         const cachedPosts = this.postRepository.getLoggedInUserPosts();
 
-        this.postRepository.setLoggedInUserPosts({
+        const combinedResults = [...(cachedPosts?.results || []), ...fetchedPosts.results];
+
+        const newCachedPosts = {
           ...fetchedPosts,
-          results: [...(cachedPosts?.results || []), ...fetchedPosts.results],
-        });
+          results: [...new Set(combinedResults)],
+        };
+
+        this.postRepository.setLoggedInUserPosts(newCachedPosts);
+
+        return newCachedPosts;
       } else {
         this.postRepository.setLoggedInUserPosts(fetchedPosts);
       }
@@ -43,4 +51,4 @@ class GetPostsUseCase {
   }
 }
 
-export default GetPostsUseCase;
+export default GetUserPostsUseCase;
