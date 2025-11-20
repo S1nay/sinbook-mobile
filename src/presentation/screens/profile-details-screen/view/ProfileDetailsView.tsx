@@ -18,7 +18,7 @@ import ProfileInfo from '../components/profile-info';
 import { IProfileDetailsViewModel } from '../view-model';
 import styles from './styles';
 
-const GRID_GAP = 4;
+const GRID_GAP = 2;
 const GRID_NUM_OF_COLUMNS = 3;
 
 const ProfileDetailsView = () => {
@@ -36,9 +36,7 @@ const ProfileDetailsView = () => {
 
   useEffect(() => {
     getUserData({ id: params?.userId }).then(user => {
-      if (!params?.userIsUpdated) {
-        getUserPosts({ userId: user.id, perPage: 20, page: 1 });
-      }
+      if (!params?.userIsUpdated) getUserPosts({ userId: user.id });
     });
   }, [params?.userIsUpdated]);
 
@@ -52,14 +50,7 @@ const ProfileDetailsView = () => {
   }, [user]);
 
   const onPaginate = async (page: number) => {
-    if (user) {
-      await getUserPosts({
-        isPagination: true,
-        userId: user.id,
-        page,
-        perPage: 20,
-      });
-    }
+    if (user) await getUserPosts({ isPagination: true, userId: user.id, page });
   };
 
   const { isLoadMore, onLoadMore } = usePagination({ pagination: postsMeta, onPaginate });
@@ -67,12 +58,7 @@ const ProfileDetailsView = () => {
   const onRefresh = () => {
     if (user) {
       getUserData({ id: user.id, isRefetching: true });
-      getUserPosts({
-        userId: user.id,
-        perPage: 20,
-        page: 1,
-        isRefetching: true,
-      });
+      getUserPosts({ userId: user.id, isRefetching: true });
     }
   };
 
@@ -95,7 +81,7 @@ const ProfileDetailsView = () => {
   };
 
   return (
-    <AppLayout>
+    <AppLayout disableBottomInsets>
       <Grid
         data={posts}
         ref={gridRef}
@@ -103,7 +89,7 @@ const ProfileDetailsView = () => {
         keyExtractor={(item: IPost) => item.id.toString()}
         refreshing={isLoading}
         gap={GRID_GAP}
-        contentContainerStyle={styles.content}
+        style={styles.content}
         numberOfColumns={GRID_NUM_OF_COLUMNS}
         ListHeaderComponent={<ProfileInfo user={user} gridRef={gridRef} />}
         ListEmptyComponent={<GridPlaceholder />}

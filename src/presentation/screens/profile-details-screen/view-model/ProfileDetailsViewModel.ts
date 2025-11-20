@@ -80,12 +80,12 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
   async getUserPosts(
     params: GetPostsRequestParams & { isRefetching: boolean; isPagination: boolean },
   ): Promise<void> {
-    const { userId, isRefetching = false, isPagination = false, ...otherParams } = params;
+    const { userId, isRefetching = false, isPagination = false, perPage = 20, page = 1 } = params;
 
     if (!isPagination) this.isLoading = true;
 
     return this.getUserPostsUseCase
-      .execute({ userId, isRefetching, isPagination, ...otherParams })
+      .execute({ userId, isRefetching, isPagination, perPage, page })
       .then(data => {
         this.posts = data.results;
         this.postsMeta = data.meta;

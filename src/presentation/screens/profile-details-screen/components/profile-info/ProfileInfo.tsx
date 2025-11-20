@@ -19,9 +19,7 @@ const ProfileInfo = (props: ProfileInfoProps) => {
     useNavigation<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['navigation']>();
 
   const onNavigateToProfileEdit = () => {
-    if (user) {
-      navigation.navigate(ProfileRouteNames.ProfileEdit, { user });
-    }
+    if (user) navigation.navigate(ProfileRouteNames.ProfileEdit, { user });
   };
 
   const onNavigateToFollowers = () => {
@@ -33,7 +31,7 @@ const ProfileInfo = (props: ProfileInfoProps) => {
   };
 
   const onScrollToPosts = () => {
-    gridRef?.current?.scrollToOffset({ offset: contentHeight + 16 });
+    gridRef?.current?.scrollToOffset({ offset: contentHeight - 6 });
   };
 
   const onLayout = (e: LayoutChangeEvent) => {

@@ -13,7 +13,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     justifyContent: 'center',
-    marginBottom: 12,
+    padding: 16,
   },
   detailsContainer: {
     flexDirection: 'row',

@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   content: {
-    padding: 16,
+    marginBottom: 6,
+    marginHorizontal: 2,
   },
 });
