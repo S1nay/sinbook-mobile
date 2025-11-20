@@ -1,9 +1,10 @@
-import { ReactElement } from 'react';
-import { FlatListProps } from 'react-native';
+import { ReactElement, RefObject } from 'react';
+import { FlatList, FlatListProps } from 'react-native';
 
 export interface GridProps<T> extends Omit<FlatListProps<T>, 'renderItem'> {
   numberOfColumns: number;
   gap: number;
+  ref: RefObject<FlatList | null>;
   renderItem: GridRenderItem<T>;
   onLoadMore?: () => void;
   isLoadMore?: boolean;

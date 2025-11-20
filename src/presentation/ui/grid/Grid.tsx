@@ -12,6 +12,7 @@ const Grid = <T,>(props: GridProps<T>) => {
     data,
     isLoadMore = false,
     onLoadMore,
+    contentContainerStyle,
     ...restProps
   } = props;
 
@@ -32,7 +33,7 @@ const Grid = <T,>(props: GridProps<T>) => {
       columnWrapperStyle={{ gap }}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ gap }}
+      contentContainerStyle={[{ gap }, contentContainerStyle]}
       numColumns={numberOfColumns}
       onEndReachedThreshold={0.3}
       onEndReached={onEndReached}
