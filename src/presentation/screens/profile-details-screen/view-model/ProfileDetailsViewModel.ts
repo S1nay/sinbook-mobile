@@ -19,8 +19,8 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     private logoutUseCase: UseCase<void, void>,
     @inject(UserUseCases.$GetUser)
     private getUserUseCase: UseCase<GetUserRequestParams & { isRefetching: boolean }, IUser>,
-    @inject(PostUseCases.$GetPosts)
-    private getPostsUseCase: UseCase<
+    @inject(PostUseCases.$GetUserPosts)
+    private getUserPostsUseCase: UseCase<
       GetPostsRequestParams & { isRefetching: boolean; isPagination?: boolean },
       IPagination<IPost>
     >,
@@ -84,7 +84,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
 
     if (!isPagination) this.isLoading = true;
 
-    return this.getPostsUseCase
+    return this.getUserPostsUseCase
       .execute({ userId, isRefetching, isPagination, ...otherParams })
       .then(data => {
         this.posts = data.results;
