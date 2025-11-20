@@ -1,3 +1,4 @@
+import { Dimensions } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import { Colors } from '@shared/colors';
@@ -5,7 +6,7 @@ import { Colors } from '@shared/colors';
 const ProfileInfoPlaceholder = () => {
   return (
     <SkeletonPlaceholder borderRadius={4} backgroundColor={Colors.secondaryWhite}>
-      <SkeletonPlaceholder.Item alignItems="center" gap={12}>
+      <SkeletonPlaceholder.Item alignItems="center" gap={12} marginBottom={12} marginTop={24}>
         <SkeletonPlaceholder.Item width={160} height={160} borderRadius={150} />
 
         <SkeletonPlaceholder.Item gap={4} alignItems="center">
@@ -18,6 +19,8 @@ const ProfileInfoPlaceholder = () => {
           <SkeletonPlaceholder.Item width={75} height={30} />
           <SkeletonPlaceholder.Item width={75} height={30} />
         </SkeletonPlaceholder.Item>
+
+        <SkeletonPlaceholder.Item width={Dimensions.get('window').width - 32} height={40} />
       </SkeletonPlaceholder.Item>
     </SkeletonPlaceholder>
   );
