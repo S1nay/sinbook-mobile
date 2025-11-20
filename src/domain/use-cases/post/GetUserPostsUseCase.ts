@@ -1,5 +1,6 @@
 import { inject, injectable } from 'inversify';
 
+import { mergeArraysWithoutDuplicates } from '@core/helpers';
 import { IPagination, IPost } from '@domain/models';
 import { IUserRepository, IPostRepository } from '@domain/repositories';
 import { GetPostsRequestParams } from '@domain/request-params';
@@ -32,18 +33,22 @@ class GetUserPostsUseCase {
       if (isPagination) {
         const cachedPosts = this.postRepository.getLoggedInUserPosts();
 
-        const combinedResults = [...(cachedPosts?.results || []), ...fetchedPosts.results];
+        const mergedResults = mergeArraysWithoutDuplicates(
+          cachedPosts?.results || [],
+          fetchedPosts.results,
+          'id',
+        );
 
-        const newCachedPosts = {
+        const mergedPosts: IPagination<IPost> = {
           ...fetchedPosts,
-          results: [...new Set(combinedResults)],
+          results: mergedResults,
         };
 
-        this.postRepository.setLoggedInUserPosts(newCachedPosts);
-
-        return newCachedPosts;
+        this.postRepository.setLoggedInUserPosts(mergedPosts);
+        return mergedPosts;
       } else {
         this.postRepository.setLoggedInUserPosts(fetchedPosts);
+        return fetchedPosts;
       }
     }
 
