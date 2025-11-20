@@ -47,7 +47,8 @@ export type ProfileStackParamList = {
   [ProfileRouteNames.ProfileEdit]: {
     user: IUser;
   };
-  [ProfileRouteNames.ProfileFollowList]: undefined;
+  [ProfileRouteNames.ProfileFollows]: undefined;
+  [ProfileRouteNames.ProfileFollowers]: undefined;
 };
 
 export type ChatStackParamList = {
