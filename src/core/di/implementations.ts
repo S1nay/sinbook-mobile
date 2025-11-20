@@ -1,10 +1,10 @@
 import EnvConfig from 'react-native-config';
 import { Mode } from 'react-native-mmkv';
 
+import { getCorrectUrl } from '@core/helpers';
 import HttpClients from '@infrastructure/http/clients';
 import SocketManager from '@infrastructure/socket/manager';
 import Storages from '@infrastructure/storage/storages';
-import getCorrectUrl from '@shared/utils/getConnectUrl';
 
 const SinbookHttpClientImpl = new HttpClients.AxiosHttpClient({
   baseUrl: getCorrectUrl(EnvConfig.API_URL),

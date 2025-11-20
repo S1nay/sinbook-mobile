@@ -5,12 +5,12 @@ import { ActivityIndicator, FlatList, Pressable } from 'react-native';
 import TurboImage from 'react-native-turbo-image';
 
 import Header from '@components/header';
+import { getConnectUrl } from '@core/helpers';
 import { useAuth, useDIContainer, usePagination } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
 import { ProfileRouteNames, ProfileScreenProps } from '@navigation/configuration';
 import { Colors } from '@shared/colors';
-import getCorrectUrl from '@shared/utils/getConnectUrl';
 import Grid, { GridRenderItemInfo } from '@ui/grid';
 
 import GridPlaceholder from '../components/grid-placeholder';
@@ -85,7 +85,7 @@ const ProfileDetailsView = () => {
   };
 
   const renderPost = ({ item: post, style }: GridRenderItemInfo<IPost>) => {
-    const uri = getCorrectUrl(post.images[0])!;
+    const uri = getConnectUrl(post.images[0])!;
 
     return (
       <Pressable onPress={onNavigateToProfilePosts}>
