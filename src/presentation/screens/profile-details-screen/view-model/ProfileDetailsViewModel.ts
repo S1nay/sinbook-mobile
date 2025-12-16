@@ -48,11 +48,11 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._isLoading = value;
   }
 
-  private set user(value: IUser) {
+  private set user(value: IUser | null) {
     this._user = value;
   }
 
-  private set postsMeta(value: IMeta) {
+  private set postsMeta(value: IMeta | null) {
     this._postsMeta = value;
   }
 
