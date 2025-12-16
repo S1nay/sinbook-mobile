@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { FlatList, ListRenderItemInfo } from 'react-native';
+import { ActivityIndicator, FlatList, ListRenderItemInfo } from 'react-native';
 
 import Header from '@components/header';
 import Post from '@components/post';
@@ -9,6 +9,7 @@ import { useDIContainer, usePagination } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
 import { ProfileRouteNames, ProfileScreenProps } from '@navigation/configuration';
+import { Colors } from '@shared/colors';
 
 import { IProfilePostsViewModel } from '../view-model';
 import styles from './styles';
@@ -56,6 +57,9 @@ const ProfilePostsView = () => {
         showsVerticalScrollIndicator={false}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.3}
+        ListFooterComponent={
+          isLoadMore ? <ActivityIndicator size={'small'} color={Colors.black} /> : undefined
+        }
       />
     </AppLayout>
   );
