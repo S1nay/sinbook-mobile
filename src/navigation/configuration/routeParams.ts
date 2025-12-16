@@ -43,7 +43,9 @@ export type ProfileStackParamList = {
     userId?: number;
     userIsUpdated?: boolean;
   };
-  [ProfileRouteNames.ProfilePosts]: undefined;
+  [ProfileRouteNames.ProfilePosts]: {
+    user: IUser;
+  };
   [ProfileRouteNames.ProfileEdit]: {
     user: IUser;
   };
