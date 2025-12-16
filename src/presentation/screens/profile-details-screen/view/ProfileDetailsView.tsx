@@ -67,7 +67,7 @@ const ProfileDetailsView = () => {
   };
 
   const onNavigateToProfilePosts = () => {
-    navigation.navigate(ProfileRouteNames.ProfilePosts);
+    if (user) navigation.navigate(ProfileRouteNames.ProfilePosts, { user });
   };
 
   const renderPost = ({ item: post, style }: GridRenderItemInfo<IPost>) => {
