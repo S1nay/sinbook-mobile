@@ -6,8 +6,8 @@ export enum AppRouteNames {
 
 // Главные роуты с авторизацией
 export enum MaintenanceRouteNames {
-  Notifications = 'Уведомления',
-  Tab = 'Таб Навигатор',
+  Notifications = 'Notifications',
+  Tab = 'TabNavigator',
 }
 
 //Чат
