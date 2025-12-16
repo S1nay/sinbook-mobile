@@ -35,6 +35,7 @@ const Button = (props: ButtonProps) => {
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       style={[styles.base, cfg.container, style as StyleProp<ViewStyle>]}
+      disabled={disabled}
       {...otherProps}
     >
       {icon && <Icon {...icon} stroke={cfg.icon.color || icon.stroke} />}
