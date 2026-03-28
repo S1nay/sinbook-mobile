@@ -1,5 +1,5 @@
 import { StackActions } from '@react-navigation/native';
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import { Asset } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
@@ -16,6 +16,7 @@ import { Toasts } from '@ui/toast';
 
 import { IProfileEditViewModel } from './IProfileEditViewModel';
 
+@injectable()
 class ProfileEditViewModel implements IProfileEditViewModel {
   private _isLoading = false;
   private _error = '';
@@ -38,11 +39,11 @@ class ProfileEditViewModel implements IProfileEditViewModel {
     return this._error;
   }
 
-  set isLoading(value: boolean) {
+  private set isLoading(value: boolean) {
     this._isLoading = value;
   }
 
-  set error(value: string) {
+  private set error(value: string) {
     this._error = value;
   }
 
@@ -63,7 +64,7 @@ class ProfileEditViewModel implements IProfileEditViewModel {
   async updateUser(data: EditProfileFormData, avatarUrl?: string) {
     this.isLoading = true;
 
-    this.patchUserUseCase
+    return this.patchUserUseCase
       .execute({
         name: data.name,
         nickName: data.nickname,

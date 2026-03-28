@@ -10,7 +10,7 @@ class UserStore implements IUserStore {
   private _userData: IUser | null = null;
 
   constructor() {
-    makeAutoObservable(this, undefined, { autoBind: true });
+    makeAutoObservable(this, {}, { autoBind: true });
   }
 
   get userData(): IUser | null {

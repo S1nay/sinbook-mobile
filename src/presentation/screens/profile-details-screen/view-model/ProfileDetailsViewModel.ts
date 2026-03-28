@@ -1,9 +1,12 @@
 import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
+import Toast from 'react-native-toast-message';
 
+import { IHttpError } from '@core/interfaces/http';
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
 import { GetPostsRequestParams, GetUserRequestParams } from '@domain/request-params';
 import { AuthUseCases, UserUseCases, PostUseCases } from '@domain/use-cases';
+import { Toasts } from '@ui/toast';
 
 import { IProfileDetailsViewModel } from './IProfileDetailsViewModel';
 
@@ -71,7 +74,6 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
         this.user = user;
         return user;
       })
-      .catch()
       .finally(() => {
         this.isLoading = false;
       });
@@ -90,7 +92,9 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
         this.posts = data.results;
         this.postsMeta = data.meta;
       })
-      .catch()
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
       .finally(() => {
         if (!isPagination) this.isLoading = false;
       });

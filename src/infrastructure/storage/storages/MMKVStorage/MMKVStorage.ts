@@ -21,11 +21,11 @@ class MMKVStorage implements IStorage {
   }
 
   getBoolean(key: string): boolean | null {
-    return this.mmkv.getBoolean(key) || null;
+    return this.mmkv.getBoolean(key) ?? null;
   }
 
   getNumber(key: string): number | null {
-    return this.mmkv.getNumber(key) || null;
+    return this.mmkv.getNumber(key) ?? null;
   }
 
   getArray(key: string): ArrayBufferLike | null {

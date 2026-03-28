@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify';
 import { getDataFromHttpResponse, getErrorFromHttpResponse } from '@core/helpers';
 import { IPostApi } from '@data/api';
 import { IPostStore } from '@data/store';
-import { ICreatePostRequestDto } from '@domain/dto';
+import { ICreatePostRequestDto, IPatchPostRequestDto } from '@domain/dto';
 import { IPagination, IPost } from '@domain/models';
 import { IPostRepository } from '@domain/repositories';
 import { GetPostsRequestParams } from '@domain/request-params';
@@ -30,9 +30,9 @@ class PostRepository implements IPostRepository {
       .catch(getErrorFromHttpResponse);
   }
 
-  async updatePost(id: number): Promise<IPost> {
+  async updatePost(id: number, dto: IPatchPostRequestDto): Promise<IPost> {
     return this.postApi
-      .updatePost(id)
+      .updatePost(id, dto)
       .then(getDataFromHttpResponse)
       .catch(getErrorFromHttpResponse);
   }

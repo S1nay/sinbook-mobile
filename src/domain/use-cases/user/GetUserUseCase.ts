@@ -11,15 +11,20 @@ class GetUserUseCase {
   async execute(params: GetUserRequestParams & { isRefetching: boolean }): Promise<IUser> {
     const { id, isRefetching } = params;
 
-    if (id || (id && isRefetching)) {
+    if (id) {
       const fetchedUser = await this.userRepository.getUser(id);
 
       return fetchedUser;
     } else {
       const sessionUser = this.userRepository.getUserSession();
 
-      if (!sessionUser) {
-        const storageUser = this.userRepository.loadUserFromStorage()!;
+      if (isRefetching || !sessionUser) {
+        const storageUser = this.userRepository.loadUserFromStorage();
+
+        if (!storageUser) {
+          throw new Error('User not found in storage');
+        }
+
         const fetchedUser = await this.userRepository.getUser(storageUser.id);
         this.userRepository.setUserSession(fetchedUser);
         return fetchedUser;

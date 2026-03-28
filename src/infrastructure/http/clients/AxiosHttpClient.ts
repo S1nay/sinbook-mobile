@@ -23,13 +23,6 @@ class AxiosHttpClient implements IHttpClient<AxiosInstance> {
       headers: config.headers,
       timeout: config.timeout,
     });
-
-    axios.interceptors.response.use(
-      response => response,
-      async error => {
-        return this.axios(error.config);
-      },
-    );
   }
 
   get<T>(url: string, config?: IHttpRequestConfig): Promise<IHttpResponse<T>> {

@@ -1,9 +1,11 @@
+import { injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 
 import { IPagination, IPost } from '@domain/models';
 
 import { IPostStore } from './IPostStore';
 
+@injectable()
 class PostStore implements IPostStore {
   private _loggedInUserPosts: IPagination<IPost> | null = null;
 

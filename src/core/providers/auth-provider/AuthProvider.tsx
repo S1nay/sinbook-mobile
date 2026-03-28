@@ -23,7 +23,7 @@ const AuthProvider = (props: PropsWithChildren<unknown>) => {
 
       await hide({ fade: true });
     })();
-  }, []);
+  }, [storage]);
 
   const authorize = () => {
     setIsAuth(true);
