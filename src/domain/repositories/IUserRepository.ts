@@ -1,7 +1,8 @@
 import { ServiceIdentifier } from 'inversify';
 
 import { IPatchUserRequestDto } from '@domain/dto';
-import { AuthUser, IUser } from '@domain/models';
+import { AuthUser, IPagination, IUser } from '@domain/models';
+import { GetUsersRequestParams } from '@domain/request-params';
 
 export interface IUserRepository {
   // session
@@ -15,7 +16,9 @@ export interface IUserRepository {
   clearPersistedUser(): void;
 
   getUser(id: number): Promise<IUser>;
+  deleteUser(id: number): Promise<void>;
   patchUser(dto: Partial<IPatchUserRequestDto>): Promise<IUser>;
+  findUsers(params?: GetUsersRequestParams): Promise<IPagination<IUser>>;
 }
 
 export namespace IUserRepository {

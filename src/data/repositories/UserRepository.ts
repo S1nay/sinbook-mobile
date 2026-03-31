@@ -5,8 +5,9 @@ import { IUserApi } from '@data/api';
 import { IUserStorage } from '@data/storage';
 import { IUserStore } from '@data/store';
 import { IPatchUserRequestDto } from '@domain/dto';
-import { IUser } from '@domain/models';
+import { IPagination, IUser } from '@domain/models';
 import { IUserRepository } from '@domain/repositories';
+import { GetUsersRequestParams } from '@domain/request-params';
 
 @injectable()
 class UserRepository implements IUserRepository {
@@ -43,9 +44,20 @@ class UserRepository implements IUserRepository {
     return this.userApi.getUser(id).then(getDataFromHttpResponse).catch(getErrorFromHttpResponse);
   }
 
+  async deleteUser(id: number): Promise<void> {
+    return this.userApi.deleteUser(id);
+  }
+
   async patchUser(dto: Partial<IPatchUserRequestDto>): Promise<IUser> {
     return this.userApi
       .updateUser(dto)
+      .then(getDataFromHttpResponse)
+      .catch(getErrorFromHttpResponse);
+  }
+
+  async findUsers(params?: GetUsersRequestParams): Promise<IPagination<IUser>> {
+    return this.userApi
+      .findUsers(params)
       .then(getDataFromHttpResponse)
       .catch(getErrorFromHttpResponse);
   }

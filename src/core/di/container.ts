@@ -8,22 +8,39 @@ import { ISocketManager } from '@core/interfaces/socket';
 import { IStorage } from '@core/interfaces/storage';
 import {
   AuthApi,
+  CommentApi,
   FileApi,
+  FollowsApi,
   IAuthApi,
+  ICommentApi,
   IFileApi,
+  IFollowsApi,
+  ILikeApi,
   IPostApi,
   IUserApi,
+  LikeApi,
   PostApi,
   UserApi,
 } from '@data/api';
-import { AuthRepository, FileRepository, PostRepository, UserRepository } from '@data/repositories';
+import {
+  AuthRepository,
+  CommentRepository,
+  FileRepository,
+  FollowsRepository,
+  LikeRepository,
+  PostRepository,
+  UserRepository,
+} from '@data/repositories';
 import { AuthStorage, IAuthStorage, IUserStorage, UserStorage } from '@data/storage';
 import { IPostStore, IUserStore, PostStore, UserStore } from '@data/store';
 import {
   IAuthRepository,
-  IUserRepository,
+  ICommentRepository,
   IFileRepository,
+  IFollowsRepository,
+  ILikeRepository,
   IPostRepository,
+  IUserRepository,
 } from '@domain/repositories';
 import { combineUseCases } from '@domain/use-cases';
 import NavigationService from '@infrastructure/navigation/service';
@@ -39,6 +56,9 @@ container.bind<IAuthApi>(IAuthApi.$).to(AuthApi).inSingletonScope();
 container.bind<IUserApi>(IUserApi.$).to(UserApi).inSingletonScope();
 container.bind<IPostApi>(IPostApi.$).to(PostApi).inSingletonScope();
 container.bind<IFileApi>(IFileApi.$).to(FileApi).inSingletonScope();
+container.bind<ICommentApi>(ICommentApi.$).to(CommentApi).inSingletonScope();
+container.bind<IFollowsApi>(IFollowsApi.$).to(FollowsApi).inSingletonScope();
+container.bind<ILikeApi>(ILikeApi.$).to(LikeApi).inSingletonScope();
 
 /* -- Store's -- */
 container.bind<IUserStore>(IUserStore.$).to(UserStore).inSingletonScope();
@@ -71,6 +91,9 @@ container.bind<IAuthRepository>(IAuthRepository.$).to(AuthRepository).inSingleto
 container.bind<IUserRepository>(IUserRepository.$).to(UserRepository).inSingletonScope();
 container.bind<IPostRepository>(IPostRepository.$).to(PostRepository).inSingletonScope();
 container.bind<IFileRepository>(IFileRepository.$).to(FileRepository).inSingletonScope();
+container.bind<ICommentRepository>(ICommentRepository.$).to(CommentRepository).inSingletonScope();
+container.bind<IFollowsRepository>(IFollowsRepository.$).to(FollowsRepository).inSingletonScope();
+container.bind<ILikeRepository>(ILikeRepository.$).to(LikeRepository).inSingletonScope();
 
 /* -- Use Cases -- */
 
