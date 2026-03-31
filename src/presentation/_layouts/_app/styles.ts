@@ -8,9 +8,7 @@ export default StyleSheet.create({
     flex: 1,
   },
   content: {
-    flexGrow: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 24,
+    flex: 1,
   },
   global: {
     flex: 1,

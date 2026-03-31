@@ -4,11 +4,13 @@ export const Colors = {
   lightOrange: '#EA916E',
   secondaryLightOrange: '#FDF5F1',
   gray: '#323842',
+  secondaryGray: '#9095A0',
   lightGray: '#BCC1CA',
   red: '#DE3B40',
   lightRed: '#FBE0E8FF',
   white: '#FFFFFF',
   secondaryWhite: '#F3F4F6',
   transparent: 'transparent',
+  dot: '#DEE1E6',
   green: '#76bf4c',
 } as const;

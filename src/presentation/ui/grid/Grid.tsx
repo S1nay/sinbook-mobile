@@ -1,27 +1,69 @@
-import { Dimensions, FlatList, ListRenderItemInfo } from 'react-native';
+import React, { useMemo, useState, useCallback } from 'react';
+import { Dimensions, FlatList, ListRenderItemInfo, View, LayoutChangeEvent } from 'react-native';
 
 import { GridProps } from './types';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const Grid = <T,>(props: GridProps<T>) => {
-  const { gap, numberOfColumns, renderItem, data } = props;
+  const {
+    gap = 0,
+    numberOfColumns = 1,
+    renderItem,
+    data,
+    isLoadMore = false,
+    onLoadMore,
+    contentContainerStyle,
+    style,
+    ...restProps
+  } = props;
 
-  const tileSize = SCREEN_WIDTH / numberOfColumns - numberOfColumns * gap;
+  const [containerWidth, setContainerWidth] = useState<number>(SCREEN_WIDTH);
+
+  const handleLayout = useCallback(
+    (e: LayoutChangeEvent) => {
+      const w = e.nativeEvent.layout.width;
+      if (w && w !== containerWidth) setContainerWidth(w);
+    },
+    [containerWidth],
+  );
+
+  const totalGaps = gap * (numberOfColumns - 1);
+
+  const tileSize = useMemo(() => {
+    const available = containerWidth;
+    const size = Math.fround((available - totalGaps) / numberOfColumns);
+    return size > 0 ? size : 0;
+  }, [containerWidth, totalGaps, numberOfColumns]);
 
   const renderGridItem = ({ item }: ListRenderItemInfo<T>) => {
-    return renderItem?.({ item, style: { width: tileSize, height: tileSize } });
+    const itemStyle = {
+      width: tileSize,
+      height: tileSize,
+    } as const;
+
+    return renderItem?.({ item, style: itemStyle });
+  };
+
+  const onEndReached = () => {
+    if (!isLoadMore && onLoadMore) onLoadMore();
   };
 
   return (
-    <FlatList
-      data={data}
-      renderItem={renderGridItem}
-      columnWrapperStyle={{ gap }}
-      contentContainerStyle={{ gap }}
-      scrollEnabled={false}
-      numColumns={numberOfColumns}
-    />
+    <View onLayout={handleLayout} style={style}>
+      <FlatList
+        data={data}
+        renderItem={renderGridItem}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        columnWrapperStyle={{ gap }}
+        contentContainerStyle={[{ gap }, contentContainerStyle]}
+        numColumns={numberOfColumns}
+        onEndReachedThreshold={0.3}
+        onEndReached={onEndReached}
+        {...restProps}
+      />
+    </View>
   );
 };
 

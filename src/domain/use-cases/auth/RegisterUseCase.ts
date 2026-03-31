@@ -14,8 +14,7 @@ class RegisterUseCase {
     const { access, refresh, user } = await this.authRepository.register(signUpDto);
 
     this.authRepository.saveTokensToStorage(access, refresh);
-    this.userRepository.saveUserInStorage(user);
-    this.userRepository.setUserToStore(user);
+    this.userRepository.persistUser(user);
 
     return true;
   }

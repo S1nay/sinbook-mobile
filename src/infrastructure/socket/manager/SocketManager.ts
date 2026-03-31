@@ -1,13 +1,13 @@
 import { injectable } from 'inversify';
 import { Socket } from 'socket.io-client';
 
-import WebSocketClients from '@infrastructure/socket/clients';
 import {
   ISocketClient,
   ISocketConfig,
   ISocketManager,
   SocketConnectionPaths,
-} from '@infrastructure/socket/entities';
+} from '@core/interfaces/socket';
+import WebSocketClients from '@infrastructure/socket/clients';
 
 @injectable()
 class SocketManager implements ISocketManager {

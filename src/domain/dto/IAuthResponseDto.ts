@@ -1,7 +1,7 @@
-import { IUser } from '../models/IUser';
+import { AuthUser } from '../models/IUser';
 
 export interface IAuthResponseDTO {
-  user: IUser;
+  user: AuthUser;
   access: string;
   refresh: string;
 }

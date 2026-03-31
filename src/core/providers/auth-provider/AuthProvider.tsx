@@ -19,10 +19,11 @@ const AuthProvider = (props: PropsWithChildren<unknown>) => {
 
       if (token) {
         setIsAuth(true);
-        await hide({ fade: true });
       }
+
+      await hide({ fade: true });
     })();
-  }, []);
+  }, [storage]);
 
   const authorize = () => {
     setIsAuth(true);

@@ -13,10 +13,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     justifyContent: 'center',
+    padding: 16,
   },
   detailsContainer: {
     flexDirection: 'row',
     gap: 45,
+    marginBottom: 8,
   },
   detailsText: {
     color: Colors.black,

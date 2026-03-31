@@ -6,8 +6,8 @@ export enum AppRouteNames {
 
 // Главные роуты с авторизацией
 export enum MaintenanceRouteNames {
-  Notifications = 'Уведомления',
-  Tab = 'Таб Навигатор',
+  Notifications = 'Notifications',
+  Tab = 'TabNavigator',
 }
 
 //Чат
@@ -19,7 +19,8 @@ export enum ChatRouteNames {
 // Профиль
 export enum ProfileRouteNames {
   ProfileDetails = 'Profile Details',
-  ProfileFollowList = 'Profile Follow',
+  ProfileFollows = 'Profile Follows',
+  ProfileFollowers = 'Profile Followers',
   ProfilePosts = 'Profile Posts',
   ProfileEdit = 'Profile Edit',
 }

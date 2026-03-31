@@ -24,7 +24,7 @@ class AuthRepository implements IAuthRepository {
 
   saveTokensToStorage(accessToken: string, refreshToken: string): void {
     this.authStorage.setAccessToken(accessToken);
-    this.authStorage.setAccessToken(refreshToken);
+    this.authStorage.setRefreshToken(refreshToken);
   }
 
   removeTokensFromStorage(): void {

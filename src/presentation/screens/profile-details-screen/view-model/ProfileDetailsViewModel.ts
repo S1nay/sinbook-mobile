@@ -1,8 +1,12 @@
 import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
+import Toast from 'react-native-toast-message';
 
+import { IHttpError } from '@core/interfaces/http';
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
+import { GetPostsRequestParams, GetUserRequestParams } from '@domain/request-params';
 import { AuthUseCases, UserUseCases, PostUseCases } from '@domain/use-cases';
+import { Toasts } from '@ui/toast';
 
 import { IProfileDetailsViewModel } from './IProfileDetailsViewModel';
 
@@ -17,10 +21,10 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     @inject(AuthUseCases.$Logout)
     private logoutUseCase: UseCase<void, void>,
     @inject(UserUseCases.$GetUser)
-    private getUserUseCase: UseCase<number | undefined, IUser>,
-    @inject(PostUseCases.$GetPosts)
-    private getPostsUseCase: UseCase<
-      Record<string, number | string | undefined>,
+    private getUserUseCase: UseCase<GetUserRequestParams & { isRefetching: boolean }, IUser>,
+    @inject(PostUseCases.$GetUserPosts)
+    private getUserPostsUseCase: UseCase<
+      GetPostsRequestParams & { isRefetching: boolean; isPagination?: boolean },
       IPagination<IPost>
     >,
   ) {
@@ -47,11 +51,11 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._isLoading = value;
   }
 
-  private set user(value: IUser) {
+  private set user(value: IUser | null) {
     this._user = value;
   }
 
-  private set postsMeta(value: IMeta) {
+  private set postsMeta(value: IMeta | null) {
     this._postsMeta = value;
   }
 
@@ -59,32 +63,40 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._posts = value;
   }
 
-  getUserData(id?: number) {
+  async getUserData(params: GetUserRequestParams & { isRefetching: boolean }): Promise<IUser> {
+    const { isRefetching = false, id } = params;
+
     this.isLoading = true;
 
-    this.getUserUseCase
-      .execute(id)
+    return this.getUserUseCase
+      .execute({ id, isRefetching })
       .then(user => {
         this.user = user;
+        return user;
       })
-      .catch()
       .finally(() => {
         this.isLoading = false;
       });
   }
 
-  getUserPosts(userId?: number) {
-    this.isLoading = true;
+  async getUserPosts(
+    params: GetPostsRequestParams & { isRefetching: boolean; isPagination: boolean },
+  ): Promise<void> {
+    const { userId, isRefetching = false, isPagination = false, perPage = 20, page = 1 } = params;
 
-    this.getPostsUseCase
-      .execute({ userId })
+    if (!isPagination) this.isLoading = true;
+
+    return this.getUserPostsUseCase
+      .execute({ userId, isRefetching, isPagination, perPage, page })
       .then(data => {
         this.posts = data.results;
         this.postsMeta = data.meta;
       })
-      .catch()
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
       .finally(() => {
-        this.isLoading = false;
+        if (!isPagination) this.isLoading = false;
       });
   }
 

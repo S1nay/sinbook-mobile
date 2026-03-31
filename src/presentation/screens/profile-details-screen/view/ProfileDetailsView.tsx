@@ -1,51 +1,64 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
-import { View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { ActivityIndicator, FlatList, Pressable } from 'react-native';
+import TurboImage from 'react-native-turbo-image';
 
 import Header from '@components/header';
-import { useAuth, useDIContainer } from '@core/hooks';
+import { getConnectUrl } from '@core/helpers';
+import { useAuth, useDIContainer, usePagination } from '@core/hooks';
+import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
 import { ProfileRouteNames, ProfileScreenProps } from '@navigation/configuration';
-import Button from '@ui/button';
+import { Colors } from '@shared/colors';
+import Grid, { GridRenderItemInfo } from '@ui/grid';
 
+import GridPlaceholder from '../components/grid-placeholder';
+import ProfileInfo from '../components/profile-info';
 import { IProfileDetailsViewModel } from '../view-model';
 import styles from './styles';
-import ProfileInfo from '../components/profile-info';
-import ProfileInfoPlaceholder from '../components/profile-info-placeholder';
-import ProfilePostGrid from '../components/profile-post-grid';
-import ProfilePostGridPlaceholder from '../components/profile-post-grid-placeholder';
+
+const GRID_GAP = 2;
+const GRID_NUM_OF_COLUMNS = 3;
 
 const ProfileDetailsView = () => {
   const container = useDIContainer();
   const navigation =
     useNavigation<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['navigation']>();
   const { params } = useRoute<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['route']>();
-  const { logout, user, getUserData, getUserPosts, posts, postsMeta } = container.get(
+  const { logout, user, getUserData, getUserPosts, posts, postsMeta, isLoading } = container.get(
     IProfileDetailsViewModel.$,
   );
+
+  const gridRef = useRef<FlatList | null>(null);
+
   const { unauthorize } = useAuth();
 
   useEffect(() => {
-    getUserData(params?.userId);
+    getUserData({ id: params?.userId }).then(user => {
+      if (!params?.userIsUpdated) getUserPosts({ userId: user.id });
+    });
   }, [params?.userIsUpdated]);
 
   useEffect(() => {
     if (user) {
-      getUserPosts(user.id);
+      navigation.setOptions({
+        headerTitle: user.nickName,
+        header: props => <Header {...props} rightIcon="logout" onPressRightIcon={handleLogout} />,
+      });
     }
   }, [user]);
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: user?.nickName ?? '',
-      header: props => <Header {...props} rightIcon="logout" onPressRightIcon={handleLogout} />,
-    });
-  }, [user]);
+  const onPaginate = async (page: number) => {
+    if (user) await getUserPosts({ isPagination: true, userId: user.id, page });
+  };
 
-  const navigateToProfileEdit = () => {
+  const { isLoadMore, onLoadMore } = usePagination({ pagination: postsMeta, onPaginate });
+
+  const onRefresh = () => {
     if (user) {
-      navigation.navigate(ProfileRouteNames.ProfileEdit, { user });
+      getUserData({ id: user.id, isRefetching: true });
+      getUserPosts({ userId: user.id, isRefetching: true });
     }
   };
 
@@ -53,28 +66,40 @@ const ProfileDetailsView = () => {
     logout(unauthorize);
   };
 
-  return (
-    <AppLayout isScroll disableBottomInsets>
-      {user ? (
-        <View style={styles.container}>
-          <ProfileInfo user={user} />
-          <Button
-            value="Edit Profile"
-            icon={{ name: 'pencil', size: 16 }}
-            onPress={navigateToProfileEdit}
-          />
+  const onNavigateToProfilePosts = () => {
+    if (user) navigation.navigate(ProfileRouteNames.ProfilePosts, { user });
+  };
 
-          {posts.length > 0 && postsMeta ? (
-            <ProfilePostGrid posts={posts} postsMeta={postsMeta} />
-          ) : (
-            <ProfilePostGridPlaceholder />
-          )}
-        </View>
-      ) : (
-        <View style={styles.placeholderContainer}>
-          <ProfileInfoPlaceholder />
-        </View>
-      )}
+  const renderPost = ({ item: post, style }: GridRenderItemInfo<IPost>) => {
+    const uri = getConnectUrl(post.images[0])!;
+
+    return (
+      <Pressable onPress={onNavigateToProfilePosts}>
+        <TurboImage source={{ uri }} style={style} />
+      </Pressable>
+    );
+  };
+
+  return (
+    <AppLayout disableBottomInsets>
+      <Grid
+        data={posts}
+        ref={gridRef}
+        renderItem={renderPost}
+        keyExtractor={(item: IPost) => item.id.toString()}
+        refreshing={isLoading}
+        gap={GRID_GAP}
+        style={styles.content}
+        numberOfColumns={GRID_NUM_OF_COLUMNS}
+        ListHeaderComponent={<ProfileInfo user={user} gridRef={gridRef} />}
+        ListEmptyComponent={<GridPlaceholder />}
+        ListFooterComponent={
+          isLoadMore ? <ActivityIndicator size={'small'} color={Colors.black} /> : undefined
+        }
+        onRefresh={onRefresh}
+        isLoadMore={isLoadMore}
+        onLoadMore={onLoadMore}
+      />
     </AppLayout>
   );
 };

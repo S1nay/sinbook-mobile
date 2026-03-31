@@ -2,26 +2,34 @@ import { inject, injectable } from 'inversify';
 
 import { IUser } from '@domain/models';
 import { IUserRepository } from '@domain/repositories';
+import { GetUserRequestParams } from '@domain/request-params';
 
 @injectable()
 class GetUserUseCase {
   constructor(@inject(IUserRepository.$) private userRepository: IUserRepository) {}
 
-  async execute(userId?: number): Promise<IUser> {
-    if (userId) {
-      const fetchedUser = await this.userRepository.getUser(userId);
+  async execute(params: GetUserRequestParams & { isRefetching: boolean }): Promise<IUser> {
+    const { id, isRefetching } = params;
+
+    if (id) {
+      const fetchedUser = await this.userRepository.getUser(id);
 
       return fetchedUser;
     } else {
-      const localUser = this.userRepository.getLocalUser();
+      const sessionUser = this.userRepository.getUserSession();
 
-      if (!localUser) {
-        const savedUser = this.userRepository.getSavedUser()!;
-        const fetchedUser = await this.userRepository.getUser(savedUser.id);
-        this.userRepository.setUserToStore(fetchedUser);
+      if (isRefetching || !sessionUser) {
+        const storageUser = this.userRepository.loadUserFromStorage();
+
+        if (!storageUser) {
+          throw new Error('User not found in storage');
+        }
+
+        const fetchedUser = await this.userRepository.getUser(storageUser.id);
+        this.userRepository.setUserSession(fetchedUser);
         return fetchedUser;
       } else {
-        return localUser;
+        return sessionUser;
       }
     }
   }

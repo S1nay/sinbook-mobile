@@ -1,4 +1,4 @@
-export { IUser } from './IUser';
+export { IUser, AuthUser } from './IUser';
 export { IPost } from './IPost';
 export { IPagination } from './IPagination';
 export { IMeta } from './IMeta';

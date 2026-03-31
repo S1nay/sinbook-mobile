@@ -1,9 +1,10 @@
 import { ServiceIdentifier } from 'inversify';
 
-import GetPostsUseCase from './GetPostsUseCase';
+import GetUserPostsUseCase from './GetUserPostsUseCase';
 
-export { GetPostsUseCase };
+export { GetUserPostsUseCase };
 
 export namespace PostUseCases {
-  export const $GetPosts: ServiceIdentifier<GetPostsUseCase> = Symbol('GetPostsUseCase');
+  export const $GetUserPosts: ServiceIdentifier<GetUserPostsUseCase> =
+    Symbol('GetUserPostsUseCase');
 }

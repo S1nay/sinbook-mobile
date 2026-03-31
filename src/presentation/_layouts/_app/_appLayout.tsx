@@ -17,21 +17,21 @@ const AppLayout = (props: PropsWithChildren<AppLayoutProps>) => {
 
   const scrollViewProps: ScrollViewProps = useMemo(
     () => ({
-      contentContainerStyle: styles.content,
+      ...additionalScrollViewProps,
+      contentContainerStyle: [styles.content, additionalScrollViewProps?.contentContainerStyle],
       keyboardDismissMode: 'interactive',
       keyboardShouldPersistTaps: 'handled',
       automaticallyAdjustContentInsets: true,
       contentInsetAdjustmentBehavior: 'always',
       showsVerticalScrollIndicator: false,
-      ...additionalScrollViewProps,
     }),
     [additionalScrollViewProps],
   );
 
   const viewProps: ViewProps = useMemo(
     () => ({
-      style: styles.content,
       ...additionalViewProps,
+      style: [styles.content, additionalViewProps?.style],
     }),
     [additionalViewProps],
   );

@@ -1,8 +1,8 @@
 import { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
 
-import { IHttpClient } from '@infrastructure/http/entities';
-import { INavigationService } from '@infrastructure/navigation/entities';
-import { IStorage } from '@infrastructure/storage/entities';
+import { IHttpClient } from '@core/interfaces/http';
+import { INavigationService } from '@core/interfaces/navigation';
+import { IStorage } from '@core/interfaces/storage';
 import { RootStackParamList } from '@navigation/configuration';
 
 type CustomAxiosError = AxiosError & {

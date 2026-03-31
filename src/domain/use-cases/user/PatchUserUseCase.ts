@@ -11,8 +11,8 @@ class PatchUserUseCase {
     const user = await this.userRepository.patchUser(dto);
 
     if (user) {
-      this.userRepository.saveUserInStorage(user);
-      this.userRepository.setUserToStore(user);
+      this.userRepository.persistUser(user);
+      this.userRepository.setUserSession(user);
     }
 
     return true;
