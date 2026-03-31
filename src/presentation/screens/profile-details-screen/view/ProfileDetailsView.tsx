@@ -13,10 +13,10 @@ import { ProfileRouteNames, ProfileScreenProps } from '@navigation/configuration
 import { Colors } from '@shared/colors';
 import Grid, { GridRenderItemInfo } from '@ui/grid';
 
+import styles from './styles';
 import GridPlaceholder from '../components/grid-placeholder';
 import ProfileInfo from '../components/profile-info';
 import { IProfileDetailsViewModel } from '../view-model';
-import styles from './styles';
 
 const GRID_GAP = 2;
 const GRID_NUM_OF_COLUMNS = 3;
@@ -92,7 +92,7 @@ const ProfileDetailsView = () => {
         style={styles.content}
         numberOfColumns={GRID_NUM_OF_COLUMNS}
         ListHeaderComponent={<ProfileInfo user={user} gridRef={gridRef} />}
-        ListEmptyComponent={<GridPlaceholder />}
+        ListEmptyComponent={isLoading ? <GridPlaceholder /> : null}
         ListFooterComponent={
           isLoadMore ? <ActivityIndicator size={'small'} color={Colors.black} /> : undefined
         }

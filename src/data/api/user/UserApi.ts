@@ -2,7 +2,8 @@ import { inject, injectable } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
 import { IHttpResponse, IHttpClient } from '@core/interfaces/http';
-import { IUser } from '@domain/models';
+import { IPagination, IUser } from '@domain/models';
+import { GetUsersRequestParams } from '@domain/request-params';
 
 import { IUserApi } from './IUserApi';
 
@@ -20,6 +21,10 @@ class UserApi implements IUserApi {
 
   updateUser(dto: IUser): Promise<IHttpResponse<IUser>> {
     return this.httpClient.patch<IUser, IUser>('/user', dto);
+  }
+
+  findUsers(params?: GetUsersRequestParams): Promise<IHttpResponse<IPagination<IUser>>> {
+    return this.httpClient.get<IPagination<IUser>>('/user', params ? { params } : undefined);
   }
 }
 
