@@ -12,7 +12,7 @@ import { CreatePostFormKeys } from './keys';
 import styles from './styles';
 import { CreatePostFormData, CreatePostFormProps } from './types';
 
-const CAROUSEL_DIMENSIONS = 265;
+const CAROUSEL_DIMENSIONS = 320;
 const MAX_IMAGES = 10;
 
 const CreatePostForm = (props: CreatePostFormProps) => {
@@ -50,7 +50,7 @@ const CreatePostForm = (props: CreatePostFormProps) => {
         render={({ field: { value }, fieldState: { error } }) => (
           <>
             <ImageCarousel
-              images={value.map((a: Asset) => a.uri ?? '')}
+              images={value.map((asset: Asset) => asset.uri ?? '')}
               imageWidth={CAROUSEL_DIMENSIONS}
               imageHeight={CAROUSEL_DIMENSIONS}
               enablePagination={false}
