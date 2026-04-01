@@ -75,7 +75,7 @@ const ProfileDetailsView = () => {
 
     return (
       <Pressable onPress={onNavigateToProfilePosts}>
-        <TurboImage source={{ uri }} style={style} />
+        <TurboImage source={{ uri }} style={style} resizeMode="cover" />
       </Pressable>
     );
   };
