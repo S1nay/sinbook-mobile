@@ -1,3 +1,4 @@
+import Add from './svg/Add.svg';
 import Bell from './svg/Bell.svg';
 import Camera from './svg/Camera.svg';
 import Chat from './svg/Chat.svg';
@@ -25,6 +26,7 @@ import User from './svg/User.svg';
 import Warning from './svg/Warning.svg';
 
 export const icons = {
+  add: Add,
   bell: Bell,
   chat: Chat,
   check: Check,
