@@ -1,15 +1,13 @@
-import { useEffect, useImperativeHandle, useMemo } from 'react';
+import { useEffect, useImperativeHandle } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
-import { ImagePickerResponse, launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { Asset } from 'react-native-image-picker';
 
-import Modals from '@components/sheet-modals';
-import { IOption } from '@components/sheet-modals/list-options-sheet-modal';
 import { Colors } from '@shared/colors';
 import Avatar from '@ui/avatar';
-import { BottomSheetModal } from '@ui/bottom-sheet';
 import Icon from '@ui/icon';
 import Input from '@ui/input';
+import MediaPicker from '@ui/media-picker';
 
 import { EditProfileFormKeys } from './keys';
 import styles from './styles';
@@ -30,53 +28,9 @@ const EditProfileForm = (props: EditProfileFormProps) => {
     }
   }, [externalErrors]);
 
-  const modalOptions = useMemo<Array<IOption>>(
-    () => [
-      {
-        title: 'Open image library',
-        onPress: () => launchImageLibrary({ mediaType: 'photo' }, handleSetAvatar),
-        icon: {
-          name: 'imageLibrary',
-          size: 24,
-          stroke: Colors.black,
-        },
-      },
-      {
-        title: 'Open camera',
-        onPress: () => launchCamera({ mediaType: 'photo' }, handleSetAvatar),
-        icon: {
-          name: 'camera',
-          size: 24,
-          stroke: Colors.black,
-        },
-      },
-    ],
-    [],
-  );
-
-  const onOpenImagePickerSheet = () => {
-    BottomSheetModal.show({
-      modal: <Modals.ListOptionsSheetModal options={modalOptions} />,
-    });
-  };
-
-  const onCloseImagePickerSheet = () => {
-    BottomSheetModal.hide();
-  };
-
-  const handleSetAvatar = async (imageResponse: ImagePickerResponse) => {
-    if (imageResponse.didCancel) {
-      onOpenImagePickerSheet();
-    } else {
-      onCloseImagePickerSheet();
-
-      if (imageResponse.assets) {
-        const asset = imageResponse.assets[0];
-
-        form.setValue(EditProfileFormKeys.AVATAR_BLOB, asset);
-        form.setValue(EditProfileFormKeys.AVATAR, asset.uri ?? '');
-      }
-    }
+  const onPickAvatar = ([asset]: Array<Asset>) => {
+    form.setValue(EditProfileFormKeys.AVATAR_BLOB, asset);
+    form.setValue(EditProfileFormKeys.AVATAR, asset.uri ?? '');
   };
 
   return (
@@ -85,11 +39,13 @@ const EditProfileForm = (props: EditProfileFormProps) => {
         control={form.control}
         name={EditProfileFormKeys.AVATAR}
         render={({ field: { value } }) => (
-          <Avatar uri={value} size={160} style={styles.avatar} onPress={onOpenImagePickerSheet}>
-            <View style={styles.editIcon}>
-              <Icon size={24} name={'pencil'} stroke={Colors.black} />
-            </View>
-          </Avatar>
+          <MediaPicker style={styles.avatar} onPick={onPickAvatar}>
+            <Avatar uri={value} size={160}>
+              <View style={styles.editIcon}>
+                <Icon size={24} name={'pencil'} stroke={Colors.black} />
+              </View>
+            </Avatar>
+          </MediaPicker>
         )}
       />
 
