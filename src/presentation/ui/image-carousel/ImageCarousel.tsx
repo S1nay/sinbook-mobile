@@ -22,7 +22,7 @@ const ImageCarousel = (props: ImageCarouselProps) => {
 
   const progress = useSharedValue<number>(0);
 
-  const data = [...images, appendItem ? 'appendedItem' : ''];
+  const data = [...images, ...(appendItem ? ['appendedItem'] : [])];
 
   const getImageType = (uri: string): ImageType => {
     switch (true) {
@@ -68,9 +68,9 @@ const ImageCarousel = (props: ImageCarouselProps) => {
         containerStyle={styles.imageContainer}
       />
 
-      {images.length > 1 && enablePagination && (
+      {data.length > 1 && enablePagination && (
         <Pagination.Custom
-          data={Array(images.length).fill(0)}
+          data={Array(data.length).fill(0)}
           dotStyle={styles.dot}
           size={5}
           activeDotStyle={styles.activeDot}
