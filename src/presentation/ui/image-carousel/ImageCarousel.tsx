@@ -1,46 +1,76 @@
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, { Pagination } from 'react-native-reanimated-carousel';
 import { CarouselRenderItemInfo } from 'react-native-reanimated-carousel/lib/typescript/types';
 import TurboImage from 'react-native-turbo-image';
 
-import { getConnectUrl } from '@core/helpers';
-
 import styles from './styles';
 import { ImageCarouselProps } from './types';
 
+type ImageType = 'local' | 'remote' | 'appended';
+
 const ImageCarousel = (props: ImageCarouselProps) => {
-  const { images, imageHeight, imageWidth, enablePagination = true } = props;
+  const {
+    images = [],
+    imageHeight,
+    imageWidth,
+    enablePagination = true,
+    carouselStyle,
+    appendItem,
+    itemSpacing,
+  } = props;
 
   const progress = useSharedValue<number>(0);
 
-  const renderImage = ({ item }: CarouselRenderItemInfo<string>) => {
-    return (
-      <TurboImage
-        source={{ uri: getConnectUrl(item) || '' }}
-        style={styles.image}
-        resizeMode="cover"
-      />
+  const data = [...images, appendItem ? 'appendedItem' : ''];
+
+  const getImageType = (uri: string): ImageType => {
+    switch (true) {
+      case uri.includes('file'): {
+        return 'local';
+      }
+      case uri.includes('http') || uri.includes('https'): {
+        return 'remote';
+      }
+      default: {
+        return 'appended';
+      }
+    }
+  };
+
+  const renderImage = ({ item: uri, index }: CarouselRenderItemInfo<string>) => {
+    const isLast = index === data.length - 1;
+    const isAppended = getImageType(uri) === 'appended';
+    const isLocal = getImageType(uri) === 'local';
+
+    const ImageComponent = isLocal ? Image : TurboImage;
+
+    const content = isAppended ? (
+      appendItem
+    ) : (
+      <ImageComponent source={{ uri }} style={styles.image} resizeMode="cover" />
     );
+
+    return <View style={!isLast && !!itemSpacing && { paddingRight: itemSpacing }}>{content}</View>;
   };
 
   return (
     <View>
       <Carousel
         loop={false}
-        enabled={images.length > 1}
+        enabled={data.length > 1}
         width={imageWidth}
         height={imageHeight}
-        data={images}
+        data={data}
         onProgressChange={progress}
         renderItem={renderImage}
-        style={styles.carousel}
+        style={[styles.carousel, carouselStyle]}
         containerStyle={styles.imageContainer}
       />
 
       {images.length > 1 && enablePagination && (
         <Pagination.Custom
-          data={images}
+          data={Array(images.length).fill(0)}
           dotStyle={styles.dot}
           size={5}
           activeDotStyle={styles.activeDot}
