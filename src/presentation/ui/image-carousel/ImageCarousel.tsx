@@ -16,6 +16,7 @@ const ImageCarousel = (props: ImageCarouselProps) => {
     imageWidth,
     enablePagination = true,
     carouselStyle,
+    imageStyle,
     appendItem,
     itemSpacing,
   } = props;
@@ -48,7 +49,7 @@ const ImageCarousel = (props: ImageCarouselProps) => {
     const content = isAppended ? (
       appendItem
     ) : (
-      <ImageComponent source={{ uri }} style={styles.image} resizeMode="cover" />
+      <ImageComponent source={{ uri }} style={[styles.image, imageStyle]} resizeMode="cover" />
     );
 
     return <View style={!isLast && !!itemSpacing && { paddingRight: itemSpacing }}>{content}</View>;

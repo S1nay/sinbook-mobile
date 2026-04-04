@@ -56,6 +56,7 @@ const CreatePostForm = (props: CreatePostFormProps) => {
               enablePagination={false}
               carouselStyle={[styles.carouselStyle, { width: CAROUSEL_DIMENSIONS }]}
               itemSpacing={16}
+              imageStyle={styles.imageStyle}
               appendItem={ImagePlaceholder}
             />
 

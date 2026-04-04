@@ -14,6 +14,17 @@ export default StyleSheet.create({
     fontSize: 12,
     marginTop: 4,
   },
+  imageStyle: {
+    borderRadius: 8,
+    boxShadow: [
+      {
+        offsetX: 0,
+        offsetY: 0,
+        blurRadius: 15,
+        color: Colors.shadowBlack,
+      },
+    ],
+  },
   imagesError: {
     color: Colors.red,
     fontSize: 12,
@@ -23,6 +34,15 @@ export default StyleSheet.create({
   placeholder: {
     alignItems: 'center',
     backgroundColor: Colors.secondaryWhite,
+    borderRadius: 8,
+    boxShadow: [
+      {
+        offsetX: 0,
+        offsetY: 0,
+        blurRadius: 15,
+        color: Colors.shadowBlack,
+      },
+    ],
     justifyContent: 'center',
   },
 });
