@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import Toast from 'react-native-toast-message';
 
+import { mergeArraysWithoutDuplicates } from '@core/helpers';
 import { IHttpError } from '@core/interfaces/http';
 import { IPost, IMeta, IPagination } from '@domain/models';
 import { GetPostsRequestParams } from '@domain/request-params';
@@ -59,7 +60,10 @@ class ProfilePostsViewModel implements IProfilePostsViewModel {
     return this.getUserPostsUseCase
       .execute({ userId, mode, perPage, page, sortedBy: 'desc' })
       .then(data => {
-        this.posts = data.results;
+        this.posts =
+          mode === 'pagination'
+            ? mergeArraysWithoutDuplicates(this._posts, data.results, 'id')
+            : data.results;
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
