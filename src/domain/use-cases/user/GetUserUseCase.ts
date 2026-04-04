@@ -18,6 +18,10 @@ class GetUserUseCase {
     } else {
       const sessionUser = this.userRepository.getUserSession();
 
+      if (isRefetching && sessionUser) {
+        return sessionUser;
+      }
+
       if (isRefetching || !sessionUser) {
         const storageUser = this.userRepository.loadUserFromStorage();
 

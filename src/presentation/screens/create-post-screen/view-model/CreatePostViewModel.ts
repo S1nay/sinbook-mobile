@@ -65,7 +65,7 @@ class CreatePostViewModel implements ICreatePostViewModel {
 
         this.navigationService.navigate(BottomTabRouteNames.Profile, {
           screen: ProfileRouteNames.ProfileDetails,
-          params: { refetchPostsAt: Date.now() },
+          params: { newPostIsCreated: Date.now() },
         });
       })
       .catch(({ message }: IHttpError) => {
