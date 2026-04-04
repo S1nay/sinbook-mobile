@@ -1,9 +1,18 @@
 import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
+import Toast from 'react-native-toast-message';
 
 import { CreatePostFormData } from '@components/forms/create-post-form';
+import { Identifiers } from '@core/di/identifiers';
 import { IHttpError } from '@core/interfaces/http';
-import { IFileRepository, IPostRepository } from '@domain/repositories';
+import { INavigationService } from '@core/interfaces/navigation';
+import { CreatePostUseCase, PostUseCases } from '@domain/use-cases/post';
+import {
+  ProfileRouteNames,
+  BottomTabStackParamList,
+  BottomTabRouteNames,
+} from '@navigation/configuration';
+import { Toasts } from '@ui/toast';
 
 import { ICreatePostViewModel } from './ICreatePostViewModel';
 
@@ -11,11 +20,11 @@ import { ICreatePostViewModel } from './ICreatePostViewModel';
 class CreatePostViewModel implements ICreatePostViewModel {
   private _isLoading = false;
   private _error = '';
-  private _isSuccess = false;
 
   constructor(
-    @inject(IPostRepository.$) private postRepository: IPostRepository,
-    @inject(IFileRepository.$) private fileRepository: IFileRepository,
+    @inject(PostUseCases.$CreatePost) private createPostUseCase: CreatePostUseCase,
+    @inject(Identifiers.NavigationService)
+    private navigationService: INavigationService<BottomTabStackParamList>,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -28,10 +37,6 @@ class CreatePostViewModel implements ICreatePostViewModel {
     return this._error;
   }
 
-  get isSuccess(): boolean {
-    return this._isSuccess;
-  }
-
   private set isLoading(value: boolean) {
     this._isLoading = value;
   }
@@ -40,47 +45,34 @@ class CreatePostViewModel implements ICreatePostViewModel {
     this._error = value;
   }
 
-  private set isSuccess(value: boolean) {
-    this._isSuccess = value;
-  }
-
-  reset(): void {
+  private reset(): void {
     this._isLoading = false;
     this._error = '';
-    this._isSuccess = false;
   }
 
-  createPost(data: CreatePostFormData): void {
+  createPost(data: CreatePostFormData, resetForm: PureFunction): void {
     this.isLoading = true;
     this.error = '';
 
-    const uploadImages = async (): Promise<string[]> => {
-      if (data.images.length === 0) return [];
-
-      const formData = new FormData();
-
-      data.images.forEach(image => {
-        formData.append('images', {
-          uri: image.uri,
-          name: image.fileName,
-          type: image.type,
-        });
-      });
-
-      const files = await this.fileRepository.postPostImages(formData, {});
-
-      return files.map(f => f.url);
-    };
-
-    uploadImages()
-      .then(imageUrls =>
-        this.postRepository.createPost({ content: data.content, images: imageUrls }),
-      )
+    this.createPostUseCase
+      .execute(data.content, data.images)
       .then(() => {
-        this.isSuccess = true;
+        Toast.show({ text1: 'Post created successfully!', type: Toasts.Success });
+
+        this.reset();
+
+        resetForm();
+
+        this.navigationService.navigate(BottomTabRouteNames.Profile, {
+          screen: ProfileRouteNames.ProfileDetails,
+          params: { refetchPostsAt: Date.now() },
+        });
       })
       .catch(({ message }: IHttpError) => {
-        this.error = typeof message === 'string' ? message : 'Something went wrong';
+        Toast.show({
+          text1: typeof message === 'string' ? message : 'Something went wrong',
+          type: Toasts.Error,
+        });
       })
       .finally(() => {
         this.isLoading = false;

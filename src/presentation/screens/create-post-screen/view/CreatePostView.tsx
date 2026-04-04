@@ -1,8 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Keyboard, View } from 'react-native';
-import Toast from 'react-native-toast-message';
 
 import Forms from '@components/forms';
 import {
@@ -13,7 +12,6 @@ import {
 import { useDIContainer } from '@core/hooks';
 import AppLayout from '@layouts/_app';
 import Button from '@ui/button';
-import { Toasts } from '@ui/toast';
 
 import { ICreatePostViewModel } from '../view-model';
 import styles from './styles';
@@ -25,21 +23,17 @@ const CreatePostDefaultValues: CreatePostFormData = {
 
 const CreatePostView = () => {
   const container = useDIContainer();
-  const vm = container.get(ICreatePostViewModel.$);
+  const { createPost, isLoading } = container.get(ICreatePostViewModel.$);
   const form = useRef<CreatePostFormRef>(null);
 
-  useEffect(() => {
-    if (vm.isSuccess) {
-      Toast.show({ text1: 'Post created successfully!', type: Toasts.Success });
-      form.current?.reset(CreatePostDefaultValues);
-      vm.reset();
-    }
-  }, [vm.isSuccess]);
+  const onSubmit = (data: CreatePostFormData) => {
+    createPost(data, () => form.current?.reset(CreatePostDefaultValues));
+  };
 
   const handleSubmit = useCallback(() => {
     Keyboard.dismiss();
-    form.current?.handleSubmit(vm.createPost)();
-  }, [vm]);
+    form.current?.handleSubmit(onSubmit)();
+  }, [form.current]);
 
   return (
     <AppLayout>
@@ -56,8 +50,8 @@ const CreatePostView = () => {
           value="Create Post"
           icon={{ name: 'add', size: 20 }}
           onPress={handleSubmit}
-          isLoading={vm.isLoading}
-          disabled={vm.isLoading}
+          isLoading={isLoading}
+          disabled={isLoading}
         />
       </View>
     </AppLayout>
