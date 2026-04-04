@@ -28,6 +28,12 @@ const CreatePostForm = (props: CreatePostFormProps) => {
     form.setValue(CreatePostFormKeys.IMAGES, [...chosenImages, ...assets]);
   };
 
+  const onRemoveImage = (index: number) => {
+    const updatedImages = [...chosenImages];
+    updatedImages.splice(index, 1);
+    form.setValue(CreatePostFormKeys.IMAGES, updatedImages);
+  };
+
   const ImagePlaceholder = useMemo(() => {
     return (
       remaining > 0 && (
@@ -55,6 +61,7 @@ const CreatePostForm = (props: CreatePostFormProps) => {
               imageHeight={CAROUSEL_DIMENSIONS}
               enablePagination={false}
               carouselStyle={[styles.carouselStyle, { width: CAROUSEL_DIMENSIONS }]}
+              onRemoveImage={onRemoveImage}
               itemSpacing={16}
               imageStyle={styles.imageStyle}
               appendItem={ImagePlaceholder}

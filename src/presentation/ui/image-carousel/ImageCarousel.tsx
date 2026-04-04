@@ -1,13 +1,22 @@
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, { Pagination } from 'react-native-reanimated-carousel';
 import { CarouselRenderItemInfo } from 'react-native-reanimated-carousel/lib/typescript/types';
-import TurboImage from 'react-native-turbo-image';
 
+import CarouselImageItem from './image-carousel-components';
 import styles from './styles';
-import { ImageCarouselProps } from './types';
+import { ImageCarouselProps, ImageType } from './types';
 
-type ImageType = 'local' | 'remote' | 'appended';
+const getImageType = (uri: string): ImageType => {
+  switch (true) {
+    case uri.includes('file'):
+      return 'local';
+    case uri.includes('http') || uri.includes('https'):
+      return 'remote';
+    default:
+      return 'appended';
+  }
+};
 
 const ImageCarousel = (props: ImageCarouselProps) => {
   const {
@@ -19,37 +28,28 @@ const ImageCarousel = (props: ImageCarouselProps) => {
     imageStyle,
     appendItem,
     itemSpacing,
+    onRemoveImage,
   } = props;
 
   const progress = useSharedValue<number>(0);
 
   const data = [...images, ...(appendItem ? ['appendedItem'] : [])];
 
-  const getImageType = (uri: string): ImageType => {
-    switch (true) {
-      case uri.includes('file'): {
-        return 'local';
-      }
-      case uri.includes('http') || uri.includes('https'): {
-        return 'remote';
-      }
-      default: {
-        return 'appended';
-      }
-    }
-  };
-
   const renderImage = ({ item: uri, index }: CarouselRenderItemInfo<string>) => {
     const isLast = index === data.length - 1;
     const isAppended = getImageType(uri) === 'appended';
     const isLocal = getImageType(uri) === 'local';
 
-    const ImageComponent = isLocal ? Image : TurboImage;
-
     const content = isAppended ? (
       appendItem
     ) : (
-      <ImageComponent source={{ uri }} style={[styles.image, imageStyle]} resizeMode="cover" />
+      <CarouselImageItem
+        uri={uri}
+        index={index}
+        isLocal={isLocal}
+        imageStyle={imageStyle}
+        onRemoveImage={onRemoveImage}
+      />
     );
 
     return <View style={!isLast && !!itemSpacing && { paddingRight: itemSpacing }}>{content}</View>;
@@ -58,6 +58,7 @@ const ImageCarousel = (props: ImageCarouselProps) => {
   return (
     <View>
       <Carousel
+        key={data.length}
         loop={false}
         enabled={data.length > 1}
         width={imageWidth}

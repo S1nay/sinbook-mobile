@@ -10,4 +10,7 @@ export interface ImageCarouselProps {
   imageStyle?: StyleProp<ImageStyle>;
   appendItem?: ReactNode;
   itemSpacing?: number;
+  onRemoveImage?: (index: number) => void;
 }
+
+export type ImageType = 'local' | 'remote' | 'appended';

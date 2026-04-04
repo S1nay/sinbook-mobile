@@ -19,10 +19,6 @@ export default StyleSheet.create({
     gap: 8,
     marginTop: 10,
   },
-  image: {
-    height: '100%',
-    width: '100%',
-  },
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
