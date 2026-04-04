@@ -42,6 +42,7 @@ export type ProfileStackParamList = {
   [ProfileRouteNames.ProfileDetails]?: {
     userId?: number;
     userIsUpdated?: boolean;
+    refetchPostsAt?: number;
   };
   [ProfileRouteNames.ProfilePosts]: {
     user: IUser;

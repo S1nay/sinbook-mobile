@@ -35,18 +35,17 @@ const ProfileDetailsView = () => {
   const { unauthorize } = useAuth();
 
   useEffect(() => {
-    getUserData({ id: params?.userId }).then(user => {
-      if (!params?.userIsUpdated) getUserPosts({ userId: user.id });
+    getUserData({ id: params?.userId, isRefetching: !!params?.refetchPostsAt }).then(user => {
+      if (!params?.userIsUpdated)
+        getUserPosts({ userId: user.id, isRefetching: !!params?.refetchPostsAt });
     });
-  }, [params?.userIsUpdated]);
+  }, [params?.userIsUpdated, params?.refetchPostsAt]);
 
   useEffect(() => {
-    if (user) {
-      navigation.setOptions({
-        headerTitle: user.nickName,
-        header: props => <Header {...props} rightIcon="logout" onPressRightIcon={handleLogout} />,
-      });
-    }
+    navigation.setOptions({
+      headerTitle: user?.nickName ?? 'Profile',
+      header: props => <Header {...props} rightIcon="logout" onPressRightIcon={handleLogout} />,
+    });
   }, [user]);
 
   const onPaginate = async (page: number) => {

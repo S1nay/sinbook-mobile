@@ -4,4 +4,5 @@ export interface GetPostsRequestParams extends Record<string, unknown> {
   perPage?: number;
   search?: string;
   followingBy?: boolean;
+  sortedBy?: 'asc' | 'desc';
 }

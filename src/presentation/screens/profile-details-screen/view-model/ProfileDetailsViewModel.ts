@@ -87,7 +87,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     if (!isPagination) this.isLoading = true;
 
     return this.getUserPostsUseCase
-      .execute({ userId, isRefetching, isPagination, perPage, page })
+      .execute({ userId, isRefetching, isPagination, perPage, page, sortedBy: 'desc' })
       .then(data => {
         this.posts = data.results;
         this.postsMeta = data.meta;
