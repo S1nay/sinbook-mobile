@@ -5,6 +5,8 @@ import { IPagination, IPost } from '@domain/models';
 import { IUserRepository, IPostRepository } from '@domain/repositories';
 import { GetPostsRequestParams } from '@domain/request-params';
 
+export type GetPostsMode = 'initial' | 'post-created' | 'pagination' | 'refetch';
+
 @injectable()
 class GetUserPostsUseCase {
   constructor(
@@ -13,46 +15,55 @@ class GetUserPostsUseCase {
   ) {}
 
   async execute(
-    params: GetPostsRequestParams & { isRefetching: boolean; isPagination?: boolean },
+    params: GetPostsRequestParams & { mode: GetPostsMode },
   ): Promise<IPagination<IPost>> {
-    const { isRefetching, isPagination, userId, ...otherParams } = params;
+    const { mode, userId, ...otherParams } = params;
 
     const sessionUser = this.userRepository.getUserSession();
     const isOwnProfile = Boolean(sessionUser && userId && sessionUser.id === userId);
 
-    if (isOwnProfile && !isRefetching && !isPagination) {
-      const cachedPosts = this.postRepository.getLoggedInUserPosts();
-      if (cachedPosts) {
-        return cachedPosts;
+    switch (mode) {
+      case 'initial': {
+        if (isOwnProfile) {
+          const cached = this.postRepository.getLoggedInUserPosts();
+          if (cached) return cached;
+          const posts = await this.postRepository.getPosts({ userId, ...otherParams });
+          this.postRepository.setLoggedInUserPosts(posts);
+          return posts;
+        }
+        return this.postRepository.getPosts({ userId, ...otherParams });
+      }
+
+      case 'post-created': {
+        if (isOwnProfile) {
+          const cached = this.postRepository.getLoggedInUserPosts();
+          if (cached) return cached;
+        }
+        return this.postRepository.getPosts({ userId, ...otherParams });
+      }
+
+      case 'refetch': {
+        const posts = await this.postRepository.getPosts({ userId, ...otherParams });
+        if (isOwnProfile) this.postRepository.setLoggedInUserPosts(posts);
+        return posts;
+      }
+
+      case 'pagination': {
+        const posts = await this.postRepository.getPosts({ userId, ...otherParams });
+        if (isOwnProfile) {
+          const cached = this.postRepository.getLoggedInUserPosts();
+          const mergedResults = mergeArraysWithoutDuplicates(
+            cached?.results || [],
+            posts.results,
+            'id',
+          );
+          const merged: IPagination<IPost> = { ...posts, results: mergedResults };
+          this.postRepository.setLoggedInUserPosts(merged);
+          return merged;
+        }
+        return posts;
       }
     }
-
-    const fetchedPosts = await this.postRepository.getPosts({ userId, ...otherParams });
-
-    if (isOwnProfile) {
-      if (isPagination) {
-        const cachedPosts = this.postRepository.getLoggedInUserPosts();
-
-        const mergedResults = mergeArraysWithoutDuplicates(
-          cachedPosts?.results || [],
-          fetchedPosts.results,
-          'id',
-        );
-
-        const mergedPosts: IPagination<IPost> = {
-          ...fetchedPosts,
-          results: mergedResults,
-        };
-
-        this.postRepository.setLoggedInUserPosts(mergedPosts);
-        return mergedPosts;
-      } else {
-        this.postRepository.setLoggedInUserPosts(fetchedPosts);
-        return fetchedPosts;
-      }
-    }
-
-    return fetchedPosts;
   }
 }
 

@@ -4,6 +4,7 @@ import CreatePostUseCase from './CreatePostUseCase';
 import GetUserPostsUseCase from './GetUserPostsUseCase';
 
 export { CreatePostUseCase, GetUserPostsUseCase };
+export type { GetPostsMode } from './GetUserPostsUseCase';
 
 export namespace PostUseCases {
   export const $GetUserPosts: ServiceIdentifier<GetUserPostsUseCase> =

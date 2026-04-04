@@ -35,11 +35,12 @@ const ProfileDetailsView = () => {
   const { unauthorize } = useAuth();
 
   useEffect(() => {
-    getUserData({ id: params?.userId, isRefetching: !!params?.refetchPostsAt }).then(user => {
+    const postCreated = !!params?.newPostIsCreated;
+    getUserData({ id: params?.userId, isRefetching: postCreated }).then(user => {
       if (!params?.userIsUpdated)
-        getUserPosts({ userId: user.id, isRefetching: !!params?.refetchPostsAt });
+        getUserPosts({ userId: user.id, mode: postCreated ? 'post-created' : 'initial' });
     });
-  }, [params?.userIsUpdated, params?.refetchPostsAt]);
+  }, [params?.userIsUpdated, params?.newPostIsCreated]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -49,7 +50,7 @@ const ProfileDetailsView = () => {
   }, [user]);
 
   const onPaginate = async (page: number) => {
-    if (user) await getUserPosts({ isPagination: true, userId: user.id, page });
+    if (user) await getUserPosts({ userId: user.id, page, mode: 'pagination' });
   };
 
   const { isLoadMore, onLoadMore } = usePagination({ pagination: postsMeta, onPaginate });
@@ -57,7 +58,7 @@ const ProfileDetailsView = () => {
   const onRefresh = () => {
     if (user) {
       getUserData({ id: user.id, isRefetching: true });
-      getUserPosts({ userId: user.id, isRefetching: true });
+      getUserPosts({ userId: user.id, mode: 'refetch' });
     }
   };
 

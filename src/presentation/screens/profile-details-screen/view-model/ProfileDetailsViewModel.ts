@@ -6,6 +6,7 @@ import { IHttpError } from '@core/interfaces/http';
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
 import { GetPostsRequestParams, GetUserRequestParams } from '@domain/request-params';
 import { AuthUseCases, UserUseCases, PostUseCases } from '@domain/use-cases';
+import { GetPostsMode } from '@domain/use-cases/post';
 import { Toasts } from '@ui/toast';
 
 import { IProfileDetailsViewModel } from './IProfileDetailsViewModel';
@@ -24,7 +25,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     private getUserUseCase: UseCase<GetUserRequestParams & { isRefetching: boolean }, IUser>,
     @inject(PostUseCases.$GetUserPosts)
     private getUserPostsUseCase: UseCase<
-      GetPostsRequestParams & { isRefetching: boolean; isPagination?: boolean },
+      GetPostsRequestParams & { mode: GetPostsMode },
       IPagination<IPost>
     >,
   ) {
@@ -63,7 +64,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._posts = value;
   }
 
-  async getUserData(params: GetUserRequestParams & { isRefetching: boolean }): Promise<IUser> {
+  async getUserData(params: GetUserRequestParams & { isRefetching?: boolean }): Promise<IUser> {
     const { isRefetching = false, id } = params;
 
     this.isLoading = true;
@@ -79,15 +80,13 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
       });
   }
 
-  async getUserPosts(
-    params: GetPostsRequestParams & { isRefetching: boolean; isPagination: boolean },
-  ): Promise<void> {
-    const { userId, isRefetching = false, isPagination = false, perPage = 20, page = 1 } = params;
+  async getUserPosts(params: GetPostsRequestParams & { mode: GetPostsMode }): Promise<void> {
+    const { userId, mode, perPage = 20, page = 1 } = params;
 
-    if (!isPagination) this.isLoading = true;
+    if (mode !== 'pagination') this.isLoading = true;
 
     return this.getUserPostsUseCase
-      .execute({ userId, isRefetching, isPagination, perPage, page, sortedBy: 'desc' })
+      .execute({ userId, mode, perPage, page, sortedBy: 'desc' })
       .then(data => {
         this.posts = data.results;
         this.postsMeta = data.meta;
@@ -96,7 +95,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
         Toast.show({ text1: message as string, type: Toasts.Error });
       })
       .finally(() => {
-        if (!isPagination) this.isLoading = false;
+        if (mode !== 'pagination') this.isLoading = false;
       });
   }
 

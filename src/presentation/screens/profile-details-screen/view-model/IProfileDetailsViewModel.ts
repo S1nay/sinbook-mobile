@@ -2,6 +2,7 @@ import { ServiceIdentifier } from 'inversify';
 
 import { IMeta, IPost, IUser } from '@domain/models';
 import { GetPostsRequestParams, GetUserRequestParams } from '@domain/request-params';
+import { GetPostsMode } from '@domain/use-cases/post';
 
 export interface IProfileDetailsViewModel {
   user: IUser | null;
@@ -10,9 +11,7 @@ export interface IProfileDetailsViewModel {
   isLoading: boolean;
 
   getUserData(params: GetUserRequestParams & { isRefetching?: boolean }): Promise<IUser>;
-  getUserPosts(
-    params: GetPostsRequestParams & { isRefetching?: boolean; isPagination?: boolean },
-  ): Promise<void>;
+  getUserPosts(params: GetPostsRequestParams & { mode: GetPostsMode }): Promise<void>;
   logout: (callback: PureFunction) => void;
 }
 
