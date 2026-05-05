@@ -14,7 +14,9 @@
       "PowerShell(python -c \"import graphify.export as e; print\\([x for x in dir\\(e\\) if not x.startswith\\('_'\\)]\\)\")",
       "PowerShell(python -c \"import graphify; print\\(dir\\(graphify\\)\\)\" 2>&1)",
       "PowerShell(python -c \"import graphify.wiki\" 2>&1)",
-      "PowerShell(python -c \"import graphify.wiki as w; print\\([x for x in dir\\(w\\) if not x.startswith\\('_'\\)]\\)\")"
+      "PowerShell(python -c \"import graphify.wiki as w; print\\([x for x in dir\\(w\\) if not x.startswith\\('_'\\)]\\)\")",
+      "Bash(Get-ChildItem -Path \"G:\\\\sinbook\\\\sinbook-mobile\\\\src\\\\presentation\" -Recurse -File -Include \"*.ts\",\"*.tsx\")",
+      "Bash(Select-Object -ExpandProperty FullName)"
     ]
   }
 }
