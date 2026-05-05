@@ -22,7 +22,7 @@ const ProfilePostsView = () => {
   const { getUserPosts, posts, postsMeta } = container.get(IProfilePostsViewModel.$);
 
   useEffect(() => {
-    if (params.user) getUserPosts({ userId: params.user.id });
+    if (params.user) getUserPosts({ userId: params.user.id, mode: 'initial' });
   }, [params.user]);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const ProfilePostsView = () => {
   }, [params.user]);
 
   const onPaginate = async (page: number) => {
-    if (params.user) await getUserPosts({ isPagination: true, userId: params.user.id, page });
+    if (params.user) await getUserPosts({ userId: params.user.id, page, mode: 'pagination' });
   };
 
   const { isLoadMore, onLoadMore } = usePagination({ pagination: postsMeta, onPaginate });

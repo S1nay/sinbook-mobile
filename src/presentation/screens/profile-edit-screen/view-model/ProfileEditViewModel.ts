@@ -76,7 +76,7 @@ class ProfileEditViewModel implements IProfileEditViewModel {
           StackActions.popTo(ProfileRouteNames.ProfileDetails, { userIsUpdated: true }),
         );
 
-        Toast.show({ text1: 'Данные были успешно обновлены', type: Toasts.Success });
+        Toast.show({ text1: 'Data has been updated', type: Toasts.Success });
       })
       .catch(({ message }: IHttpError) => {
         Toast.show({ text1: message as string, type: Toasts.Error });

@@ -35,22 +35,22 @@ const ProfileDetailsView = () => {
   const { unauthorize } = useAuth();
 
   useEffect(() => {
-    getUserData({ id: params?.userId }).then(user => {
-      if (!params?.userIsUpdated) getUserPosts({ userId: user.id });
+    const postCreated = !!params?.newPostIsCreated;
+    getUserData({ id: params?.userId, isRefetching: postCreated }).then(user => {
+      if (!params?.userIsUpdated)
+        getUserPosts({ userId: user.id, mode: postCreated ? 'post-created' : 'initial' });
     });
-  }, [params?.userIsUpdated]);
+  }, [params?.userIsUpdated, params?.newPostIsCreated]);
 
   useEffect(() => {
-    if (user) {
-      navigation.setOptions({
-        headerTitle: user.nickName,
-        header: props => <Header {...props} rightIcon="logout" onPressRightIcon={handleLogout} />,
-      });
-    }
+    navigation.setOptions({
+      headerTitle: user?.nickName ?? 'Profile',
+      header: props => <Header {...props} rightIcon="logout" onPressRightIcon={handleLogout} />,
+    });
   }, [user]);
 
   const onPaginate = async (page: number) => {
-    if (user) await getUserPosts({ isPagination: true, userId: user.id, page });
+    if (user) await getUserPosts({ userId: user.id, page, mode: 'pagination' });
   };
 
   const { isLoadMore, onLoadMore } = usePagination({ pagination: postsMeta, onPaginate });
@@ -58,7 +58,7 @@ const ProfileDetailsView = () => {
   const onRefresh = () => {
     if (user) {
       getUserData({ id: user.id, isRefetching: true });
-      getUserPosts({ userId: user.id, isRefetching: true });
+      getUserPosts({ userId: user.id, mode: 'refetch' });
     }
   };
 
@@ -75,7 +75,7 @@ const ProfileDetailsView = () => {
 
     return (
       <Pressable onPress={onNavigateToProfilePosts}>
-        <TurboImage source={{ uri }} style={style} />
+        <TurboImage source={{ uri }} style={style} resizeMode="cover" />
       </Pressable>
     );
   };

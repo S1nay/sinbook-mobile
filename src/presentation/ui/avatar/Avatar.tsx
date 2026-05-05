@@ -1,5 +1,5 @@
 import { memo, PropsWithChildren } from 'react';
-import { Image, Pressable } from 'react-native';
+import { Image } from 'react-native';
 import TurboImage from 'react-native-turbo-image';
 
 import { AvatarProps } from './types';
@@ -8,10 +8,10 @@ import { AvatarProps } from './types';
 const AVATAR_PLACEHOLDER = require('../../shared/images/avatar-placeholder.jpg');
 
 const Avatar = (props: PropsWithChildren<AvatarProps>) => {
-  const { uri, size = 28, imageProps, children, ...otherProps } = props;
+  const { uri, size = 28, imageProps, children } = props;
 
   return (
-    <Pressable {...otherProps}>
+    <>
       {uri ? (
         <TurboImage
           {...imageProps}
@@ -28,7 +28,7 @@ const Avatar = (props: PropsWithChildren<AvatarProps>) => {
       )}
 
       {children}
-    </Pressable>
+    </>
   );
 };
 

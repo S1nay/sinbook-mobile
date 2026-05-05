@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { Dimensions, Pressable, Text, View } from 'react-native';
 
+import { getConnectUrl } from '@core/helpers';
 import { Colors } from '@shared/colors';
 import Avatar from '@ui/avatar';
 import Icon from '@ui/icon';
@@ -36,7 +37,7 @@ const Post = (props: PostProps) => {
       <Text style={styles.postContent}>{post.content}</Text>
 
       <ImageCarousel
-        images={post.images}
+        images={post.images.map(url => getConnectUrl(url) ?? '')}
         imageWidth={POST_IMAGE_SIZE}
         imageHeight={POST_IMAGE_SIZE}
       />

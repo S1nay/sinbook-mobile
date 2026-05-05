@@ -21,13 +21,23 @@ class FileApi implements IFileApi {
     dto: FormData,
     params: Record<string, string>,
   ): Promise<IHttpResponse<Array<IFile>>> {
-    return this.httpClient.post<Array<IFile>, FormData>('/file/upload/post', dto, { params });
+    return this.httpClient.post<Array<IFile>, FormData>('/file/upload/post', dto, {
+      params,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   }
   uploadDialogImages(
     dto: FormData,
     params: Record<string, string>,
   ): Promise<IHttpResponse<Array<IFile>>> {
-    return this.httpClient.post<Array<IFile>, FormData>('/file/upload/dialog', dto, { params });
+    return this.httpClient.post<Array<IFile>, FormData>('/file/upload/dialog', dto, {
+      params,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   }
 }
 
