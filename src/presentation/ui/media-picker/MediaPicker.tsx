@@ -6,16 +6,17 @@ import {
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
+import { useUnistyles } from 'react-native-unistyles';
 
 import SheetModals from '@components/sheet-modals';
 import { IOption } from '@components/sheet-modals/list-options-sheet-modal';
-import { Colors } from '@shared/colors';
 import { BottomSheetModal } from '@ui/bottom-sheet';
 
 import { MediaPickerProps } from './types';
 
 const MediaPicker = (props: MediaPickerProps) => {
-  const { onPick, selectionLimit, style, children } = props;
+  const { onPick, selectionLimit = 1, style, children } = props;
+  const { theme } = useUnistyles();
 
   const handleResponse = useCallback(
     (response: ImagePickerResponse) => {
@@ -32,15 +33,15 @@ const MediaPicker = (props: MediaPickerProps) => {
       {
         title: 'Open image library',
         onPress: () => launchImageLibrary({ mediaType: 'photo', selectionLimit }, handleResponse),
-        icon: { name: 'imageLibrary', size: 24, stroke: Colors.black },
+        icon: { name: 'imageLibrary', size: 24, stroke: theme.colors.foreground.primary },
       },
       {
         title: 'Open camera',
         onPress: () => launchCamera({ mediaType: 'photo' }, handleResponse),
-        icon: { name: 'camera', size: 24, stroke: Colors.black },
+        icon: { name: 'camera', size: 24, stroke: theme.colors.foreground.primary },
       },
     ],
-    [selectionLimit, handleResponse],
+    [selectionLimit, handleResponse, theme],
   );
 
   const open = useCallback(() => {

@@ -19,8 +19,7 @@ export enum ChatRouteNames {
 // Профиль
 export enum ProfileRouteNames {
   ProfileDetails = 'Profile Details',
-  ProfileFollows = 'Profile Follows',
-  ProfileFollowers = 'Profile Followers',
+  ProfileFollows = 'Follows',
   ProfilePosts = 'Profile Posts',
   ProfileEdit = 'Profile Edit',
 }

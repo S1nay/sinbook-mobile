@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import { View, ViewStyle, StyleProp } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { StyleProp, View, ViewStyle } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { useUnistyles } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-import styles from './styles';
+import { styles } from './styles';
 
 interface CountdownBarProps {
   duration: number;
@@ -20,13 +19,16 @@ interface CountdownBarProps {
 
 const CountdownBar: React.FC<CountdownBarProps> = ({
   duration,
-  color = Colors.white,
+  color,
   height = 6,
   borderRadius = 3,
-  backgroundColor = Colors.green,
+  backgroundColor,
   style,
   isStart,
 }) => {
+  const { theme } = useUnistyles();
+  const barColor = color ?? theme.components.toast.fg;
+  const barBg = backgroundColor ?? theme.components.toast.successBg;
   const progress = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -42,9 +44,9 @@ const CountdownBar: React.FC<CountdownBarProps> = ({
   }, [isStart]);
 
   return (
-    <View style={[styles.container, style, { height, borderRadius, backgroundColor }]}>
+    <View style={[styles.container, style, { height, borderRadius, backgroundColor: barBg }]}>
       <Animated.View
-        style={[styles.fill, animatedStyle, { backgroundColor: color, borderRadius }]}
+        style={[styles.fill, animatedStyle, { backgroundColor: barColor, borderRadius }]}
       />
     </View>
   );

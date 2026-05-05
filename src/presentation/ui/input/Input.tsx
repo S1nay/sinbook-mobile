@@ -1,14 +1,14 @@
 import { memo, useCallback, useImperativeHandle, useRef, useState } from 'react';
 import { View, NativeSyntheticEvent, TextInputFocusEventData, TextInput, Text } from 'react-native';
 import { MaskedTextInput, MaskedTextInputRef } from 'react-native-advanced-input-mask';
+import { useUnistyles } from 'react-native-unistyles';
 
 import { Masks } from '@shared/utils/masks';
 import Icon from '@ui/icon';
 
-import { getInputConfig } from './config';
 import Label from './input-components/label';
-import styles from './styles';
-import { InputProps } from './types';
+import { styles } from './styles';
+import { InputProps, InputState } from './types';
 
 const Input = (props: InputProps) => {
   const {
@@ -32,13 +32,24 @@ const Input = (props: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<MaskedTextInputRef>(null);
 
-  const cfg = getInputConfig({
+  const { theme } = useUnistyles();
+
+  // Unistyles omits 'default' from variant types; use undefined for the base case.
+  const activeState: Exclude<InputState, 'default'> | undefined = !editable
+    ? 'disabled'
+    : error
+    ? 'error'
+    : isFocused
+    ? 'focused'
+    : undefined;
+
+  const iconColor = theme.components.input.icon[activeState ?? 'default'];
+
+  styles.useVariants({
     variant,
-    focused: isFocused,
-    disabled: !editable,
-    error: !!error,
-    startIcon: !!startIcon,
-    endIcon: !!endIcon,
+    state: activeState,
+    withStartIcon: !!startIcon,
+    withEndIcon: !!endIcon,
   });
 
   useImperativeHandle(ref, () => ({
@@ -49,7 +60,6 @@ const Input = (props: InputProps) => {
   const handleChangeText = useCallback(
     (val: string) => {
       const formattedValue = format?.(val) || val;
-
       onChangeText?.(formattedValue);
     },
     [value],
@@ -71,7 +81,7 @@ const Input = (props: InputProps) => {
       value,
       editable,
       mask: mask ? Masks[mask] : '',
-      style: [cfg.input, style],
+      style: [styles.inputField, style],
       onChangeText: handleChangeText,
       onFocus: handleFocus,
       onBlur: handleBlur,
@@ -84,13 +94,13 @@ const Input = (props: InputProps) => {
 
   return (
     <View>
-      <View style={[styles.container, containerStyle]}>
+      <View style={[styles.wrapper, containerStyle]}>
         {startIcon && (
           <Icon
             {...startIcon}
             name={startIcon.name}
-            style={[styles.startIcon, cfg.startIcon]}
-            stroke={cfg.endIcon.color}
+            style={styles.startIcon}
+            stroke={iconColor}
             size={startIcon.size}
           />
         )}
@@ -103,8 +113,8 @@ const Input = (props: InputProps) => {
           <Icon
             {...endIcon}
             name={endIcon.name}
-            style={[styles.endIcon, cfg.endIcon]}
-            stroke={cfg.endIcon.color}
+            style={styles.endIcon}
+            stroke={iconColor}
             size={endIcon.size}
           />
         )}

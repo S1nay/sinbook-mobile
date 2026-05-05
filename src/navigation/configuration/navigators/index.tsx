@@ -15,7 +15,6 @@ import LoginScreen from '@screens/login-screen';
 import NotificationsScreen from '@screens/notifications-screen';
 import ProfileDetailsScreen from '@screens/profile-details-screen';
 import ProfileEditScreen from '@screens/profile-edit-screen';
-import ProfileFollowersScreen from '@screens/profile-followers-screen';
 import ProfileFollowsScreen from '@screens/profile-follows-screen';
 import ProfilePostsScreen from '@screens/profile-posts-screen';
 import RegisterScreen from '@screens/register-screen';
@@ -54,13 +53,6 @@ const ProfileNavigator = () => {
         }
         component={ProfileFollowsScreen}
         name={ProfileRouteNames.ProfileFollows}
-      />
-      <ProfileStack.Screen
-        options={params =>
-          defaultHeader<ParamListBase, NativeStackNavigationProp<ParamListBase>>(params)
-        }
-        component={ProfileFollowersScreen}
-        name={ProfileRouteNames.ProfileFollowers}
       />
       <ProfileStack.Screen
         options={params =>

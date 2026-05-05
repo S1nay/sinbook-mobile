@@ -11,9 +11,9 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useUnistyles } from 'react-native-unistyles';
 
 import { AppRouteNames } from '@navigation/configuration';
-import { Colors } from '@shared/colors';
 import Icon from '@ui/icon';
 
 import styles from './styles';
@@ -23,6 +23,7 @@ const AuthLayout = (props: PropsWithChildren<AuthLayoutProps>) => {
   const { title, children } = props;
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase, string, undefined>>();
   const insets = useSafeAreaInsets();
+  const { theme } = useUnistyles();
 
   const onLog = () => {
     if (__DEV__) {
@@ -37,7 +38,13 @@ const AuthLayout = (props: PropsWithChildren<AuthLayoutProps>) => {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <Pressable onPress={Keyboard.dismiss} style={styles.inner}>
-          <Icon name="logo" size={96} style={styles.icon} fill={Colors.black} onLongPress={onLog} />
+          <Icon
+            name="logo"
+            size={96}
+            style={styles.icon}
+            fill={theme.colors.foreground.primary}
+            onLongPress={onLog}
+          />
 
           <Text style={styles.title}>{title}</Text>
 

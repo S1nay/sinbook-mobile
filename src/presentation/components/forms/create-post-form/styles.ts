@@ -1,8 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export default StyleSheet.create(({ colors, typography }) => ({
   carouselStyle: {
     alignItems: 'center',
     marginBottom: 24,
@@ -10,8 +8,8 @@ export default StyleSheet.create({
   },
   charCounter: {
     alignSelf: 'flex-end',
-    color: Colors.secondaryGray,
-    fontSize: 12,
+    color: colors.foreground.muted,
+    fontSize: typography.size.sm,
     marginTop: 4,
   },
   imageStyle: {
@@ -21,28 +19,28 @@ export default StyleSheet.create({
         offsetX: 0,
         offsetY: 0,
         blurRadius: 15,
-        color: Colors.shadowBlack,
+        color: colors.overlay.shadow,
       },
     ],
   },
   imagesError: {
-    color: Colors.red,
-    fontSize: 12,
+    color: colors.danger.default,
+    fontSize: typography.size.sm,
     marginTop: 4,
     paddingHorizontal: 16,
   },
   placeholder: {
     alignItems: 'center',
-    backgroundColor: Colors.secondaryWhite,
+    backgroundColor: colors.background.secondary,
     borderRadius: 8,
     boxShadow: [
       {
         offsetX: 0,
         offsetY: 0,
         blurRadius: 15,
-        color: Colors.shadowBlack,
+        color: colors.overlay.shadow,
       },
     ],
     justifyContent: 'center',
   },
-});
+}));

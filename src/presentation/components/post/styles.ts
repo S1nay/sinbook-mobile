@@ -1,11 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export default StyleSheet.create(({ colors, typography }) => ({
   container: {
-    backgroundColor: Colors.white,
-    boxShadow: [{ blurRadius: 5, offsetX: 0, offsetY: 0, color: Colors.secondaryWhite }],
+    backgroundColor: colors.background.primary,
+    boxShadow: [{ blurRadius: 5, offsetX: 0, offsetY: 0, color: colors.background.secondary }],
     flex: 1,
     gap: 12,
     paddingVertical: 16,
@@ -16,9 +14,9 @@ export default StyleSheet.create({
     gap: 8,
   },
   postActionText: {
-    color: Colors.secondaryGray,
-    fontFamily: 'Inter-Regular',
-    fontSize: 12,
+    color: colors.foreground.muted,
+    fontFamily: typography.family.regular,
+    fontSize: typography.size.sm,
   },
   postActions: {
     alignItems: 'center',
@@ -30,9 +28,9 @@ export default StyleSheet.create({
     paddingHorizontal: 16,
   },
   postDateCreated: {
-    color: Colors.secondaryGray,
-    fontFamily: 'Inter-Regular',
-    fontSize: 11,
+    color: colors.foreground.muted,
+    fontFamily: typography.family.regular,
+    fontSize: typography.size.xs,
   },
   postHeader: {
     alignItems: 'center',
@@ -46,7 +44,7 @@ export default StyleSheet.create({
     gap: 8,
   },
   postUserNickname: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 12,
+    fontFamily: typography.family.bold,
+    fontSize: typography.size.sm,
   },
-});
+}));

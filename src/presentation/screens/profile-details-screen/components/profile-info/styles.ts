@@ -1,12 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export default StyleSheet.create(({ typography, colors }) => ({
   biography: {
-    color: Colors.lightGray,
-    fontFamily: 'Inter-Regular',
-    fontSize: 16,
+    color: colors.border.default,
+    fontFamily: typography.family.regular,
+    fontSize: typography.size.lg,
     lineHeight: 26,
   },
   container: {
@@ -21,13 +19,13 @@ export default StyleSheet.create({
     marginBottom: 8,
   },
   detailsText: {
-    color: Colors.black,
-    fontFamily: 'Inter-Regular',
-    fontSize: 16,
+    color: colors.foreground.primary,
+    fontFamily: typography.family.regular,
+    fontSize: typography.size.lg,
   },
   name: {
-    color: Colors.black,
-    fontFamily: 'Inter-Bold',
-    fontSize: 20,
+    color: colors.foreground.primary,
+    fontFamily: typography.family.bold,
+    fontSize: typography.size.xl,
   },
-});
+}));

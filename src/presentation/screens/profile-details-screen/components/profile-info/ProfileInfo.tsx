@@ -22,12 +22,8 @@ const ProfileInfo = (props: ProfileInfoProps) => {
     if (user) navigation.navigate(ProfileRouteNames.ProfileEdit, { user });
   };
 
-  const onNavigateToFollowers = () => {
-    navigation.navigate(ProfileRouteNames.ProfileFollowers);
-  };
-
-  const onNavigateToFollows = () => {
-    navigation.navigate(ProfileRouteNames.ProfileFollows);
+  const onNavigateToFollows = (type: 'follows' | 'followers') => {
+    navigation.navigate(ProfileRouteNames.ProfileFollows, { type });
   };
 
   const onScrollToPosts = () => {
@@ -51,11 +47,11 @@ const ProfileInfo = (props: ProfileInfoProps) => {
           {user?.postsCount} posts
         </Text>
 
-        <Text onPress={onNavigateToFollowers} style={styles.detailsText}>
+        <Text onPress={() => onNavigateToFollows('followers')} style={styles.detailsText}>
           {user?.followersCount} followers
         </Text>
 
-        <Text onPress={onNavigateToFollows} style={styles.detailsText}>
+        <Text onPress={() => onNavigateToFollows('follows')} style={styles.detailsText}>
           {user?.followsCount} follows
         </Text>
       </View>

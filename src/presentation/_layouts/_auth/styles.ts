@@ -1,10 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export default StyleSheet.create(({ colors, typography }) => ({
   container: {
-    backgroundColor: Colors.white,
+    backgroundColor: colors.background.primary,
     flex: 1,
   },
   content: {
@@ -24,9 +22,9 @@ export default StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: Colors.black,
-    fontFamily: 'Inter-Bold',
-    fontSize: 32,
+    color: colors.foreground.primary,
+    fontFamily: typography.family.bold,
+    fontSize: typography.size.xxl,
     textAlign: 'center',
   },
-});
+}));

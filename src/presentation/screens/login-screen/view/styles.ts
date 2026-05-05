@@ -1,10 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export default StyleSheet.create(({ colors }) => ({
   bottomText: { textAlign: 'center' },
   errorContainer: { marginBottom: 12 },
-  registrationText: { color: Colors.orange },
+  registrationText: { color: colors.accent.default },
   submitButton: { marginTop: 24 },
-});
+}));

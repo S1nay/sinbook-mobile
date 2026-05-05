@@ -1,13 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export default StyleSheet.create(({ colors }) => ({
   container: {
-    backgroundColor: Colors.secondaryWhite,
+    backgroundColor: colors.background.secondary,
   },
   listContainer: {
     gap: 24,
     paddingVertical: 24,
   },
-});
+}));

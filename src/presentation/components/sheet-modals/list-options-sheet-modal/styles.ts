@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-export default StyleSheet.create({
+export default StyleSheet.create(({ typography }) => ({
   item: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -8,7 +8,7 @@ export default StyleSheet.create({
     padding: 16,
   },
   text: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 16,
+    fontFamily: typography.family.regular,
+    fontSize: typography.size.lg,
   },
-});
+}));

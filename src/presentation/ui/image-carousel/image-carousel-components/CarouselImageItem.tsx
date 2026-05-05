@@ -1,11 +1,12 @@
 import { Image, ImageStyle, Pressable, StyleProp } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import TurboImage from 'react-native-turbo-image';
+import { useUnistyles } from 'react-native-unistyles';
 import { scheduleOnRN } from 'react-native-worklets';
 
 import Icon from '@ui/icon';
 
-import styles from './styles';
+import { styles } from './styles';
 
 type CarouselImageItemProps = {
   uri: string;
@@ -24,6 +25,7 @@ const CarouselImageItem = ({
   imageStyle,
   onRemoveImage,
 }: CarouselImageItemProps) => {
+  const { theme } = useUnistyles();
   const translateY = useSharedValue(0);
   const opacity = useSharedValue(1);
 
@@ -48,7 +50,12 @@ const CarouselImageItem = ({
       <ImageComponent source={{ uri }} style={[styles.image, imageStyle]} resizeMode="cover" />
       {!!onRemoveImage && (
         <Pressable style={styles.removeButton} onPress={handleRemove}>
-          <Icon name="add" size={14} stroke="white" style={styles.removeIcon} />
+          <Icon
+            name="add"
+            size={14}
+            stroke={theme.colors.foreground.inverse}
+            style={styles.removeIcon}
+          />
         </Pressable>
       )}
     </Animated.View>

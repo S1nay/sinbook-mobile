@@ -1,17 +1,19 @@
 import NetworkLogger from 'react-native-network-logger';
+import { useUnistyles } from 'react-native-unistyles';
 
 import AppLayout from '@layouts/_app';
-import { Colors } from '@shared/colors';
 
 const LogView = () => {
+  const { theme } = useUnistyles();
+
   return (
     <AppLayout>
       <NetworkLogger
         sort="desc"
         theme={{
           colors: {
-            background: Colors.white,
-            text: Colors.black,
+            background: theme.colors.background.primary,
+            text: theme.colors.foreground.primary,
           },
         }}
       />

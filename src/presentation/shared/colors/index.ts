@@ -1,17 +1,23 @@
+import { lightTheme } from '@shared/theme/light';
+
+/**
+ * @deprecated Migrate styles.ts files to StyleSheet.create((theme) => ({...})) from react-native-unistyles.
+ * This shim re-exports the light theme values to keep existing styles compiling during migration.
+ */
 export const Colors = {
-  black: '#171A1F',
-  shadowBlack: '#171A1F30',
-  orange: '#E1602C',
-  lightOrange: '#EA916E',
-  secondaryLightOrange: '#FDF5F1',
-  gray: '#323842',
-  secondaryGray: '#9095A0',
-  lightGray: '#BCC1CA',
-  red: '#DE3B40',
-  lightRed: '#FBE0E8FF',
-  white: '#FFFFFF',
-  secondaryWhite: '#F3F4F6',
+  black: lightTheme.colors.foreground.primary,
+  shadowBlack: lightTheme.colors.overlay.shadow,
+  orange: lightTheme.colors.accent.default,
+  lightOrange: lightTheme.colors.accent.hover,
+  secondaryLightOrange: lightTheme.colors.accent.subtle,
+  gray: lightTheme.colors.foreground.secondary,
+  secondaryGray: lightTheme.colors.foreground.muted,
+  lightGray: lightTheme.colors.border.default,
+  red: lightTheme.colors.danger.default,
+  lightRed: lightTheme.colors.danger.subtle,
+  white: lightTheme.colors.background.primary,
+  secondaryWhite: lightTheme.colors.background.secondary,
   transparent: 'transparent',
-  dot: '#DEE1E6',
-  green: '#76bf4c',
+  dot: lightTheme.colors.border.subtle,
+  green: lightTheme.colors.success.default,
 } as const;

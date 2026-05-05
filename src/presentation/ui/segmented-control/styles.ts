@@ -1,17 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export const styles = StyleSheet.create(({ colors, typography }) => ({
   activeItem: {
-    backgroundColor: Colors.secondaryLightOrange,
+    backgroundColor: colors.accent.subtle,
     borderRadius: 12,
     height: 24,
     position: 'absolute',
   },
   activeText: {
-    color: Colors.lightOrange,
-    fontFamily: 'Inter-Bold',
+    color: colors.accent.hover,
+    fontFamily: typography.family.bold,
   },
   container: {
     flexDirection: 'row',
@@ -22,7 +20,7 @@ export default StyleSheet.create({
     paddingVertical: 1,
   },
   text: {
-    color: Colors.gray,
-    fontFamily: 'Inter-Regular',
+    color: colors.foreground.secondary,
+    fontFamily: typography.family.regular,
   },
-});
+}));

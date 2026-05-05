@@ -1,16 +1,13 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export const styles = StyleSheet.create(({ colors }) => ({
   image: {
     height: '100%',
     width: '100%',
   },
-
   removeButton: {
     alignItems: 'center',
-    backgroundColor: Colors.black,
+    backgroundColor: colors.foreground.primary,
     borderRadius: 100,
     height: 24,
     justifyContent: 'center',
@@ -22,4 +19,4 @@ export default StyleSheet.create({
   removeIcon: {
     transform: [{ rotate: '45deg' }],
   },
-});
+}));

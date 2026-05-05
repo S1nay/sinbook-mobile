@@ -1,9 +1,12 @@
+import './presentation/shared/theme/unistyles';
+
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useEffect, useRef } from 'react';
 import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
+import { useUnistyles } from 'react-native-unistyles';
 
 import container from '@core/di/container';
 import { Identifiers } from '@core/di/identifiers';
@@ -22,6 +25,7 @@ const socketConnections = [
 ];
 
 const App = () => {
+  const { theme } = useUnistyles();
   const httpClient = useRef(container.get(Identifiers.SinbookHttpClient)).current;
   const storage = useRef(container.get(Identifiers.MMKVStorage)).current;
   const socketManager = useRef(container.get(Identifiers.SocketManager)).current;
@@ -54,7 +58,7 @@ const App = () => {
         <BottomSheetModalProvider>
           <DIProvider container={container}>
             <AuthProvider>
-              <StatusBar barStyle={'dark-content'} />
+              <StatusBar barStyle={theme.components.statusBar.barStyle} />
 
               <AppNavigator />
 

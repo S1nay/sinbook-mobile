@@ -4,7 +4,7 @@ import Carousel, { Pagination } from 'react-native-reanimated-carousel';
 import { CarouselRenderItemInfo } from 'react-native-reanimated-carousel/lib/typescript/types';
 
 import CarouselImageItem from './image-carousel-components';
-import styles from './styles';
+import { styles } from './styles';
 import { ImageCarouselProps, ImageType } from './types';
 
 const getImageType = (uri: string): ImageType => {

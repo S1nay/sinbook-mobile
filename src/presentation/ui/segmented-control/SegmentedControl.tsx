@@ -3,7 +3,7 @@ import { memo, useCallback, useState } from 'react';
 import { LayoutChangeEvent, Pressable, Text, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import styles from './styles';
+import { styles } from './styles';
 import { SegmentedControlProps } from './types';
 
 const SegmentedControl = (props: SegmentedControlProps) => {

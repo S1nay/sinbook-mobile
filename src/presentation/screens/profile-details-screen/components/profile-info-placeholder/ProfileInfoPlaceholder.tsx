@@ -1,11 +1,12 @@
 import { Dimensions } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-
-import { Colors } from '@shared/colors';
+import { useUnistyles } from 'react-native-unistyles';
 
 const ProfileInfoPlaceholder = () => {
+  const { theme } = useUnistyles();
+
   return (
-    <SkeletonPlaceholder borderRadius={4} backgroundColor={Colors.secondaryWhite}>
+    <SkeletonPlaceholder borderRadius={4} backgroundColor={theme.colors.background.secondary}>
       <SkeletonPlaceholder.Item alignItems="center" gap={12} marginBottom={12} marginTop={24}>
         <SkeletonPlaceholder.Item width={160} height={160} borderRadius={150} />
 
