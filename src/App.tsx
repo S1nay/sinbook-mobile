@@ -1,9 +1,12 @@
+import './presentation/shared/theme/unistyles';
+
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useEffect, useRef } from 'react';
 import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
+import { useUnistyles } from 'react-native-unistyles';
 
 import container from '@core/di/container';
 import { Identifiers } from '@core/di/identifiers';
@@ -11,6 +14,7 @@ import { requestInterceptor, responseInterceptor } from '@core/interceptors';
 import { SocketConnectionPaths } from '@core/interfaces/socket';
 import { AuthProvider } from '@core/providers/auth-provider';
 import { DIProvider } from '@core/providers/di-provider';
+import { ThemeProvider } from '@core/providers/theme-provider';
 import { AppNavigator } from '@navigation/AppNavigator';
 import BottomSheetModalWrapper from '@ui/bottom-sheet';
 import ToastConfig from '@ui/toast';
@@ -22,6 +26,7 @@ const socketConnections = [
 ];
 
 const App = () => {
+  const { theme } = useUnistyles();
   const httpClient = useRef(container.get(Identifiers.SinbookHttpClient)).current;
   const storage = useRef(container.get(Identifiers.MMKVStorage)).current;
   const socketManager = useRef(container.get(Identifiers.SocketManager)).current;
@@ -53,15 +58,17 @@ const App = () => {
       <SafeAreaProvider>
         <BottomSheetModalProvider>
           <DIProvider container={container}>
-            <AuthProvider>
-              <StatusBar barStyle={'dark-content'} />
+            <ThemeProvider>
+              <AuthProvider>
+                <StatusBar barStyle={theme.components.statusBar.barStyle} />
 
-              <AppNavigator />
+                <AppNavigator />
 
-              <BottomSheetModalWrapper />
+                <BottomSheetModalWrapper />
 
-              <Toast position={'bottom'} visibilityTime={3000} config={ToastConfig} />
-            </AuthProvider>
+                <Toast position={'bottom'} visibilityTime={3000} config={ToastConfig} />
+              </AuthProvider>
+            </ThemeProvider>
           </DIProvider>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

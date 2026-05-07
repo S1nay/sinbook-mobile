@@ -1,6 +1,8 @@
 import { ServiceIdentifier } from 'inversify';
 
 export interface IAuthStorage {
+  getAccessToken(): string | null;
+
   setAccessToken(access: string): void;
   setRefreshToken(refresh: string): void;
 

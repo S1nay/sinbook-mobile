@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import { Dimensions, Pressable, Text, View } from 'react-native';
+import { useUnistyles } from 'react-native-unistyles';
 
 import { getConnectUrl } from '@core/helpers';
-import { Colors } from '@shared/colors';
 import Avatar from '@ui/avatar';
 import Icon from '@ui/icon';
 import ImageCarousel from '@ui/image-carousel';
@@ -14,6 +14,7 @@ const POST_IMAGE_SIZE = Dimensions.get('screen').width;
 
 const Post = (props: PostProps) => {
   const { post, user } = props;
+  const { theme } = useUnistyles();
 
   return (
     <View style={styles.container}>
@@ -30,7 +31,12 @@ const Post = (props: PostProps) => {
         </View>
 
         <Pressable hitSlop={8}>
-          <Icon size={24} name="threeDots" stroke={Colors.black} fill={Colors.black} />
+          <Icon
+            size={24}
+            name="threeDots"
+            stroke={theme.colors.foreground.primary}
+            fill={theme.colors.foreground.primary}
+          />
         </Pressable>
       </View>
 
@@ -44,12 +50,12 @@ const Post = (props: PostProps) => {
 
       <View style={styles.postActions}>
         <Pressable hitSlop={8} style={styles.postAction}>
-          <Icon size={16} name="like" stroke={Colors.gray} />
+          <Icon size={16} name="like" stroke={theme.colors.foreground.secondary} />
           <Text style={styles.postActionText}>{post.likes.length}</Text>
         </Pressable>
 
         <Pressable hitSlop={8} style={styles.postAction}>
-          <Icon size={16} name="comment" stroke={Colors.gray} />
+          <Icon size={16} name="comment" stroke={theme.colors.foreground.secondary} />
           <Text style={styles.postActionText}>{post.commentsCount}</Text>
         </Pressable>
       </View>

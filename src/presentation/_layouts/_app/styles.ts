@@ -1,10 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export default StyleSheet.create(({ colors }) => ({
   container: {
-    backgroundColor: Colors.white,
+    backgroundColor: colors.background.primary,
     flex: 1,
   },
   content: {
@@ -13,4 +11,4 @@ export default StyleSheet.create({
   global: {
     flex: 1,
   },
-});
+}));

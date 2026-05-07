@@ -4,6 +4,7 @@ import FileRepository from './FileRepository';
 import FollowsRepository from './FollowsRepository';
 import LikeRepository from './LikeRepository';
 import PostRepository from './PostRepository';
+import ThemeRepository from './ThemeRepository';
 import UserRepository from './UserRepository';
 
 export {
@@ -14,4 +15,5 @@ export {
   CommentRepository,
   FollowsRepository,
   LikeRepository,
+  ThemeRepository,
 };

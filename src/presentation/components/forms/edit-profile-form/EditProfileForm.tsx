@@ -2,8 +2,8 @@ import { useEffect, useImperativeHandle } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 import { Asset } from 'react-native-image-picker';
+import { useUnistyles } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
 import Avatar from '@ui/avatar';
 import Icon from '@ui/icon';
 import Input from '@ui/input';
@@ -17,6 +17,7 @@ const EditProfileForm = (props: EditProfileFormProps) => {
   const { externalErrors, formParams, ref, formStyle } = props;
 
   const form = useForm<EditProfileFormData>(formParams);
+  const { theme } = useUnistyles();
 
   useImperativeHandle(ref, () => form);
 
@@ -42,7 +43,7 @@ const EditProfileForm = (props: EditProfileFormProps) => {
           <MediaPicker style={styles.avatar} onPick={onPickAvatar}>
             <Avatar uri={value} size={160}>
               <View style={styles.editIcon}>
-                <Icon size={24} name={'pencil'} stroke={Colors.black} />
+                <Icon size={24} name={'pencil'} stroke={theme.colors.foreground.primary} />
               </View>
             </Avatar>
           </MediaPicker>

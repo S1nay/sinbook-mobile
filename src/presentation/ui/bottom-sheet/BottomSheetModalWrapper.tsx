@@ -8,6 +8,7 @@ import { BackHandler, NativeEventSubscription } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BottomSheetModalRef } from './BottomSheetModal';
+import styles from './styles';
 import { BottomSheetModalShowFunc, IBottomSheetModalParams } from './types';
 
 const BottomSheetModalWrapper = () => {
@@ -69,6 +70,8 @@ const BottomSheetModalWrapper = () => {
       topInset={insets.top}
       backdropComponent={renderBackdrop}
       onDismiss={onDismiss}
+      handleStyle={styles.handle}
+      handleIndicatorStyle={styles.handleIndicator}
     >
       {state.modal}
     </BottomSheetModal>

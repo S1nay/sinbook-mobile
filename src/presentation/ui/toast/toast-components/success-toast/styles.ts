@@ -1,10 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export const styles = StyleSheet.create(({ components, typography }) => ({
   container: {
-    backgroundColor: Colors.green,
+    backgroundColor: components.toast.successBg,
     borderRadius: 12,
     gap: 8,
     height: 50,
@@ -24,8 +22,8 @@ export default StyleSheet.create({
     width: '110%',
   },
   success: {
-    color: Colors.white,
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
+    color: components.toast.fg,
+    fontFamily: typography.family.regular,
+    fontSize: typography.size.md,
   },
-});
+}));

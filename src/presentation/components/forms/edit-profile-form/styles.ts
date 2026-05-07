@@ -1,8 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export default StyleSheet.create(({ colors }) => ({
   avatar: {
     alignSelf: 'center',
   },
@@ -11,14 +9,14 @@ export default StyleSheet.create({
   },
   editIcon: {
     alignItems: 'center',
-    backgroundColor: Colors.white,
-    borderRadius: '50%',
+    backgroundColor: colors.background.primary,
+    borderRadius: '50%' as unknown as number,
     bottom: 0,
-    boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 10, color: Colors.lightGray }],
+    boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 10, color: colors.overlay.shadowSubtle }],
     height: 32,
     justifyContent: 'center',
     position: 'absolute',
     right: 16,
     width: 32,
   },
-});
+}));

@@ -1,14 +1,23 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export const styles = StyleSheet.create(({ colors, typography }) => ({
   checkbox: {
     alignItems: 'center',
     borderRadius: 2,
     height: 16,
     justifyContent: 'center',
     width: 16,
+    variants: {
+      checked: {
+        true: {
+          backgroundColor: colors.accent.hover,
+        },
+        false: {
+          borderColor: colors.foreground.secondary,
+          borderWidth: 1,
+        },
+      },
+    },
   },
   container: {
     alignItems: 'center',
@@ -16,8 +25,8 @@ export default StyleSheet.create({
     gap: 6,
   },
   label: {
-    color: Colors.black,
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
+    color: colors.foreground.primary,
+    fontFamily: typography.family.regular,
+    fontSize: typography.size.md,
   },
-});
+}));

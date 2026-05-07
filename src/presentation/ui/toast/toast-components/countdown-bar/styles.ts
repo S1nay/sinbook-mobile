@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-export default StyleSheet.create({
+export const styles = StyleSheet.create(() => ({
   container: {
     overflow: 'hidden',
     width: '100%',
@@ -8,4 +8,4 @@ export default StyleSheet.create({
   fill: {
     height: '100%',
   },
-});
+}));

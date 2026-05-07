@@ -29,10 +29,18 @@ import {
   FollowsRepository,
   LikeRepository,
   PostRepository,
+  ThemeRepository,
   UserRepository,
 } from '@data/repositories';
-import { AuthStorage, IAuthStorage, IUserStorage, UserStorage } from '@data/storage';
-import { IPostStore, IUserStore, PostStore, UserStore } from '@data/store';
+import {
+  AuthStorage,
+  IAuthStorage,
+  IThemeStorage,
+  IUserStorage,
+  ThemeStorage,
+  UserStorage,
+} from '@data/storage';
+import { IPostStore, IThemeStore, IUserStore, PostStore, ThemeStore, UserStore } from '@data/store';
 import {
   IAuthRepository,
   ICommentRepository,
@@ -40,6 +48,7 @@ import {
   IFollowsRepository,
   ILikeRepository,
   IPostRepository,
+  IThemeRepository,
   IUserRepository,
 } from '@domain/repositories';
 import { combineUseCases } from '@domain/use-cases';
@@ -63,11 +72,13 @@ container.bind<ILikeApi>(ILikeApi.$).to(LikeApi).inSingletonScope();
 /* -- Store's -- */
 container.bind<IUserStore>(IUserStore.$).to(UserStore).inSingletonScope();
 container.bind<IPostStore>(IPostStore.$).to(PostStore).inSingletonScope();
+container.bind<IThemeStore>(IThemeStore.$).to(ThemeStore).inSingletonScope();
 
 /* -- Storage's -- */
 
 container.bind<IAuthStorage>(IAuthStorage.$).to(AuthStorage).inSingletonScope();
 container.bind<IUserStorage>(IUserStorage.$).to(UserStorage).inSingletonScope();
+container.bind<IThemeStorage>(IThemeStorage.$).to(ThemeStorage).inSingletonScope();
 
 /* -- API Http Clients -- */
 container.bind<IHttpClient>(Identifiers.SinbookHttpClient).toConstantValue(SinbookHttpClientImpl);
@@ -89,6 +100,7 @@ container.bind<ISocketManager>(Identifiers.SocketManager).toConstantValue(Socket
 
 container.bind<IAuthRepository>(IAuthRepository.$).to(AuthRepository).inSingletonScope();
 container.bind<IUserRepository>(IUserRepository.$).to(UserRepository).inSingletonScope();
+container.bind<IThemeRepository>(IThemeRepository.$).to(ThemeRepository).inSingletonScope();
 container.bind<IPostRepository>(IPostRepository.$).to(PostRepository).inSingletonScope();
 container.bind<IFileRepository>(IFileRepository.$).to(FileRepository).inSingletonScope();
 container.bind<ICommentRepository>(ICommentRepository.$).to(CommentRepository).inSingletonScope();

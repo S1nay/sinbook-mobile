@@ -1,9 +1,8 @@
 import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { hide } from 'react-native-bootsplash';
 
-import { Identifiers } from '@core/di/identifiers';
 import { useDIContainer } from '@core/hooks';
-import { AuthStorageKeys } from '@data/storage';
+import { AuthUseCases } from '@domain/use-cases';
 
 import AuthContext from './AuthContext';
 
@@ -11,19 +10,17 @@ const AuthProvider = (props: PropsWithChildren<unknown>) => {
   const { children } = props;
   const container = useDIContainer();
   const [isAuth, setIsAuth] = useState(false);
-  const storage = container?.get(Identifiers.MMKVStorage);
+  const checkAuthUseCase = container.get<UseCase<void, boolean, boolean>>(AuthUseCases.$CheckAuth);
 
   useEffect(() => {
     (async () => {
-      const token = storage?.getString(AuthStorageKeys.ACCESS_TOKEN);
-
-      if (token) {
+      if (checkAuthUseCase.execute()) {
         setIsAuth(true);
       }
 
       await hide({ fade: true });
     })();
-  }, [storage]);
+  }, []);
 
   const authorize = () => {
     setIsAuth(true);

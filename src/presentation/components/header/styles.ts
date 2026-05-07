@@ -1,17 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export default StyleSheet.create(({ colors, typography }) => ({
   container: {
     alignItems: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: colors.background.primary,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border.separator,
     boxShadow: [
       {
         blurRadius: 6,
         offsetX: 0,
         offsetY: 4,
-        color: Colors.secondaryWhite,
+        color: colors.overlay.shadow,
       },
     ],
     flexDirection: 'row',
@@ -35,8 +35,8 @@ export default StyleSheet.create({
     width: 30,
   },
   title: {
-    color: Colors.black,
-    fontFamily: 'Inter-Bold',
-    fontSize: 16,
+    color: colors.foreground.primary,
+    fontFamily: typography.family.bold,
+    fontSize: typography.size.lg,
   },
-});
+}));

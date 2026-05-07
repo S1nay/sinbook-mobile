@@ -12,7 +12,7 @@
     "noEmit": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "types": ["@types/react"],
     "resolveJsonModule": true,
     "paths": {
@@ -25,7 +25,7 @@
       "@ui/*": ["./src/presentation/ui/*"],
       "@components/*": ["./src/presentation/components/*"],
       "@screens/*": ["./src/presentation/screens/*"],
-      "@layouts/*": ["./src/presentation/_layouts/*"],
+      "@layouts/*": ["./src/presentation/_layouts/*"]
     }
   },
   "exclude": ["node_modules"]

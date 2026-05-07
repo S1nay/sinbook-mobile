@@ -3,14 +3,14 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
 import { ActivityIndicator, FlatList, Pressable } from 'react-native';
 import TurboImage from 'react-native-turbo-image';
+import { useUnistyles } from 'react-native-unistyles';
 
 import Header from '@components/header';
 import { getConnectUrl } from '@core/helpers';
-import { useAuth, useDIContainer, usePagination } from '@core/hooks';
+import { useDIContainer, usePagination } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
 import { ProfileRouteNames, ProfileScreenProps } from '@navigation/configuration';
-import { Colors } from '@shared/colors';
 import Grid, { GridRenderItemInfo } from '@ui/grid';
 
 import styles from './styles';
@@ -23,16 +23,15 @@ const GRID_NUM_OF_COLUMNS = 3;
 
 const ProfileDetailsView = () => {
   const container = useDIContainer();
+  const { theme } = useUnistyles();
   const navigation =
     useNavigation<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['navigation']>();
   const { params } = useRoute<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['route']>();
-  const { logout, user, getUserData, getUserPosts, posts, postsMeta, isLoading } = container.get(
+  const { user, getUserData, getUserPosts, posts, postsMeta, isLoading } = container.get(
     IProfileDetailsViewModel.$,
   );
 
   const gridRef = useRef<FlatList | null>(null);
-
-  const { unauthorize } = useAuth();
 
   useEffect(() => {
     const postCreated = !!params?.newPostIsCreated;
@@ -45,7 +44,9 @@ const ProfileDetailsView = () => {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: user?.nickName ?? 'Profile',
-      header: props => <Header {...props} rightIcon="logout" onPressRightIcon={handleLogout} />,
+      header: props => (
+        <Header {...props} rightIcon="threeDots" onPressRightIcon={navigateToSettings} />
+      ),
     });
   }, [user]);
 
@@ -62,8 +63,8 @@ const ProfileDetailsView = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout(unauthorize);
+  const navigateToSettings = () => {
+    navigation.navigate(ProfileRouteNames.ProfileSettings);
   };
 
   const onNavigateToProfilePosts = () => {
@@ -94,7 +95,9 @@ const ProfileDetailsView = () => {
         ListHeaderComponent={<ProfileInfo user={user} gridRef={gridRef} />}
         ListEmptyComponent={isLoading ? <GridPlaceholder /> : null}
         ListFooterComponent={
-          isLoadMore ? <ActivityIndicator size={'small'} color={Colors.black} /> : undefined
+          isLoadMore ? (
+            <ActivityIndicator size={'small'} color={theme.colors.foreground.primary} />
+          ) : undefined
         }
         onRefresh={onRefresh}
         isLoadMore={isLoadMore}

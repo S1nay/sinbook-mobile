@@ -2,6 +2,8 @@ import { ServiceIdentifier } from 'inversify';
 
 import { IAuthResponseDTO, ILoginRequestDTO, IRegisterRequestDTO } from '@domain/dto';
 export interface IAuthRepository {
+  isAuthenticated(): boolean;
+
   login(dto: ILoginRequestDTO): Promise<IAuthResponseDTO>;
   register(dto: IRegisterRequestDTO): Promise<IAuthResponseDTO>;
 

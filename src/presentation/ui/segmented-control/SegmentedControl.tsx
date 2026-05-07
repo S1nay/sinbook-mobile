@@ -1,65 +1,52 @@
-/* eslint-disable react-native/no-inline-styles */
-import { memo, useCallback, useState } from 'react';
-import { LayoutChangeEvent, Pressable, Text, View } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { memo, PropsWithChildren, useCallback, useMemo, useState } from 'react';
+import { View } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
 
+import { SegmentedControlContext } from './context';
 import styles from './styles';
-import { SegmentedControlProps } from './types';
+import { SegmentedControlProps, IItemLayout } from './types';
 
-const SegmentedControl = (props: SegmentedControlProps) => {
-  const { options, selectedOption, optionStyle, style, onPressOption, ...otherProps } = props;
+const WZSegmentedControl = (props: PropsWithChildren<SegmentedControlProps>) => {
+  const {
+    defaultValue,
+    disabled = false,
+    onValueChange,
+    orientation = 'horizontal',
+    style,
+    children,
+  } = props;
+  const [value, setValue] = useState(defaultValue);
 
-  const [optionsWidth, setOptionsWidth] = useState<Array<number>>([]);
+  const layouts = useSharedValue<Record<string, IItemLayout>>({});
 
-  const changeActiveOptionPosition = ({ nativeEvent }: LayoutChangeEvent, index: number) => {
-    const width = nativeEvent.layout.width;
+  styles.useVariants({ orientation, disabled });
 
-    setOptionsWidth(prev => {
-      const copy = [...prev];
-      copy[index] = width;
-      return copy;
-    });
-  };
-
-  const renderOption = (option: string, index: number) => {
-    const isActive = option === selectedOption;
-
-    return (
-      <Pressable
-        style={[styles.option, optionStyle]}
-        onLayout={(e: LayoutChangeEvent) => changeActiveOptionPosition(e, index)}
-        onPress={() => onPressOption(option)}
-        key={option + index}
-      >
-        <Text style={[styles.text, isActive && styles.activeText]}>{option}</Text>
-      </Pressable>
-    );
-  };
-
-  const getLeft = useCallback(
-    (index: number) => {
-      return optionsWidth.slice(0, index).reduce((acc, w) => acc + w + styles.container.gap, 0);
+  const onChange = useCallback(
+    (newValue: string) => {
+      setValue(newValue);
+      onValueChange?.(newValue);
     },
-    [optionsWidth],
+    [onValueChange],
+  );
+
+  const ctxValue = useMemo(
+    () => ({
+      value,
+      onChange,
+      disabled,
+      orientation,
+      layouts,
+    }),
+    [value, onChange, disabled, orientation, layouts],
   );
 
   return (
-    <View style={[styles.container, style]} {...otherProps}>
-      <Animated.View
-        style={[
-          styles.activeItem,
-          {
-            width: optionsWidth[options.indexOf(selectedOption)],
-            left: getLeft(options.indexOf(selectedOption)),
-            transitionProperty: ['left'],
-            transitionDuration: 300,
-          },
-        ]}
-      />
-
-      {options.map(renderOption)}
-    </View>
+    <SegmentedControlContext.Provider value={ctxValue}>
+      <View style={styles.wrapper}>
+        <View style={[styles.content, style]}>{children}</View>
+      </View>
+    </SegmentedControlContext.Provider>
   );
 };
 
-export default memo(SegmentedControl);
+export default memo(WZSegmentedControl);

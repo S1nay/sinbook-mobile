@@ -1,28 +1,26 @@
-import { StyleSheet } from 'react-native';
-
-import { Colors } from '@shared/colors';
+import { StyleSheet } from 'react-native-unistyles';
 
 export default StyleSheet.create({
-  activeItem: {
-    backgroundColor: Colors.secondaryLightOrange,
-    borderRadius: 12,
-    height: 24,
-    position: 'absolute',
+  content: {
+    overflow: 'visible',
+    position: 'relative',
+    variants: {
+      orientation: {
+        horizontal: {
+          flexDirection: 'row',
+        },
+        vertical: {
+          flexDirection: 'column',
+        },
+      },
+      disabled: {
+        true: {
+          opacity: 0.5,
+        },
+      },
+    },
   },
-  activeText: {
-    color: Colors.lightOrange,
-    fontFamily: 'Inter-Bold',
-  },
-  container: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  option: {
-    paddingHorizontal: 21,
-    paddingVertical: 1,
-  },
-  text: {
-    color: Colors.gray,
-    fontFamily: 'Inter-Regular',
+  wrapper: {
+    overflow: 'visible',
   },
 });

@@ -1,7 +1,7 @@
 import { Pressable, Text, View } from 'react-native';
+import { useUnistyles } from 'react-native-unistyles';
 
 import { BottomTabRouteNames, ChatRouteNames, ProfileRouteNames } from '@navigation/configuration';
-import { Colors } from '@shared/colors';
 import Icon from '@ui/icon';
 
 import styles from './styles';
@@ -16,6 +16,7 @@ const icons: BottomTabIcons = {
 
 const BottomTabBar = (props: BottomTabBarProps) => {
   const { state, navigation, insets } = props;
+  const { theme } = useUnistyles();
 
   const onPress = (route: BottomTabRoute, isFocused: boolean) => {
     const event = navigation.emit({
@@ -73,7 +74,7 @@ const BottomTabBar = (props: BottomTabBarProps) => {
             <Icon
               name={icons[route.name]}
               size={24}
-              stroke={isFocused ? Colors.orange : Colors.black}
+              stroke={isFocused ? theme.colors.accent.default : theme.colors.foreground.primary}
             />
 
             {isFocused && <View style={styles.tabBottomBorder} />}

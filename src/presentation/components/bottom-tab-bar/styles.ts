@@ -1,25 +1,25 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export default StyleSheet.create(({ colors }) => ({
   container: {
     alignItems: 'center',
-    backgroundColor: Colors.white,
-    boxShadow: [{ offsetX: 0, offsetY: -4, blurRadius: 9, color: Colors.secondaryWhite }],
+    backgroundColor: colors.background.primary,
+    borderTopWidth: 1,
+    borderTopColor: colors.border.separator,
+    boxShadow: [{ offsetX: 0, offsetY: -4, blurRadius: 9, color: colors.overlay.shadowSubtle }],
     flexDirection: 'row',
     height: 70,
   },
   createPost: {
     alignItems: 'center',
-    backgroundColor: Colors.black,
-    borderRadius: '100%',
+    backgroundColor: colors.foreground.primary,
+    borderRadius: '100%' as unknown as number,
     height: 40,
     justifyContent: 'center',
     width: 40,
   },
   createPostText: {
-    color: Colors.white,
+    color: colors.foreground.inverse,
     fontSize: 36,
     lineHeight: 40,
   },
@@ -28,10 +28,10 @@ export default StyleSheet.create({
     flex: 1,
   },
   tabBottomBorder: {
-    backgroundColor: Colors.orange,
+    backgroundColor: colors.accent.default,
     bottom: -15,
     height: 2,
     position: 'absolute',
     width: 80,
   },
-});
+}));

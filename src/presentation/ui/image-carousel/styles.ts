@@ -1,10 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-import { Colors } from '@shared/colors';
-
-export default StyleSheet.create({
+export const styles = StyleSheet.create(({ colors }) => ({
   activeDot: {
-    backgroundColor: Colors.black,
+    backgroundColor: colors.foreground.primary,
     borderRadius: 100,
     overflow: 'hidden',
   },
@@ -12,7 +10,7 @@ export default StyleSheet.create({
     width: '100%',
   },
   dot: {
-    backgroundColor: Colors.dot,
+    backgroundColor: colors.border.subtle,
     borderRadius: 100,
   },
   dotContainer: {
@@ -23,4 +21,4 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+}));

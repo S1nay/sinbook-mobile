@@ -10,10 +10,7 @@ class LikeRepository implements ILikeRepository {
   constructor(@inject(ILikeApi.$) private likeApi: ILikeApi) {}
 
   async likePost(dto: ILikeRequestDto): Promise<void> {
-    return this.likeApi
-      .likePost(dto)
-      .then(getDataFromHttpResponse)
-      .catch(getErrorFromHttpResponse);
+    return this.likeApi.likePost(dto).then(getDataFromHttpResponse).catch(getErrorFromHttpResponse);
   }
 }
 

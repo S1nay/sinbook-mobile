@@ -1,11 +1,11 @@
 import { memo, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleProp, Text, ViewStyle } from 'react-native';
+import { useUnistyles } from 'react-native-unistyles';
 
 import Icon from '@ui/icon';
 
-import { getButtonConfig } from './config';
-import styles from './styles';
-import { ButtonProps } from './types';
+import { styles } from './styles';
+import { ButtonProps, ButtonState } from './types';
 
 const Button = (props: ButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -21,7 +21,30 @@ const Button = (props: ButtonProps) => {
     ...otherProps
   } = props;
 
-  const cfg = getButtonConfig({ pressed: isPressed, disabled, variant, size });
+  const { theme } = useUnistyles();
+  // Unistyles omits 'default' from variant types; use undefined for the base case.
+  const activeState: Exclude<ButtonState, 'default'> | undefined = disabled
+    ? 'disabled'
+    : isPressed
+    ? 'pressed'
+    : undefined;
+
+  styles.useVariants({ variant, size, state: activeState });
+
+  const iconColorMap = {
+    primary: {
+      default: theme.components.button.primary.fg,
+      pressed: theme.components.button.primary.fg,
+      disabled: theme.components.button.primary.disabledFg,
+    },
+    secondary: {
+      default: theme.components.button.secondary.fg,
+      pressed: theme.components.button.secondary.pressedFg,
+      disabled: theme.components.button.secondary.disabledFg,
+    },
+  };
+
+  const iconColor = iconColorMap[variant][activeState ?? 'default'];
 
   const handlePressIn = () => {
     if (!disabled) setIsPressed(true);
@@ -34,14 +57,14 @@ const Button = (props: ButtonProps) => {
     <Pressable
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      style={[styles.base, cfg.container, style as StyleProp<ViewStyle>]}
+      style={[styles.root, style as StyleProp<ViewStyle>]}
       disabled={disabled}
       {...otherProps}
     >
-      {icon && <Icon {...icon} stroke={cfg.icon.color || icon.stroke} />}
+      {icon && <Icon {...icon} stroke={icon.stroke ?? iconColor} />}
 
-      <Text style={[cfg.text, textStyle]}>{value}</Text>
-      {isLoading && <ActivityIndicator color={cfg.loader.color} size={16} />}
+      <Text style={[styles.label, textStyle]}>{value}</Text>
+      {isLoading && <ActivityIndicator color={iconColor} size={16} />}
     </Pressable>
   );
 };

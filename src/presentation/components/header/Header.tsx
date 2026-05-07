@@ -1,10 +1,10 @@
 import { getHeaderTitle } from '@react-navigation/elements';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { BackHandler, Keyboard, Pressable, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useUnistyles } from 'react-native-unistyles';
 
 import { AppRouteNames } from '@navigation/configuration';
-import { Colors } from '@shared/colors';
 import Icon from '@ui/icon/Icon';
 
 import styles from './styles';
@@ -23,6 +23,7 @@ const Header = (props: AppHeaderProps) => {
     route,
   } = props;
   const insets = useSafeAreaInsets();
+  const { theme } = useUnistyles();
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', onBackPressHandler);
@@ -46,30 +47,6 @@ const Header = (props: AppHeaderProps) => {
     }
   };
 
-  const LeftIcon = useCallback(() => {
-    return (
-      <Pressable
-        hitSlop={8}
-        style={styles.headerLeftIcon}
-        onPress={isShowBackIcon ? onBackPressHandler : undefined}
-      >
-        <Icon
-          name={isShowBackIcon ? 'leftArrow' : 'logo'}
-          size={!isShowBackIcon ? 30 : 16}
-          fill={!isShowBackIcon ? Colors.black : Colors.lightGray}
-        />
-      </Pressable>
-    );
-  }, [isShowBackIcon]);
-
-  const RightIcon = useCallback(() => {
-    return (
-      <Pressable style={styles.headerRightIcon} onPress={onPressRightIcon}>
-        <Icon name={rightIcon} size={24} stroke={Colors.black} />
-      </Pressable>
-    );
-  }, [route.name]);
-
   const headerTitle =
     typeof options.headerTitle !== 'function'
       ? (props: React.ComponentProps<typeof Text>) => (
@@ -82,14 +59,28 @@ const Header = (props: AppHeaderProps) => {
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.headerLeftContainer}>
-        <LeftIcon />
+        <Pressable
+          hitSlop={8}
+          style={styles.headerLeftIcon}
+          onPress={isShowBackIcon ? onBackPressHandler : undefined}
+        >
+          <Icon
+            name={isShowBackIcon ? 'leftArrow' : 'logo'}
+            size={!isShowBackIcon ? 30 : 16}
+            fill={theme.colors.foreground.primary}
+          />
+        </Pressable>
 
         <Pressable onLongPress={onOpenLog}>
           {headerTitle?.({ children: getHeaderTitle(options, route.name), ...props.options })}
         </Pressable>
       </View>
 
-      {isShowRightIcon && <RightIcon />}
+      {isShowRightIcon && (
+        <Pressable style={styles.headerRightIcon} onPress={onPressRightIcon}>
+          <Icon name={rightIcon} size={24} stroke={theme.colors.foreground.primary} />
+        </Pressable>
+      )}
     </View>
   );
 };

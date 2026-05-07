@@ -1,7 +1,13 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-export default StyleSheet.create({
+export const styles = StyleSheet.create(({ components, typography }) => ({
   label: {
-    fontSize: 12,
+    fontSize: typography.size.sm,
+    variants: {
+      isError: {
+        true: { color: components.input.label.error },
+        false: { color: components.input.label.default },
+      },
+    },
   },
-});
+}));
