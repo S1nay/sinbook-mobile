@@ -1,5 +1,6 @@
 import useAuth from './use-auth';
 import useDIContainer from './use-DI-container';
 import usePagination from './use-pagination';
+import useTheme from './useTheme';
 
-export { useDIContainer, useAuth, usePagination };
+export { useDIContainer, useAuth, usePagination, useTheme };

@@ -14,6 +14,7 @@ import { requestInterceptor, responseInterceptor } from '@core/interceptors';
 import { SocketConnectionPaths } from '@core/interfaces/socket';
 import { AuthProvider } from '@core/providers/auth-provider';
 import { DIProvider } from '@core/providers/di-provider';
+import { ThemeProvider } from '@core/providers/theme-provider';
 import { AppNavigator } from '@navigation/AppNavigator';
 import BottomSheetModalWrapper from '@ui/bottom-sheet';
 import ToastConfig from '@ui/toast';
@@ -57,15 +58,17 @@ const App = () => {
       <SafeAreaProvider>
         <BottomSheetModalProvider>
           <DIProvider container={container}>
-            <AuthProvider>
-              <StatusBar barStyle={theme.components.statusBar.barStyle} />
+            <ThemeProvider>
+              <AuthProvider>
+                <StatusBar barStyle={theme.components.statusBar.barStyle} />
 
-              <AppNavigator />
+                <AppNavigator />
 
-              <BottomSheetModalWrapper />
+                <BottomSheetModalWrapper />
 
-              <Toast position={'bottom'} visibilityTime={3000} config={ToastConfig} />
-            </AuthProvider>
+                <Toast position={'bottom'} visibilityTime={3000} config={ToastConfig} />
+              </AuthProvider>
+            </ThemeProvider>
           </DIProvider>
         </BottomSheetModalProvider>
       </SafeAreaProvider>
