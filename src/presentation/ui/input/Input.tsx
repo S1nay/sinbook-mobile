@@ -33,6 +33,7 @@ const Input = (props: InputProps) => {
   const inputRef = useRef<MaskedTextInputRef>(null);
 
   const { theme } = useUnistyles();
+  const placeholderTextColor = theme.components.input.placeholder;
 
   // Unistyles omits 'default' from variant types; use undefined for the base case.
   const activeState: Exclude<InputState, 'default'> | undefined = !editable
@@ -82,6 +83,7 @@ const Input = (props: InputProps) => {
       editable,
       mask: mask ? Masks[mask] : '',
       style: [styles.inputField, style],
+      placeholderTextColor,
       onChangeText: handleChangeText,
       onFocus: handleFocus,
       onBlur: handleBlur,

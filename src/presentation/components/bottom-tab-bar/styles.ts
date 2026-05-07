@@ -4,7 +4,9 @@ export default StyleSheet.create(({ colors }) => ({
   container: {
     alignItems: 'center',
     backgroundColor: colors.background.primary,
-    boxShadow: [{ offsetX: 0, offsetY: -4, blurRadius: 9, color: colors.background.secondary }],
+    borderTopWidth: 1,
+    borderTopColor: colors.border.separator,
+    boxShadow: [{ offsetX: 0, offsetY: -4, blurRadius: 9, color: colors.overlay.shadowSubtle }],
     flexDirection: 'row',
     height: 70,
   },

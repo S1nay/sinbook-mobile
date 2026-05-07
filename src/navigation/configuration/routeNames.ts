@@ -22,6 +22,7 @@ export enum ProfileRouteNames {
   ProfileFollows = 'Follows',
   ProfilePosts = 'Profile Posts',
   ProfileEdit = 'Profile Edit',
+  ProfileSettings = 'Settings',
 }
 
 //Авторизация

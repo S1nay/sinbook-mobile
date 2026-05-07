@@ -7,7 +7,7 @@ import { useUnistyles } from 'react-native-unistyles';
 
 import Header from '@components/header';
 import { getConnectUrl } from '@core/helpers';
-import { useAuth, useDIContainer, usePagination } from '@core/hooks';
+import { useDIContainer, usePagination } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
 import { ProfileRouteNames, ProfileScreenProps } from '@navigation/configuration';
@@ -27,13 +27,11 @@ const ProfileDetailsView = () => {
   const navigation =
     useNavigation<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['navigation']>();
   const { params } = useRoute<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['route']>();
-  const { logout, user, getUserData, getUserPosts, posts, postsMeta, isLoading } = container.get(
+  const { user, getUserData, getUserPosts, posts, postsMeta, isLoading } = container.get(
     IProfileDetailsViewModel.$,
   );
 
   const gridRef = useRef<FlatList | null>(null);
-
-  const { unauthorize } = useAuth();
 
   useEffect(() => {
     const postCreated = !!params?.newPostIsCreated;
@@ -46,7 +44,9 @@ const ProfileDetailsView = () => {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: user?.nickName ?? 'Profile',
-      header: props => <Header {...props} rightIcon="logout" onPressRightIcon={handleLogout} />,
+      header: props => (
+        <Header {...props} rightIcon="threeDots" onPressRightIcon={navigateToSettings} />
+      ),
     });
   }, [user]);
 
@@ -63,8 +63,8 @@ const ProfileDetailsView = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout(unauthorize);
+  const navigateToSettings = () => {
+    navigation.navigate(ProfileRouteNames.ProfileSettings);
   };
 
   const onNavigateToProfilePosts = () => {

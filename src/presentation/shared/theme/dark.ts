@@ -9,13 +9,13 @@ export const darkTheme = {
       primary: palette.darkBg,
       secondary: palette.darkBgSecondary,
       elevated: palette.darkBgSecondary,
-      overlay: 'rgba(0,0,0,0.7)',
+      overlay: palette.scrimDark,
       inverse: palette.darkFgPrimary,
     },
     foreground: {
       primary: palette.darkFgPrimary,
       secondary: palette.darkFgSecondary,
-      muted: palette.darkFgMuted,
+      muted: palette.darkFgTertiary,
       inverse: palette.darkBg,
       onAccent: palette.darkBg,
       onDanger: palette.white,
@@ -25,6 +25,7 @@ export const darkTheme = {
       subtle: palette.darkBorderSubtle,
       strong: palette.darkFgSecondary,
       focus: palette.darkOrange,
+      separator: palette.darkBorderSubtle,
     },
     accent: {
       default: palette.darkOrange,
@@ -40,11 +41,12 @@ export const darkTheme = {
     },
     success: {
       default: palette.darkGreen,
-      subtle: '#1A3A10',
+      subtle: palette.darkGreenSubtle,
     },
     overlay: {
-      scrim: 'rgba(0,0,0,0.7)',
-      shadow: '#00000060',
+      scrim: palette.scrimDark,
+      shadow: palette.shadowWhite,
+      shadowSubtle: palette.shadowWhiteSubtle,
     },
   },
   components: {
@@ -68,6 +70,8 @@ export const darkTheme = {
       },
     },
     input: {
+      text: palette.darkFgPrimary,
+      placeholder: palette.darkFgMuted,
       lineTransparent: {
         border: palette.darkFgSecondary,
         focusBorder: palette.darkOrange,
@@ -88,14 +92,21 @@ export const darkTheme = {
         disabledBorder: palette.darkBorder,
       },
       icon: {
-        default: palette.darkFgMuted,
+        default: palette.darkFgSecondary,
         focused: palette.darkFgSecondary,
         error: palette.darkRed,
         disabled: palette.darkBorder,
       },
       label: {
-        default: palette.darkFgMuted,
+        default: palette.darkFgSecondary,
         error: palette.darkRed,
+      },
+    },
+    segmentedControl: {
+      indicator: palette.darkOrangeSubtle,
+      label: {
+        active: palette.darkOrange,
+        inactive: palette.darkFgTertiary,
       },
     },
     statusBar: {

@@ -9,7 +9,7 @@ export const lightTheme = {
       primary: palette.white,
       secondary: palette.secondaryWhite,
       elevated: palette.white,
-      overlay: 'rgba(0,0,0,0.5)',
+      overlay: palette.scrimLight,
       inverse: palette.black,
     },
     foreground: {
@@ -25,6 +25,7 @@ export const lightTheme = {
       subtle: palette.dot,
       strong: palette.gray,
       focus: palette.lightOrange,
+      separator: palette.transparent,
     },
     accent: {
       default: palette.orange,
@@ -40,11 +41,12 @@ export const lightTheme = {
     },
     success: {
       default: palette.green,
-      subtle: '#DFFBCF',
+      subtle: palette.greenSubtle,
     },
     overlay: {
-      scrim: 'rgba(0,0,0,0.5)',
+      scrim: palette.scrimLight,
       shadow: palette.shadowBlack,
+      shadowSubtle: palette.shadowBlackSubtle,
     },
   },
   components: {
@@ -68,6 +70,8 @@ export const lightTheme = {
       },
     },
     input: {
+      text: palette.black,
+      placeholder: palette.lightGray,
       lineTransparent: {
         border: palette.gray,
         focusBorder: palette.lightOrange,
@@ -96,6 +100,13 @@ export const lightTheme = {
       label: {
         default: palette.secondaryGray,
         error: palette.red,
+      },
+    },
+    segmentedControl: {
+      indicator: palette.secondaryLightOrange,
+      label: {
+        active: palette.orange,
+        inactive: palette.secondaryGray,
       },
     },
     statusBar: {

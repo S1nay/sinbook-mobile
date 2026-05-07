@@ -4,12 +4,14 @@ export default StyleSheet.create(({ colors, typography }) => ({
   container: {
     alignItems: 'center',
     backgroundColor: colors.background.primary,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border.separator,
     boxShadow: [
       {
         blurRadius: 6,
         offsetX: 0,
         offsetY: 4,
-        color: colors.background.secondary,
+        color: colors.overlay.shadow,
       },
     ],
     flexDirection: 'row',

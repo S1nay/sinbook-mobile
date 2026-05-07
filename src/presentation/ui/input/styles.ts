@@ -7,6 +7,7 @@ export const styles = StyleSheet.create(({ components, typography }) => ({
     zIndex: 1,
   },
   inputField: {
+    color: components.input.text,
     variants: {
       variant: {
         'line-transparent': {

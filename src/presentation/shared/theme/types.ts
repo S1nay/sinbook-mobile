@@ -26,6 +26,7 @@ export type AppTheme = {
       subtle: string;
       strong: string;
       focus: string;
+      separator: string;
     };
     accent: {
       default: string;
@@ -46,6 +47,7 @@ export type AppTheme = {
     overlay: {
       scrim: string;
       shadow: string;
+      shadowSubtle: string;
     };
   };
   components: {
@@ -69,6 +71,8 @@ export type AppTheme = {
       };
     };
     input: {
+      text: string;
+      placeholder: string;
       lineTransparent: {
         border: string;
         focusBorder: string;
@@ -97,6 +101,13 @@ export type AppTheme = {
       label: {
         default: string;
         error: string;
+      };
+    };
+    segmentedControl: {
+      indicator: string;
+      label: {
+        active: string;
+        inactive: string;
       };
     };
     statusBar: {

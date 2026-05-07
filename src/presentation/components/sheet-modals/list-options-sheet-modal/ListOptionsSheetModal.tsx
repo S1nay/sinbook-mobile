@@ -29,7 +29,7 @@ const ListOptionsSheetModal = (props: ListOptionsSheetModalProps) => {
     <BottomSheetFlatList
       data={options}
       renderItem={renderOption}
-      contentContainerStyle={{ paddingBottom: insets.bottom }}
+      contentContainerStyle={[styles.container, { paddingBottom: insets.bottom }]}
     />
   );
 };

@@ -12,7 +12,7 @@ export default StyleSheet.create(({ colors }) => ({
     backgroundColor: colors.background.primary,
     borderRadius: '50%' as unknown as number,
     bottom: 0,
-    boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 10, color: colors.border.default }],
+    boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 10, color: colors.overlay.shadowSubtle }],
     height: 32,
     justifyContent: 'center',
     position: 'absolute',

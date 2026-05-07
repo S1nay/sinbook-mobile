@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import { Dimensions, Pressable, Text, View } from 'react-native';
-
 import { useUnistyles } from 'react-native-unistyles';
 
 import { getConnectUrl } from '@core/helpers';
@@ -32,7 +31,12 @@ const Post = (props: PostProps) => {
         </View>
 
         <Pressable hitSlop={8}>
-          <Icon size={24} name="threeDots" stroke={theme.colors.foreground.primary} fill={theme.colors.foreground.primary} />
+          <Icon
+            size={24}
+            name="threeDots"
+            stroke={theme.colors.foreground.primary}
+            fill={theme.colors.foreground.primary}
+          />
         </Pressable>
       </View>
 

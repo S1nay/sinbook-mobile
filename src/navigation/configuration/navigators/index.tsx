@@ -19,13 +19,14 @@ import ProfileFollowsScreen from '@screens/profile-follows-screen';
 import ProfilePostsScreen from '@screens/profile-posts-screen';
 import RegisterScreen from '@screens/register-screen';
 import SearchScreen from '@screens/search-screen';
+import SettingsScreen from '@screens/settings-screen';
 
 import {
-  ChatRouteNames,
-  ProfileRouteNames,
-  BottomTabRouteNames,
-  MaintenanceRouteNames,
   AuthRouteNames,
+  BottomTabRouteNames,
+  ChatRouteNames,
+  MaintenanceRouteNames,
+  ProfileRouteNames,
 } from '../routeNames';
 import type {
   AuthStackParamList,
@@ -48,18 +49,19 @@ const ProfileNavigator = () => {
       />
       <ProfileStack.Screen component={ProfileEditScreen} name={ProfileRouteNames.ProfileEdit} />
       <ProfileStack.Screen
-        options={params =>
-          defaultHeader<ParamListBase, NativeStackNavigationProp<ParamListBase>>(params)
-        }
+        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
         component={ProfileFollowsScreen}
         name={ProfileRouteNames.ProfileFollows}
       />
       <ProfileStack.Screen
-        options={params =>
-          defaultHeader<ParamListBase, NativeStackNavigationProp<ParamListBase>>(params)
-        }
+        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
         component={ProfilePostsScreen}
         name={ProfileRouteNames.ProfilePosts}
+      />
+      <ProfileStack.Screen
+        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
+        component={SettingsScreen}
+        name={ProfileRouteNames.ProfileSettings}
       />
     </ProfileStack.Navigator>
   );

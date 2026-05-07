@@ -53,6 +53,7 @@ export type ProfileStackParamList = {
   [ProfileRouteNames.ProfileFollows]: {
     type: 'follows' | 'followers';
   };
+  [ProfileRouteNames.ProfileSettings]: undefined;
 };
 
 export type ChatStackParamList = {

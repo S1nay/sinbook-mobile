@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native-unistyles';
 
 export default StyleSheet.create(({ typography, colors }) => ({
   biography: {
-    color: colors.border.default,
+    color: colors.foreground.muted,
     fontFamily: typography.family.regular,
     fontSize: typography.size.lg,
     lineHeight: 26,

@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native-unistyles';
 
-export default StyleSheet.create(({ typography }) => ({
+export default StyleSheet.create(({ typography, colors }) => ({
+  container: {
+    backgroundColor: colors.background.secondary,
+  },
   item: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -10,5 +13,6 @@ export default StyleSheet.create(({ typography }) => ({
   text: {
     fontFamily: typography.family.regular,
     fontSize: typography.size.lg,
+    color: colors.foreground.primary,
   },
 }));
