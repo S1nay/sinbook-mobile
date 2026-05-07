@@ -14,6 +14,6 @@ declare interface Binding {
   scope?: 'singleton';
 }
 
-declare interface UseCase<T, K> {
-  execute(...args: T[]): Promise<K>;
+declare interface UseCase<T, K, R = Promise<K>> {
+  execute(...args: T[]): R;
 }
