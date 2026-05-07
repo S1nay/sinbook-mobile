@@ -26,8 +26,7 @@ export default StyleSheet.create(({ colors, typography }) => ({
   imagesError: {
     color: colors.danger.default,
     fontSize: typography.size.sm,
-    marginTop: 4,
-    paddingHorizontal: 16,
+    textAlign: 'center',
   },
   placeholder: {
     alignItems: 'center',
