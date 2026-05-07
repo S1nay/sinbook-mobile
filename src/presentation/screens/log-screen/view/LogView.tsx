@@ -14,6 +14,7 @@ const LogView = () => {
           colors: {
             background: theme.colors.background.primary,
             text: theme.colors.foreground.primary,
+            card: theme.colors.background.secondary,
           },
         }}
       />
