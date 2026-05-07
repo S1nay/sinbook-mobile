@@ -2,6 +2,8 @@ import { memo, PropsWithChildren } from 'react';
 import { Image } from 'react-native';
 import TurboImage from 'react-native-turbo-image';
 
+import { getConnectUrl } from '@core/helpers';
+
 import { AvatarProps } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -15,7 +17,7 @@ const Avatar = (props: PropsWithChildren<AvatarProps>) => {
       {uri ? (
         <TurboImage
           {...imageProps}
-          source={{ uri }}
+          source={{ uri: getConnectUrl(uri) ?? '' }}
           rounded
           style={{ width: size, height: size }}
         />
