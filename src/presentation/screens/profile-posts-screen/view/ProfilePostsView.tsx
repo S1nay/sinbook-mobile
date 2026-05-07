@@ -50,7 +50,7 @@ const ProfilePostsView = () => {
   };
 
   return (
-    <AppLayout viewProps={{ style: styles.container }} disableBottomInsets>
+    <AppLayout disableBottomInsets>
       <FlatList
         data={posts}
         renderItem={renderPost}

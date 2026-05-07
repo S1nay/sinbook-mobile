@@ -1,7 +1,8 @@
 export const palette = {
-  // Light palette — original Colors
+  // Light palette
   black: '#171A1F',
   shadowBlack: '#171A1F30',
+  shadowBlackSubtle: 'rgba(23,26,31,0.10)',
   orange: '#E1602C',
   lightOrange: '#EA916E',
   secondaryLightOrange: '#FDF5F1',
@@ -15,12 +16,15 @@ export const palette = {
   transparent: 'transparent',
   dot: '#DEE1E6',
   green: '#76bf4c',
+  greenSubtle: '#DFFBCF',
+  scrimLight: 'rgba(0,0,0,0.5)',
   // Dark palette
-  darkBg: '#0F1115',
-  darkBgSecondary: '#1A1D22',
+  darkBg: '#141414',
+  darkBgSecondary: '#1C1C1C',
   darkFgPrimary: '#F3F4F6',
   darkFgSecondary: '#BCC1CA',
   darkFgMuted: '#6E737D',
+  darkFgTertiary: '#9095A0',
   darkBorder: '#3A3F47',
   darkBorderSubtle: '#2A2E35',
   darkOrange: '#F07A4A',
@@ -29,4 +33,8 @@ export const palette = {
   darkRed: '#F05A60',
   darkRedSubtle: '#3A1418',
   darkGreen: '#8FD964',
+  darkGreenSubtle: '#1A3A10',
+  shadowWhite: 'transparent',
+  shadowWhiteSubtle: 'transparent',
+  scrimDark: 'rgba(0,0,0,0.7)',
 } as const;
