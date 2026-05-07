@@ -10,7 +10,7 @@ import { IAuthStorage } from './IAuthStorage';
 class AuthStorage implements IAuthStorage {
   constructor(@inject(Identifiers.MMKVStorage) private readonly storage: IStorage) {}
 
-  getAccessToken(): string | undefined {
+  getAccessToken(): string | null {
     return this.storage.getString(AuthStorageKeys.ACCESS_TOKEN);
   }
 
