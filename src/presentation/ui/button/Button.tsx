@@ -31,16 +31,20 @@ const Button = (props: ButtonProps) => {
 
   styles.useVariants({ variant, size, state: activeState });
 
-  const iconColor =
-    variant === 'primary'
-      ? activeState === 'disabled'
-        ? theme.components.button.primary.disabledFg
-        : theme.components.button.primary.fg
-      : activeState === 'disabled'
-      ? theme.components.button.secondary.disabledFg
-      : activeState === 'pressed'
-      ? theme.components.button.secondary.pressedFg
-      : theme.components.button.secondary.fg;
+  const iconColorMap = {
+    primary: {
+      default: theme.components.button.primary.fg,
+      pressed: theme.components.button.primary.fg,
+      disabled: theme.components.button.primary.disabledFg,
+    },
+    secondary: {
+      default: theme.components.button.secondary.fg,
+      pressed: theme.components.button.secondary.pressedFg,
+      disabled: theme.components.button.secondary.disabledFg,
+    },
+  };
+
+  const iconColor = iconColorMap[variant][activeState ?? 'default'];
 
   const handlePressIn = () => {
     if (!disabled) setIsPressed(true);
