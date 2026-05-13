@@ -13,17 +13,17 @@ import { PostProps } from './types';
 const POST_IMAGE_SIZE = Dimensions.get('screen').width;
 
 const Post = (props: PostProps) => {
-  const { post, user } = props;
+  const { post } = props;
   const { theme } = useUnistyles();
 
   return (
     <View style={styles.container}>
       <View style={styles.postHeader}>
         <View style={styles.postHeaderInfo}>
-          <Avatar uri={user.avatarPath} size={40} />
+          <Avatar uri={post.user.avatarPath} size={40} />
 
           <View>
-            <Text style={styles.postUserNickname}>{user.nickName}</Text>
+            <Text style={styles.postUserNickname}>{post.user.nickName}</Text>
             <Text style={styles.postDateCreated}>
               {dayjs(post.createdAt).format('MMM DD, YYYY')}
             </Text>
