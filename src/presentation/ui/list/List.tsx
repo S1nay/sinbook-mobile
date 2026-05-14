@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 
@@ -10,15 +9,15 @@ import { ListProps } from './types';
 const List = <T,>({
   pagination,
   onPaginate,
-  onRefresh: onRefreshProp,
+  onRefresh,
   onEndReached: onEndReachedProp,
   contentContainerStyle,
   isLoading = false,
+  isRefreshing = false,
   placeholder,
   ...rest
 }: ListProps<T>) => {
   const { theme } = useUnistyles();
-  const [refreshing, setRefreshing] = useState(false);
 
   const { isLoadMore, onLoadMore } = usePagination({
     pagination: pagination ?? null,
@@ -29,15 +28,6 @@ const List = <T,>({
     if (!isLoadMore) onLoadMore();
   };
 
-  const onRefresh = async () => {
-    setRefreshing(true);
-    try {
-      await onRefreshProp?.();
-    } finally {
-      setRefreshing(false);
-    }
-  };
-
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
@@ -45,9 +35,9 @@ const List = <T,>({
       contentContainerStyle={[styles.content, contentContainerStyle]}
       onEndReached={pagination ? onEndReached : onEndReachedProp}
       refreshControl={
-        onRefreshProp ? (
+        onRefresh ? (
           <RefreshControl
-            refreshing={refreshing}
+            refreshing={isRefreshing}
             onRefresh={onRefresh}
             tintColor={theme.colors.foreground.primary}
           />

@@ -16,5 +16,6 @@ export interface ListProps<T>
   onPaginate?: (page: number) => Promise<void>;
   onRefresh?: () => Promise<void>;
   isLoading?: boolean;
+  isRefreshing?: boolean;
   placeholder?: ReactElement;
 }

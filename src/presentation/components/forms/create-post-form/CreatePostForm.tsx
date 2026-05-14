@@ -35,17 +35,15 @@ const CreatePostForm = (props: CreatePostFormProps) => {
   };
 
   const ImagePlaceholder = useMemo(() => {
-    return (
-      remaining > 0 && (
-        <MediaPicker
-          selectionLimit={remaining}
-          style={[styles.placeholder, { width: CAROUSEL_DIMENSIONS, height: CAROUSEL_DIMENSIONS }]}
-          onPick={onPickImages}
-        >
-          <Icon name="imageLibrary" size={64} stroke="#BCC1CA" />
-        </MediaPicker>
-      )
-    );
+    return remaining > 0 ? (
+      <MediaPicker
+        selectionLimit={remaining}
+        style={[styles.placeholder, { width: CAROUSEL_DIMENSIONS, height: CAROUSEL_DIMENSIONS }]}
+        onPick={onPickImages}
+      >
+        <Icon name="imageLibrary" size={64} stroke="#BCC1CA" />
+      </MediaPicker>
+    ) : null;
   }, [remaining]);
 
   return (

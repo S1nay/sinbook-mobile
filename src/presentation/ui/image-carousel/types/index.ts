@@ -8,7 +8,7 @@ export interface ImageCarouselProps {
   enablePagination?: boolean;
   carouselStyle?: StyleProp<ViewStyle>;
   imageStyle?: StyleProp<ImageStyle>;
-  appendItem?: ReactElement;
+  appendItem?: ReactElement | null;
   itemSpacing?: number;
   onRemoveImage?: (index: number) => void;
 }

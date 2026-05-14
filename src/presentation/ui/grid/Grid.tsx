@@ -7,6 +7,7 @@ import {
   View,
   LayoutChangeEvent,
 } from 'react-native';
+import { RefreshControl } from 'react-native-gesture-handler';
 import { useUnistyles } from 'react-native-unistyles';
 
 import { usePagination } from '@core/hooks';
@@ -23,6 +24,7 @@ const Grid = <T,>(props: GridProps<T>) => {
     data,
     pagination,
     onPaginate,
+    onRefresh,
     isLoading = false,
     isRefreshing = false,
     placeholder,
@@ -81,7 +83,15 @@ const Grid = <T,>(props: GridProps<T>) => {
         numColumns={numberOfColumns}
         onEndReachedThreshold={0.3}
         onEndReached={onEndReached}
-        refreshing={isRefreshing}
+        refreshControl={
+          onRefresh ? (
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={onRefresh}
+              tintColor={theme.colors.foreground.primary}
+            />
+          ) : undefined
+        }
         ListHeaderComponent={GridHeaderComponent ? GridHeaderComponent : null}
         ListEmptyComponent={isLoading && placeholder ? placeholder : null}
         ListFooterComponent={

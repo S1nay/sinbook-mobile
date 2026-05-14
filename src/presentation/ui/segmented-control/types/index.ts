@@ -12,7 +12,7 @@ export interface IItemLayout {
 
 export interface INormalizedItem {
   value: string;
-  label: ReactElement;
+  label: ReactElement | string;
   disabled?: boolean;
 }
 
