@@ -7,10 +7,10 @@ import styles from './styles';
 import { UserCardProps } from './types';
 
 const UserCard = (props: UserCardProps) => {
-  const { mutualFollow, nickName, avatarPath, onPressUserName } = props;
+  const { mutualFollow, nickName, avatarPath, onPressUserName, style } = props;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Pressable onPress={onPressUserName} style={styles.info}>
         <Avatar uri={avatarPath} />
         <Text style={styles.nickName}>{nickName}</Text>
