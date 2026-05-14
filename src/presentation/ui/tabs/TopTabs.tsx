@@ -15,10 +15,15 @@ import { TabsContentProps } from './tabs-components/tabs-content';
 import { TopTabsProps } from './types';
 
 const TopTabsContainer = (props: PropsWithChildren<TopTabsProps>) => {
-  const { routes, children } = props;
+  const { routes, children, onIndexChange } = props;
 
   const { width } = useWindowDimensions();
   const [index, setIndex] = useState(0);
+
+  const handleIndexChange = (nextIndex: number) => {
+    setIndex(nextIndex);
+    onIndexChange?.(nextIndex);
+  };
 
   const sceneMap = useMemo(() => {
     const items = Children.toArray(children).filter(
@@ -36,7 +41,7 @@ const TopTabsContainer = (props: PropsWithChildren<TopTabsProps>) => {
       navigationState={{ index, routes }}
       renderScene={renderScene}
       renderTabBar={TabBar}
-      onIndexChange={setIndex}
+      onIndexChange={handleIndexChange}
       initialLayout={{ width }}
       commonOptions={{ label: TabLabel }}
     />

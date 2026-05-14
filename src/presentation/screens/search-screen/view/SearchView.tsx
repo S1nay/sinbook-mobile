@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ListRenderItemInfo } from 'react-native';
 
 import Placeholders from '@components/placeholders';
@@ -21,24 +21,45 @@ const TabRoutes = [
   { key: 'Users', title: 'Users' },
 ];
 
+const USERS_TAB_INDEX = 1;
+
 const SearchView = () => {
   const container = useDIContainer();
-  const { getPosts, getUsers, posts, postsMeta, users, usersMeta, isLoading } = container.get(ISearchViewModel.$);
+  const {
+    loadPosts,
+    loadUsers,
+    refreshPosts,
+    refreshUsers,
+    loadMorePosts,
+    loadMoreUsers,
+    posts,
+    postsMeta,
+    users,
+    usersMeta,
+    isPostsLoading,
+    isUsersLoading,
+    isPostsRefreshing,
+    isUsersRefreshing,
+  } = container.get(ISearchViewModel.$);
+
   const navigation =
     useNavigation<MaintenanceScreenProps<MaintenanceRouteNames.Tab>['navigation']>();
 
+  const usersLoaded = useRef(false);
+
   useEffect(() => {
-    getPosts({ mode: 'initial' });
-    getUsers({ mode: 'initial' });
+    loadPosts();
   }, []);
 
-  const onPaginatePosts = async (page: number) => {
-    await getPosts({ page, mode: 'pagination' });
+  const onTabIndexChange = (index: number) => {
+    if (index === USERS_TAB_INDEX && !usersLoaded.current) {
+      usersLoaded.current = true;
+      loadUsers();
+    }
   };
 
-  const onPaginateUsers = async (page: number) => {
-    await getUsers({ page, mode: 'pagination' });
-  };
+  const onPaginatePosts = async (page: number) => loadMorePosts(page);
+  const onPaginateUsers = async (page: number) => loadMoreUsers(page);
 
   const navigateToUserDetails = (userId: number, nickName: string) =>
     navigation.navigate(MaintenanceRouteNames.UserDetails, { userId, nickName });
@@ -50,14 +71,16 @@ const SearchView = () => {
 
   return (
     <AppLayout>
-      <TopTabs routes={TabRoutes}>
+      <TopTabs routes={TabRoutes} onIndexChange={onTabIndexChange}>
         <TopTabs.Content routeKey="Posts">
           <List
             data={posts}
             renderItem={renderPost}
             pagination={postsMeta}
             onPaginate={onPaginatePosts}
-            isLoading={isLoading}
+            onRefresh={refreshPosts}
+            isLoading={isPostsLoading}
+            isRefreshing={isPostsRefreshing}
             placeholder={<Placeholders.PostListPlaceholder />}
           />
         </TopTabs.Content>
@@ -67,8 +90,10 @@ const SearchView = () => {
             renderItem={renderUser}
             pagination={usersMeta}
             onPaginate={onPaginateUsers}
+            onRefresh={refreshUsers}
             contentContainerStyle={styles.userListContainer}
-            isLoading={isLoading}
+            isLoading={isUsersLoading}
+            isRefreshing={isUsersRefreshing}
             placeholder={<Placeholders.UserCardListPlaceholder />}
           />
         </TopTabs.Content>
