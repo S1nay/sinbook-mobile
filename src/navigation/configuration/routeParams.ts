@@ -1,7 +1,7 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { IUser } from '@domain/models';
+import { IMeta, IPost, IUser } from '@domain/models';
 
 import {
   AppRouteNames,
@@ -30,6 +30,7 @@ export type MaintenanceStackParamList = {
   [MaintenanceRouteNames.Notifications]: undefined;
   [MaintenanceRouteNames.UserDetails]: {
     userId: number;
+    nickName: string;
   };
 };
 

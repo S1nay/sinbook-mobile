@@ -41,14 +41,12 @@ const SearchView = () => {
     await getUsers({ page, mode: 'pagination' });
   };
 
+  const navigateToUserDetails = (userId: number, nickName: string) =>
+    navigation.navigate(MaintenanceRouteNames.UserDetails, { userId, nickName });
+
   const renderPost = ({ item: post }: ListRenderItemInfo<IPost>) => <Post post={post} />;
   const renderUser = ({ item: user }: ListRenderItemInfo<IUser>) => (
-    <UserCard
-      {...user}
-      onPressUserName={(userId: number) => {
-        navigation.navigate(MaintenanceRouteNames.UserDetails, { userId });
-      }}
-    />
+    <UserCard {...user} onPressUserName={() => navigateToUserDetails(user.id, user.nickName)} />
   );
 
   return (
