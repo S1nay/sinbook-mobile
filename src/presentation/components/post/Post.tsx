@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import { Dimensions, Pressable, Text, View } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 
-import { getConnectUrl } from '@core/helpers';
 import Avatar from '@ui/avatar';
 import Icon from '@ui/icon';
 import ImageCarousel from '@ui/image-carousel';
@@ -43,7 +42,7 @@ const Post = (props: PostProps) => {
       <Text style={styles.postContent}>{post.content}</Text>
 
       <ImageCarousel
-        images={post.images.map(url => getConnectUrl(url) ?? '')}
+        images={post.images}
         imageWidth={POST_IMAGE_SIZE}
         imageHeight={POST_IMAGE_SIZE}
       />
