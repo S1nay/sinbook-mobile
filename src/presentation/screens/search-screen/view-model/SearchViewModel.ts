@@ -4,7 +4,7 @@ import Toast from 'react-native-toast-message';
 
 import { mergeArraysWithoutDuplicates } from '@core/helpers';
 import { IHttpError } from '@core/interfaces/http';
-import { IMeta, IPagination, IPost, IUser } from '@domain/models';
+import { IMeta, IPost, IUser } from '@domain/models';
 import { PostUseCases, UserUseCases } from '@domain/use-cases';
 import SearchPostsUseCase from '@domain/use-cases/post/SearchPostsUseCase';
 import SearchUsersUseCase from '@domain/use-cases/user/SearchUsersUseCase';
@@ -94,86 +94,118 @@ class SearchViewModel implements ISearchViewModel {
     this._isUsersRefreshing = value;
   }
 
-  async loadPosts(): Promise<void> {
+  async loadPosts(search?: string): Promise<void> {
     this.isPostsLoading = true;
 
-    try {
-      const data = await this.searchPostsUseCase.execute({ page: 1, perPage: 20 });
-
-      this.posts = data.results;
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isPostsLoading = false;
-    }
+    this.searchPostsUseCase
+      .execute({
+        page: 1,
+        perPage: 20,
+        search,
+      })
+      .then(data => {
+        this.posts = data.results;
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
+      .finally(() => {
+        this.isPostsLoading = false;
+      });
   }
 
-  async loadUsers(): Promise<void> {
+  async loadUsers(search?: string): Promise<void> {
     this.isUsersLoading = true;
 
-    try {
-      const data = await this.searchUsersUseCase.execute({ page: 1, perPage: 20 });
-
-      this.users = data.results;
-      this.usersMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isUsersLoading = false;
-    }
+    this.searchUsersUseCase
+      .execute({
+        page: 1,
+        perPage: 20,
+        search,
+      })
+      .then(data => {
+        this.users = data.results;
+        this.usersMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
+      .finally(() => {
+        this.isUsersLoading = false;
+      });
   }
 
   async refreshPosts(): Promise<void> {
     this.isPostsRefreshing = true;
 
-    try {
-      const data = await this.searchPostsUseCase.execute({ page: 1, perPage: 20 });
-
-      this.posts = data.results;
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isPostsRefreshing = false;
-    }
+    this.searchPostsUseCase
+      .execute({
+        page: 1,
+        perPage: 20,
+      })
+      .then(data => {
+        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
+      .finally(() => {
+        this.isPostsRefreshing = false;
+      });
   }
 
   async refreshUsers(): Promise<void> {
     this.isUsersRefreshing = true;
 
-    try {
-      const data = await this.searchUsersUseCase.execute({ page: 1, perPage: 20 });
-
-      this.users = data.results;
-      this.usersMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isUsersRefreshing = false;
-    }
+    this.searchUsersUseCase
+      .execute({
+        page: 1,
+        perPage: 20,
+      })
+      .then(data => {
+        this.users = mergeArraysWithoutDuplicates(this.users, data.results, 'id');
+        this.usersMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
+      .finally(() => {
+        this.isUsersRefreshing = false;
+      });
   }
 
-  async loadMorePosts(page: number): Promise<void> {
-    try {
-      const data: IPagination<IPost> = await this.searchPostsUseCase.execute({ page, perPage: 20 });
-
-      this.posts = mergeArraysWithoutDuplicates(this._posts, data.results, 'id');
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    }
+  async loadMorePosts(page: number, search: string): Promise<void> {
+    this.searchPostsUseCase
+      .execute({
+        page,
+        perPage: 20,
+        search,
+      })
+      .then(data => {
+        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      });
   }
 
-  async loadMoreUsers(page: number): Promise<void> {
-    try {
-      const data: IPagination<IUser> = await this.searchUsersUseCase.execute({ page, perPage: 20 });
-
-      this.users = mergeArraysWithoutDuplicates(this._users, data.results, 'id');
-      this.usersMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    }
+  async loadMoreUsers(page: number, search: string): Promise<void> {
+    this.searchUsersUseCase
+      .execute({
+        page,
+        perPage: 20,
+        search,
+      })
+      .then(data => {
+        this.users = mergeArraysWithoutDuplicates(this.users, data.results, 'id');
+        this.usersMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      });
   }
 }
 

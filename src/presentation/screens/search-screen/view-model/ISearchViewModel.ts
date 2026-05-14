@@ -12,12 +12,12 @@ export interface ISearchViewModel {
   isPostsRefreshing: boolean;
   isUsersRefreshing: boolean;
 
-  loadPosts(): Promise<void>;
-  loadUsers(): Promise<void>;
+  loadPosts(search?: string): Promise<void>;
+  loadUsers(search?: string): Promise<void>;
   refreshPosts(): Promise<void>;
   refreshUsers(): Promise<void>;
-  loadMorePosts(page: number): Promise<void>;
-  loadMoreUsers(page: number): Promise<void>;
+  loadMorePosts(page: number, search: string): Promise<void>;
+  loadMoreUsers(page: number, search: string): Promise<void>;
 }
 
 export namespace ISearchViewModel {

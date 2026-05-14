@@ -13,7 +13,6 @@ import { IProfilePostsViewModel } from './IProfilePostsViewModel';
 
 @injectable()
 class ProfilePostsViewModel implements IProfilePostsViewModel {
-  private _userId: number | null = null;
   private _posts: IPost[] = [];
   private _postsMeta: IMeta | null = null;
   private _isLoading: boolean = false;
@@ -54,20 +53,21 @@ class ProfilePostsViewModel implements IProfilePostsViewModel {
     this.postsMeta = meta;
   }
 
-  async loadMorePosts(page: number): Promise<void> {
-    if (!this._userId) return;
-    try {
-      const data = await this.getUserPostsUseCase.execute({
-        userId: this._userId,
+  async loadMorePosts(page: number, userId: number): Promise<void> {
+    this.getUserPostsUseCase
+      .execute({
+        userId,
         perPage: 20,
         page,
         sortedBy: 'desc',
+      })
+      .then(data => {
+        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
       });
-      this.posts = mergeArraysWithoutDuplicates(this._posts, data.results, 'id');
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    }
   }
 }
 

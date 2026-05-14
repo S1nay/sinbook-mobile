@@ -46,8 +46,8 @@ class CreatePostViewModel implements ICreatePostViewModel {
   }
 
   private reset(): void {
-    this._isLoading = false;
-    this._error = '';
+    this.isLoading = false;
+    this.error = '';
   }
 
   createPost(data: CreatePostFormData, resetForm: PureFunction): void {
@@ -69,10 +69,7 @@ class CreatePostViewModel implements ICreatePostViewModel {
         });
       })
       .catch(({ message }: IHttpError) => {
-        Toast.show({
-          text1: typeof message === 'string' ? message : 'Something went wrong',
-          type: Toasts.Error,
-        });
+        Toast.show({ text1: message as string, type: Toasts.Error });
       })
       .finally(() => {
         this.isLoading = false;

@@ -95,59 +95,63 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
   async loadUser(): Promise<void> {
     this.isLoading = true;
 
-    try {
-      const user = await this.getCurrentUserUseCase.execute(false);
-
-      this.user = user;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isLoading = false;
-    }
+    this.getCurrentUserUseCase
+      .execute(false)
+      .then(user => {
+        this.user = user;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 
   async refresh(): Promise<void> {
-    if (!this._user) return;
+    if (!this.user) return;
 
     this.isRefreshing = true;
 
-    try {
-      const [user, data] = await Promise.all([
-        this.getCurrentUserUseCase.execute(false),
-        this.getUserPostsUseCase.execute({
-          userId: this._user.id,
-          perPage: 20,
-          page: 1,
-          sortedBy: 'desc',
-        }),
-      ]);
-
-      this.user = user;
-      this.posts = data.results;
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isRefreshing = false;
-    }
+    Promise.all([
+      this.getCurrentUserUseCase.execute(false),
+      this.getUserPostsUseCase.execute({
+        userId: this.user.id,
+        perPage: 20,
+        page: 1,
+        sortedBy: 'desc',
+      }),
+    ])
+      .then(([user, data]) => {
+        this.user = user;
+        this.posts = data.results;
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
+      .finally(() => {
+        this.isRefreshing = false;
+      });
   }
 
   async loadMorePosts(page: number): Promise<void> {
-    if (!this._user) return;
+    if (!this.user) return;
 
-    try {
-      const data = await this.getUserPostsUseCase.execute({
-        userId: this._user.id,
+    this.getUserPostsUseCase
+      .execute({
+        userId: this.user.id,
         perPage: 20,
         page,
         sortedBy: 'desc',
+      })
+      .then(data => {
+        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
       });
-
-      this.posts = mergeArraysWithoutDuplicates(this._posts, data.results, 'id');
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    }
   }
 }
 

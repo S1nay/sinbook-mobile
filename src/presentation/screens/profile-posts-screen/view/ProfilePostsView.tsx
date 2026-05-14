@@ -20,14 +20,12 @@ const ProfilePostsView = () => {
   const { load, loadMorePosts, posts, postsMeta } = container.get(IProfilePostsViewModel.$);
 
   useEffect(() => {
-    const { meta, posts, user } = params;
+    navigation.setOptions({ headerTitle: params.user.nickName });
 
-    navigation.setOptions({ headerTitle: user.nickName });
-
-    load(posts, meta);
+    load(params.posts, params.meta);
   }, []);
 
-  const onPaginate = async (page: number) => loadMorePosts(page);
+  const onPaginate = async (page: number) => loadMorePosts(page, params.user.id);
 
   const renderPost = ({ item: post }: ListRenderItemInfo<IPost>) => <Post post={post} />;
 

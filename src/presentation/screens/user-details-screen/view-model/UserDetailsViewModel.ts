@@ -13,7 +13,6 @@ import { IUserDetailsViewModel } from './IUserDetailsViewModel';
 
 @injectable()
 class UserDetailsViewModel implements IUserDetailsViewModel {
-  private _userId: number | null = null;
   private _user: IUser | null = null;
   private _isLoading: boolean = false;
   private _isRefreshing: boolean = false;
@@ -70,69 +69,71 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
   }
 
   async load(userId: number): Promise<void> {
-    this._userId = userId;
-    this._user = null;
-    this._posts = [];
+    this.user = null;
+    this.posts = [];
     this.isLoading = true;
 
-    try {
-      const [user, data] = await Promise.all([
-        this.getUserByIdUseCase.execute(userId),
-        this.getUserPostsUseCase.execute({ userId, perPage: 20, page: 1, sortedBy: 'desc' }),
-      ]);
-
-      this.user = user;
-      this.posts = data.results;
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isLoading = false;
-    }
+    Promise.all([
+      this.getUserByIdUseCase.execute(userId),
+      this.getUserPostsUseCase.execute({ userId, perPage: 20, page: 1, sortedBy: 'desc' }),
+    ])
+      .then(([user, data]) => {
+        this.user = user;
+        this.posts = data.results;
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 
   async refresh(): Promise<void> {
-    if (!this._userId) return;
+    if (!this.user) return;
 
     this.isRefreshing = true;
 
-    try {
-      const [user, data] = await Promise.all([
-        this.getUserByIdUseCase.execute(this._userId),
-        this.getUserPostsUseCase.execute({
-          userId: this._userId,
-          perPage: 20,
-          page: 1,
-          sortedBy: 'desc',
-        }),
-      ]);
-
-      this.user = user;
-      this.posts = data.results;
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isRefreshing = false;
-    }
+    Promise.all([
+      this.getUserByIdUseCase.execute(this.user.id),
+      this.getUserPostsUseCase.execute({
+        userId: this.user.id,
+        perPage: 20,
+        page: 1,
+        sortedBy: 'desc',
+      }),
+    ])
+      .then(([user, data]) => {
+        this.user = user;
+        this.posts = data.results;
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
+      .finally(() => {
+        this.isRefreshing = false;
+      });
   }
 
   async loadMorePosts(page: number): Promise<void> {
-    if (!this._userId) return;
+    if (!this.user) return;
 
-    try {
-      const data = await this.getUserPostsUseCase.execute({
-        userId: this._userId,
+    this.getUserPostsUseCase
+      .execute({
+        userId: this.user.id,
         perPage: 20,
         page,
         sortedBy: 'desc',
+      })
+      .then(data => {
+        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
       });
-
-      this.posts = mergeArraysWithoutDuplicates(this._posts, data.results, 'id');
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    }
   }
 }
 

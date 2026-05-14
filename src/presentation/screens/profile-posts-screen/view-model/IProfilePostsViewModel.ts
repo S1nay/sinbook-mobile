@@ -8,7 +8,7 @@ export interface IProfilePostsViewModel {
   isLoading: boolean;
 
   load(posts: Array<IPost>, meta: IMeta): void;
-  loadMorePosts(page: number): Promise<void>;
+  loadMorePosts(page: number, userId: number): Promise<void>;
 }
 
 export namespace IProfilePostsViewModel {
