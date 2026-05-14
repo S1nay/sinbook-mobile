@@ -7,23 +7,20 @@ import { IHttpError } from '@core/interfaces/http';
 import { IPost, IMeta, IPagination } from '@domain/models';
 import { GetPostsRequestParams } from '@domain/request-params';
 import { PostUseCases } from '@domain/use-cases';
-import { GetPostsMode } from '@domain/use-cases/post';
 import { Toasts } from '@ui/toast';
 
 import { IProfilePostsViewModel } from './IProfilePostsViewModel';
 
 @injectable()
 class ProfilePostsViewModel implements IProfilePostsViewModel {
+  private _userId: number | null = null;
   private _posts: IPost[] = [];
   private _postsMeta: IMeta | null = null;
   private _isLoading: boolean = false;
 
   constructor(
     @inject(PostUseCases.$GetUserPosts)
-    private getUserPostsUseCase: UseCase<
-      GetPostsRequestParams & { mode: GetPostsMode },
-      IPagination<IPost>
-    >,
+    private getUserPostsUseCase: UseCase<GetPostsRequestParams, IPagination<IPost>>,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -52,26 +49,39 @@ class ProfilePostsViewModel implements IProfilePostsViewModel {
     this._posts = value;
   }
 
-  async getUserPosts(params: GetPostsRequestParams & { mode: GetPostsMode }): Promise<void> {
-    const { userId, mode, perPage = 20, page = 1 } = params;
-
-    if (mode !== 'pagination') this.isLoading = true;
-
-    return this.getUserPostsUseCase
-      .execute({ userId, mode, perPage, page, sortedBy: 'desc' })
-      .then(data => {
-        this.posts =
-          mode === 'pagination'
-            ? mergeArraysWithoutDuplicates(this._posts, data.results, 'id')
-            : data.results;
-        this.postsMeta = data.meta;
-      })
-      .catch(({ message }: IHttpError) => {
-        Toast.show({ text1: message as string, type: Toasts.Error });
-      })
-      .finally(() => {
-        if (mode !== 'pagination') this.isLoading = false;
+  async load(userId: number): Promise<void> {
+    this._userId = userId;
+    this.isLoading = true;
+    try {
+      const data = await this.getUserPostsUseCase.execute({
+        userId,
+        perPage: 20,
+        page: 1,
+        sortedBy: 'desc',
       });
+      this.posts = data.results;
+      this.postsMeta = data.meta;
+    } catch (e) {
+      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  async loadMorePosts(page: number): Promise<void> {
+    if (!this._userId) return;
+    try {
+      const data = await this.getUserPostsUseCase.execute({
+        userId: this._userId,
+        perPage: 20,
+        page,
+        sortedBy: 'desc',
+      });
+      this.posts = mergeArraysWithoutDuplicates(this._posts, data.results, 'id');
+      this.postsMeta = data.meta;
+    } catch (e) {
+      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
+    }
   }
 }
 
