@@ -68,6 +68,10 @@ const ImageCarousel = (props: ImageCarouselProps) => {
         renderItem={renderImage}
         style={[styles.carousel, carouselStyle]}
         containerStyle={styles.imageContainer}
+        onConfigurePanGesture={g => {
+          g.activeOffsetX([-10, 10]);
+          g.failOffsetY([-5, 5]);
+        }}
       />
 
       {data.length > 1 && enablePagination && (
