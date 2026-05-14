@@ -6,13 +6,14 @@ import { mergeArraysWithoutDuplicates } from '@core/helpers';
 import { IHttpError } from '@core/interfaces/http';
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
 import { GetPostsRequestParams } from '@domain/request-params';
-import { UserUseCases, PostUseCases } from '@domain/use-cases';
+import { PostUseCases, UserUseCases } from '@domain/use-cases';
 import { Toasts } from '@ui/toast';
 
-import { IProfileDetailsViewModel } from './IProfileDetailsViewModel';
+import { IUserDetailsViewModel } from './IUserDetailsViewModel';
 
 @injectable()
-class ProfileDetailsViewModel implements IProfileDetailsViewModel {
+class UserDetailsViewModel implements IUserDetailsViewModel {
+  private _userId: number | null = null;
   private _user: IUser | null = null;
   private _isLoading: boolean = false;
   private _isRefreshing: boolean = false;
@@ -20,8 +21,8 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
   private _postsMeta: IMeta | null = null;
 
   constructor(
-    @inject(UserUseCases.$GetCurrentUser)
-    private getCurrentUserUseCase: UseCase<boolean, IUser>,
+    @inject(UserUseCases.$GetUserById)
+    private getUserByIdUseCase: UseCase<number, IUser>,
     @inject(PostUseCases.$GetUserPosts)
     private getUserPostsUseCase: UseCase<GetPostsRequestParams, IPagination<IPost>>,
   ) {
@@ -68,21 +69,19 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._posts = value;
   }
 
-  async load(): Promise<void> {
+  async load(userId: number): Promise<void> {
+    this._userId = userId;
+    this._user = null;
+    this._posts = [];
     this.isLoading = true;
 
     try {
-      const user = await this.getCurrentUserUseCase.execute(true);
+      const [user, data] = await Promise.all([
+        this.getUserByIdUseCase.execute(userId),
+        this.getUserPostsUseCase.execute({ userId, perPage: 20, page: 1, sortedBy: 'desc' }),
+      ]);
 
       this.user = user;
-
-      const data = await this.getUserPostsUseCase.execute({
-        userId: user.id,
-        perPage: 20,
-        page: 1,
-        sortedBy: 'desc',
-      });
-
       this.posts = data.results;
       this.postsMeta = data.meta;
     } catch (e) {
@@ -92,30 +91,16 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     }
   }
 
-  async loadUser(): Promise<void> {
-    this.isLoading = true;
-
-    try {
-      const user = await this.getCurrentUserUseCase.execute(false);
-
-      this.user = user;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isLoading = false;
-    }
-  }
-
   async refresh(): Promise<void> {
-    if (!this._user) return;
+    if (!this._userId) return;
 
     this.isRefreshing = true;
 
     try {
       const [user, data] = await Promise.all([
-        this.getCurrentUserUseCase.execute(false),
+        this.getUserByIdUseCase.execute(this._userId),
         this.getUserPostsUseCase.execute({
-          userId: this._user.id,
+          userId: this._userId,
           perPage: 20,
           page: 1,
           sortedBy: 'desc',
@@ -133,11 +118,11 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
   }
 
   async loadMorePosts(page: number): Promise<void> {
-    if (!this._user) return;
+    if (!this._userId) return;
 
     try {
       const data = await this.getUserPostsUseCase.execute({
-        userId: this._user.id,
+        userId: this._userId,
         perPage: 20,
         page,
         sortedBy: 'desc',
@@ -151,4 +136,4 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
   }
 }
 
-export default ProfileDetailsViewModel;
+export default UserDetailsViewModel;
