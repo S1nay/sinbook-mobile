@@ -1,5 +1,13 @@
-import React, { useMemo, useState, useCallback } from 'react';
-import { Dimensions, FlatList, ListRenderItemInfo, View, LayoutChangeEvent } from 'react-native';
+import { useMemo, useState, useCallback } from 'react';
+import {
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  ListRenderItemInfo,
+  View,
+  LayoutChangeEvent,
+} from 'react-native';
+import { useUnistyles } from 'react-native-unistyles';
 
 import { GridProps } from './types';
 
@@ -12,12 +20,17 @@ const Grid = <T,>(props: GridProps<T>) => {
     renderItem,
     data,
     isLoadMore = false,
+    isLoading = false,
+    isRefreshing = false,
+    placeholder,
+    GridHeaderComponent,
     onLoadMore,
     contentContainerStyle,
     style,
     ...restProps
   } = props;
 
+  const { theme } = useUnistyles();
   const [containerWidth, setContainerWidth] = useState<number>(SCREEN_WIDTH);
 
   const handleLayout = useCallback(
@@ -61,6 +74,14 @@ const Grid = <T,>(props: GridProps<T>) => {
         numColumns={numberOfColumns}
         onEndReachedThreshold={0.3}
         onEndReached={onEndReached}
+        refreshing={isRefreshing}
+        ListHeaderComponent={GridHeaderComponent ? GridHeaderComponent : null}
+        ListEmptyComponent={isLoading && placeholder ? placeholder : null}
+        ListFooterComponent={
+          isLoadMore ? (
+            <ActivityIndicator size="small" color={theme.colors.foreground.primary} />
+          ) : null
+        }
         {...restProps}
       />
     </View>
