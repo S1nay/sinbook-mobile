@@ -13,6 +13,8 @@ const List = <T,>({
   onRefresh: onRefreshProp,
   onEndReached: onEndReachedProp,
   contentContainerStyle,
+  isLoading = false,
+  placeholder,
   ...rest
 }: ListProps<T>) => {
   const { theme } = useUnistyles();
@@ -51,6 +53,7 @@ const List = <T,>({
           />
         ) : undefined
       }
+      ListEmptyComponent={isLoading && placeholder ? placeholder : null}
       ListFooterComponent={
         isLoadMore ? (
           <ActivityIndicator size="small" color={theme.colors.foreground.primary} />

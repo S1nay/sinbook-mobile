@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { ListRenderItemInfo } from 'react-native';
 
+import Placeholders from '@components/placeholders';
 import Post from '@components/post';
 import UserCard from '@components/user-card';
 import { useDIContainer } from '@core/hooks';
@@ -22,9 +23,7 @@ const TabRoutes = [
 
 const SearchView = () => {
   const container = useDIContainer();
-  const { getPosts, getUsers, posts, postsMeta, users, usersMeta } = container.get(
-    ISearchViewModel.$,
-  );
+  const { getPosts, getUsers, posts, postsMeta, users, usersMeta, isLoading } = container.get(ISearchViewModel.$);
   const navigation =
     useNavigation<MaintenanceScreenProps<MaintenanceRouteNames.Tab>['navigation']>();
 
@@ -58,6 +57,8 @@ const SearchView = () => {
             renderItem={renderPost}
             pagination={postsMeta}
             onPaginate={onPaginatePosts}
+            isLoading={isLoading}
+            placeholder={<Placeholders.PostListPlaceholder />}
           />
         </TopTabs.Content>
         <TopTabs.Content routeKey="Users">
@@ -67,6 +68,8 @@ const SearchView = () => {
             pagination={usersMeta}
             onPaginate={onPaginateUsers}
             contentContainerStyle={styles.userListContainer}
+            isLoading={isLoading}
+            placeholder={<Placeholders.UserCardListPlaceholder />}
           />
         </TopTabs.Content>
       </TopTabs>
