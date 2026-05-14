@@ -7,8 +7,8 @@ import { IUserRepository } from '@domain/repositories';
 class GetCurrentUserUseCase {
   constructor(@inject(IUserRepository.$) private userRepository: IUserRepository) {}
 
-  async execute(useCache: boolean = true): Promise<IUser> {
-    if (useCache) {
+  async execute(shouldUseCache: boolean = true): Promise<IUser> {
+    if (shouldUseCache) {
       const sessionUser = this.userRepository.getUserSession();
       if (sessionUser) return sessionUser;
     }
