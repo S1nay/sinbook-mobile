@@ -28,6 +28,9 @@ export type AuthStackParamList = {
 export type MaintenanceStackParamList = {
   [MaintenanceRouteNames.Tab]: NavigatorScreenParams<BottomTabStackParamList>;
   [MaintenanceRouteNames.Notifications]: undefined;
+  [MaintenanceRouteNames.UserDetails]: {
+    userId: number;
+  };
 };
 
 export type BottomTabStackParamList = {
@@ -40,7 +43,6 @@ export type BottomTabStackParamList = {
 
 export type ProfileStackParamList = {
   [ProfileRouteNames.ProfileDetails]?: {
-    userId?: number;
     userIsUpdated?: boolean;
     newPostIsCreated?: number;
   };

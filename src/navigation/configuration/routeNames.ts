@@ -8,6 +8,7 @@ export enum AppRouteNames {
 export enum MaintenanceRouteNames {
   Notifications = 'Notifications',
   Tab = 'TabNavigator',
+  UserDetails = 'User Details',
 }
 
 //Чат
