@@ -72,11 +72,9 @@ const ProfileDetailsView = () => {
   };
 
   const renderPost = ({ item: post, style }: GridRenderItemInfo<IPost>) => {
-    const uri = getConnectUrl(post.images[0])!;
-
     return (
-      <Pressable onPress={onNavigateToProfilePosts}>
-        <TurboImage source={{ uri }} style={style} resizeMode="cover" />
+      <Pressable onPress={navigateToProfilePosts}>
+        <AppImage source={{ uri: post.images[0] }} style={style} />
       </Pressable>
     );
   };
