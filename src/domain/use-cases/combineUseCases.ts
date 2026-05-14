@@ -10,7 +10,7 @@ import {
 import { FileUseCases, PostAvatarUseCase } from './file';
 import { CreatePostUseCase, GetUserPostsUseCase, PostUseCases } from './post';
 import { GetThemeUseCase, SwitchThemeUseCase, ThemeUseCases } from './theme';
-import { GetUserUseCase, PatchUserUseCase, UserUseCases } from './user';
+import { GetCurrentUserUseCase, GetUserByIdUseCase, PatchUserUseCase, UserUseCases } from './user';
 
 export const combineUseCases = (container: Container) => {
   container.bind(AuthUseCases.$CheckAuth).to(CheckAuthUseCase).inSingletonScope();
@@ -18,7 +18,8 @@ export const combineUseCases = (container: Container) => {
   container.bind(AuthUseCases.$Logout).to(LogoutUseCase).inSingletonScope();
   container.bind(AuthUseCases.$Register).to(RegisterUseCase).inSingletonScope();
 
-  container.bind(UserUseCases.$GetUser).to(GetUserUseCase).inSingletonScope();
+  container.bind(UserUseCases.$GetCurrentUser).to(GetCurrentUserUseCase).inSingletonScope();
+  container.bind(UserUseCases.$GetUserById).to(GetUserByIdUseCase).inSingletonScope();
   container.bind(UserUseCases.$PatchUser).to(PatchUserUseCase).inSingletonScope();
 
   container.bind(PostUseCases.$GetUserPosts).to(GetUserPostsUseCase).inSingletonScope();
