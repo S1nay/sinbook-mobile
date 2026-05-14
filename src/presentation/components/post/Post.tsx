@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Dimensions, Pressable, Text, View } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 
@@ -75,4 +75,4 @@ const Post = (props: PostProps) => {
   );
 };
 
-export default Post;
+export default memo(Post);
