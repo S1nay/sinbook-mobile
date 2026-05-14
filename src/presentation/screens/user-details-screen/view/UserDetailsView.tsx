@@ -1,14 +1,19 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Pressable } from 'react-native';
 
 import Placeholders from '@components/placeholders';
 import ProfileInfo from '@components/profile-info';
 import { useDIContainer } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
-import { MaintenanceRouteNames, MaintenanceScreenProps } from '@navigation/configuration';
+import {
+  BottomTabRouteNames,
+  MaintenanceRouteNames,
+  MaintenanceScreenProps,
+  ProfileRouteNames,
+} from '@navigation/configuration';
 import Button from '@ui/button';
 import Grid, { GridRenderItemInfo } from '@ui/grid';
 import AppImage from '@ui/image';
@@ -37,10 +42,24 @@ const UserDetailsView = () => {
 
   const onPaginate = async (page: number) => loadMorePosts(page);
 
-  const renderPost = ({ item: post, style }: GridRenderItemInfo<IPost>) => {
-    return <AppImage source={{ uri: post.images[0] }} style={style} />;
+  const navigateToProfilePosts = () => {
+    if (user && posts.length && postsMeta)
+      navigation.navigate(MaintenanceRouteNames.Tab, {
+        screen: BottomTabRouteNames.Profile,
+        params: {
+          screen: ProfileRouteNames.ProfilePosts,
+          params: { user, posts, meta: postsMeta },
+        },
+      });
   };
 
+  const renderPost = ({ item: post, style }: GridRenderItemInfo<IPost>) => {
+    return (
+      <Pressable onPress={navigateToProfilePosts}>
+        <AppImage source={{ uri: post.images[0] }} style={style} />
+      </Pressable>
+    );
+  };
   return (
     <AppLayout disableBottomInsets>
       <Grid
