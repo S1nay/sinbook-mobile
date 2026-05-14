@@ -73,14 +73,14 @@ export const lightTheme = {
       text: palette.black,
       placeholder: palette.lightGray,
       lineTransparent: {
-        border: palette.gray,
-        focusBorder: palette.lightOrange,
+        border: palette.lightGray,
+        focusBorder: palette.gray,
         errorBorder: palette.red,
         disabledBorder: palette.lightGray,
       },
       outlinedTransparent: {
-        border: palette.gray,
-        focusBorder: palette.lightOrange,
+        border: palette.lightGray,
+        focusBorder: palette.gray,
         errorBorder: palette.red,
         disabledBorder: palette.lightGray,
       },
