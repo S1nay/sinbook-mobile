@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { PropsWithChildren, useCallback, useMemo } from 'react';
 import { Pressable } from 'react-native';
 import {
   Asset,
@@ -14,7 +14,7 @@ import { BottomSheetModal } from '@ui/bottom-sheet';
 
 import { MediaPickerProps } from './types';
 
-const MediaPicker = (props: MediaPickerProps) => {
+const MediaPicker = (props: PropsWithChildren<MediaPickerProps>) => {
   const { onPick, selectionLimit = 1, style, children } = props;
   const { theme } = useUnistyles();
 

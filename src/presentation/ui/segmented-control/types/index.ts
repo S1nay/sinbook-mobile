@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 import { StyleProp, ViewProps, ViewStyle } from 'react-native';
 
 export type TOrientation = 'horizontal' | 'vertical';
@@ -12,7 +12,7 @@ export interface IItemLayout {
 
 export interface INormalizedItem {
   value: string;
-  label: ReactNode;
+  label: ReactElement;
   disabled?: boolean;
 }
 
