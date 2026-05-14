@@ -7,7 +7,7 @@ export interface IProfilePostsViewModel {
   postsMeta: IMeta | null;
   isLoading: boolean;
 
-  load(userId: number): Promise<void>;
+  load(posts: Array<IPost>, meta: IMeta): void;
   loadMorePosts(page: number): Promise<void>;
 }
 

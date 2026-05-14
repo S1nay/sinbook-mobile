@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { ListRenderItemInfo } from 'react-native';
 
-import Header from '@components/header';
 import Post from '@components/post';
 import { useDIContainer } from '@core/hooks';
 import { IPost } from '@domain/models';
@@ -13,8 +12,6 @@ import List from '@ui/list';
 
 import { IProfilePostsViewModel } from '../view-model';
 
-// Прокинуть загруженные посты с экрана пользователя в параметры навигации
-// После создания поста, обновления профиля данные на экранах поиска и главной устаревают
 const ProfilePostsView = () => {
   const container = useDIContainer();
   const navigation =
@@ -23,21 +20,14 @@ const ProfilePostsView = () => {
   const { load, loadMorePosts, posts, postsMeta } = container.get(IProfilePostsViewModel.$);
 
   useEffect(() => {
-    if (params.user) load(params.user.id);
-  }, [params.user]);
+    const { meta, posts, user } = params;
 
-  useEffect(() => {
-    if (params.user) {
-      navigation.setOptions({
-        headerTitle: params.user.nickName,
-        header: props => <Header {...props} isShowBackIcon />,
-      });
-    }
-  }, [params.user]);
+    navigation.setOptions({ headerTitle: user.nickName });
 
-  const onPaginate = async (page: number) => {
-    if (params.user) await loadMorePosts(page);
-  };
+    load(posts, meta);
+  }, []);
+
+  const onPaginate = async (page: number) => loadMorePosts(page);
 
   const renderPost = ({ item: post }: ListRenderItemInfo<IPost>) => <Post post={post} />;
 

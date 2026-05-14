@@ -31,15 +31,10 @@ const UserDetailsView = () => {
   const gridRef = useRef<FlatList | null>(null);
 
   useEffect(() => {
+    navigation.setOptions({ headerTitle: params.nickName });
+
     load(params.userId);
   }, [params.userId]);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerTitle: user?.nickName ?? '',
-      header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} />,
-    });
-  }, [user]);
 
   const onPaginate = async (page: number) => loadMorePosts(page);
 

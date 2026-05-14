@@ -48,7 +48,11 @@ const ProfileNavigator = () => {
         component={ProfileDetailsScreen}
         name={ProfileRouteNames.ProfileDetails}
       />
-      <ProfileStack.Screen component={ProfileEditScreen} name={ProfileRouteNames.ProfileEdit} />
+      <ProfileStack.Screen
+        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
+        component={ProfileEditScreen}
+        name={ProfileRouteNames.ProfileEdit}
+      />
       <ProfileStack.Screen
         options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
         component={ProfileFollowsScreen}
@@ -173,7 +177,7 @@ export const MaintenanceNavigator = () => {
       <MaintenanceStack.Screen
         component={UserDetailsScreen}
         name={MaintenanceRouteNames.UserDetails}
-        options={{ header: props => <Header {...props} isShowRightIcon={false} isShowBackIcon /> }}
+        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
       />
     </MaintenanceStack.Navigator>
   );

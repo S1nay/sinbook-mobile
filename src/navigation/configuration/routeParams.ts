@@ -48,6 +48,8 @@ export type ProfileStackParamList = {
   };
   [ProfileRouteNames.ProfilePosts]: {
     user: IUser;
+    posts: Array<IPost>;
+    meta: IMeta;
   };
   [ProfileRouteNames.ProfileEdit]: {
     user: IUser;

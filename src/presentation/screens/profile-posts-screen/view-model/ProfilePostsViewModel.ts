@@ -49,23 +49,9 @@ class ProfilePostsViewModel implements IProfilePostsViewModel {
     this._posts = value;
   }
 
-  async load(userId: number): Promise<void> {
-    this._userId = userId;
-    this.isLoading = true;
-    try {
-      const data = await this.getUserPostsUseCase.execute({
-        userId,
-        perPage: 20,
-        page: 1,
-        sortedBy: 'desc',
-      });
-      this.posts = data.results;
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isLoading = false;
-    }
+  load(posts: Array<IPost>, meta: IMeta): void {
+    this.posts = posts;
+    this.postsMeta = meta;
   }
 
   async loadMorePosts(page: number): Promise<void> {
