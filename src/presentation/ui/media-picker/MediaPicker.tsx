@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useMemo } from 'react';
+import { memo, PropsWithChildren, useCallback, useMemo } from 'react';
 import { Pressable } from 'react-native';
 import {
   Asset,
@@ -57,4 +57,4 @@ const MediaPicker = (props: PropsWithChildren<MediaPickerProps>) => {
   );
 };
 
-export default MediaPicker;
+export default memo(MediaPicker);
