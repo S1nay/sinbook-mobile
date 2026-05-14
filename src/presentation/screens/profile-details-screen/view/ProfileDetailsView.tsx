@@ -6,7 +6,7 @@ import { FlatList, Pressable } from 'react-native';
 import Header from '@components/header';
 import Placeholders from '@components/placeholders';
 import ProfileInfo from '@components/profile-info';
-import { useDIContainer, usePagination } from '@core/hooks';
+import { useDIContainer } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
 import { ProfileRouteNames, ProfileScreenProps } from '@navigation/configuration';
@@ -52,10 +52,6 @@ const ProfileDetailsView = () => {
     });
   }, [user]);
 
-  const onPaginate = async (page: number) => loadMorePosts(page);
-
-  const { isLoadMore, onLoadMore } = usePagination({ pagination: postsMeta, onPaginate });
-
   const navigateToSettings = () => {
     navigation.navigate(ProfileRouteNames.ProfileSettings);
   };
@@ -72,6 +68,8 @@ const ProfileDetailsView = () => {
     if (user && posts.length && postsMeta)
       navigation.navigate(ProfileRouteNames.ProfilePosts, { user, posts, meta: postsMeta });
   };
+
+  const onPaginate = async (page: number) => loadMorePosts(page);
 
   const renderPost = ({ item: post, style }: GridRenderItemInfo<IPost>) => {
     return (
@@ -90,13 +88,12 @@ const ProfileDetailsView = () => {
         keyExtractor={(item: IPost) => item.id.toString()}
         isRefreshing={isRefreshing}
         isLoading={isLoading}
-        isLoadMore={isLoadMore}
         gap={GRID_GAP}
         style={styles.content}
         numberOfColumns={GRID_NUM_OF_COLUMNS}
         placeholder={<Placeholders.GridPlaceholder />}
         onRefresh={refresh}
-        onLoadMore={onLoadMore}
+        onPaginate={onPaginate}
         GridHeaderComponent={
           <ProfileInfo
             user={user}

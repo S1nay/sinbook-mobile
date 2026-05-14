@@ -1,6 +1,8 @@
 import { ReactElement, RefObject } from 'react';
 import { FlatList, FlatListProps } from 'react-native';
 
+import { IMeta } from '@domain/models';
+
 export interface GridProps<T>
   extends Omit<
     FlatListProps<T>,
@@ -14,10 +16,10 @@ export interface GridProps<T>
   > {
   numberOfColumns: number;
   gap: number;
+  pagination?: IMeta | null;
+  onPaginate?: (page: number) => Promise<void>;
   ref: RefObject<FlatList | null>;
   renderItem: GridRenderItem<T>;
-  onLoadMore?: () => void;
-  isLoadMore?: boolean;
   isLoading?: boolean;
   isRefreshing?: boolean;
   placeholder?: ReactElement;

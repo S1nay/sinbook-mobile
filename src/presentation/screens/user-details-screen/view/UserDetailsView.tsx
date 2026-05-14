@@ -3,10 +3,9 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
 import { FlatList } from 'react-native';
 
-import Header from '@components/header';
 import Placeholders from '@components/placeholders';
 import ProfileInfo from '@components/profile-info';
-import { useDIContainer, usePagination } from '@core/hooks';
+import { useDIContainer } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
 import { MaintenanceRouteNames, MaintenanceScreenProps } from '@navigation/configuration';
@@ -38,8 +37,6 @@ const UserDetailsView = () => {
 
   const onPaginate = async (page: number) => loadMorePosts(page);
 
-  const { isLoadMore, onLoadMore } = usePagination({ pagination: postsMeta, onPaginate });
-
   const renderPost = ({ item: post, style }: GridRenderItemInfo<IPost>) => {
     return <AppImage source={{ uri: post.images[0] }} style={style} />;
   };
@@ -53,7 +50,8 @@ const UserDetailsView = () => {
         keyExtractor={(item: IPost) => item.id.toString()}
         isRefreshing={isRefreshing}
         isLoading={isLoading}
-        isLoadMore={isLoadMore}
+        pagination={postsMeta}
+        onPaginate={onPaginate}
         gap={GRID_GAP}
         style={styles.content}
         numberOfColumns={GRID_NUM_OF_COLUMNS}
@@ -67,7 +65,6 @@ const UserDetailsView = () => {
           />
         }
         onRefresh={refresh}
-        onLoadMore={onLoadMore}
       />
     </AppLayout>
   );

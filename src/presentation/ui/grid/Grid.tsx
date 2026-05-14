@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 
+import { usePagination } from '@core/hooks';
+
 import { GridProps } from './types';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -19,12 +21,12 @@ const Grid = <T,>(props: GridProps<T>) => {
     numberOfColumns = 1,
     renderItem,
     data,
-    isLoadMore = false,
+    pagination,
+    onPaginate,
     isLoading = false,
     isRefreshing = false,
     placeholder,
     GridHeaderComponent,
-    onLoadMore,
     contentContainerStyle,
     style,
     ...restProps
@@ -32,6 +34,11 @@ const Grid = <T,>(props: GridProps<T>) => {
 
   const { theme } = useUnistyles();
   const [containerWidth, setContainerWidth] = useState<number>(SCREEN_WIDTH);
+
+  const { isLoadMore, onLoadMore } = usePagination({
+    pagination: pagination ?? null,
+    onPaginate: onPaginate ?? (() => Promise.resolve()),
+  });
 
   const handleLayout = useCallback(
     (e: LayoutChangeEvent) => {
