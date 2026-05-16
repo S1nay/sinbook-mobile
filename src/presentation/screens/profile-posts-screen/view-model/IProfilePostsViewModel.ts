@@ -1,15 +1,14 @@
 import { ServiceIdentifier } from 'inversify';
 
 import { IMeta, IPost } from '@domain/models';
-import { GetPostsRequestParams } from '@domain/request-params';
-import { GetPostsMode } from '@domain/use-cases/post';
 
 export interface IProfilePostsViewModel {
   posts: Array<IPost>;
   postsMeta: IMeta | null;
   isLoading: boolean;
 
-  getUserPosts(params: GetPostsRequestParams & { mode: GetPostsMode }): Promise<void>;
+  load(posts: Array<IPost>, meta: IMeta): void;
+  loadMorePosts(page: number, userId: number): Promise<void>;
 }
 
 export namespace IProfilePostsViewModel {

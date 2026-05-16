@@ -1,10 +1,10 @@
 import { Image, ImageStyle, Pressable, StyleProp } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import TurboImage from 'react-native-turbo-image';
 import { useUnistyles } from 'react-native-unistyles';
 import { scheduleOnRN } from 'react-native-worklets';
 
 import Icon from '@ui/icon';
+import AppImage from '@ui/image';
 
 import { styles } from './styles';
 
@@ -43,7 +43,7 @@ const CarouselImageItem = ({
     });
   };
 
-  const ImageComponent = isLocal ? Image : TurboImage;
+  const ImageComponent = isLocal ? Image : AppImage;
 
   return (
     <Animated.View style={animatedStyle}>

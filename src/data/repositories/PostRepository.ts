@@ -2,7 +2,6 @@ import { inject, injectable } from 'inversify';
 
 import { getDataFromHttpResponse, getErrorFromHttpResponse } from '@core/helpers';
 import { IPostApi } from '@data/api';
-import { IPostStore } from '@data/store';
 import { ICreatePostRequestDto, IPatchPostRequestDto } from '@domain/dto';
 import { IPagination, IPost } from '@domain/models';
 import { IPostRepository } from '@domain/repositories';
@@ -10,18 +9,7 @@ import { GetPostsRequestParams } from '@domain/request-params';
 
 @injectable()
 class PostRepository implements IPostRepository {
-  constructor(
-    @inject(IPostApi.$) private postApi: IPostApi,
-    @inject(IPostStore.$) private postStore: IPostStore,
-  ) {}
-
-  getLoggedInUserPosts(): IPagination<IPost> | null {
-    return this.postStore.loggedInUserPosts;
-  }
-
-  setLoggedInUserPosts(posts: IPagination<IPost> | null): void {
-    this.postStore.setLoggedInUserPosts(posts);
-  }
+  constructor(@inject(IPostApi.$) private postApi: IPostApi) {}
 
   async getPosts(params?: GetPostsRequestParams): Promise<IPagination<IPost>> {
     return this.postApi

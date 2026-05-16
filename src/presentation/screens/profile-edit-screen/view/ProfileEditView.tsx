@@ -10,7 +10,6 @@ import {
   EditProfileFormRef,
   EditProfileFormValidationSchema,
 } from '@components/forms/edit-profile-form';
-import Header from '@components/header';
 import { useDIContainer } from '@core/hooks';
 import AppLayout from '@layouts/_app';
 import { ProfileScreenProps, ProfileRouteNames } from '@navigation/configuration';
@@ -29,10 +28,7 @@ const ProfileEditView = () => {
   const form = useRef<EditProfileFormRef>(null);
 
   useEffect(() => {
-    navigation.setOptions({
-      headerTitle: params.user.nickName,
-      header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} />,
-    });
+    navigation.setOptions({ headerTitle: params.user.nickName });
   }, [params.user]);
 
   const onSubmit = async (formData: EditProfileFormData) => {

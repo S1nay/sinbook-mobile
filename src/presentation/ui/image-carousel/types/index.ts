@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 import { ImageStyle, StyleProp, ViewStyle } from 'react-native';
 
 export interface ImageCarouselProps {
@@ -8,7 +8,7 @@ export interface ImageCarouselProps {
   enablePagination?: boolean;
   carouselStyle?: StyleProp<ViewStyle>;
   imageStyle?: StyleProp<ImageStyle>;
-  appendItem?: ReactNode;
+  appendItem?: ReactElement | null;
   itemSpacing?: number;
   onRemoveImage?: (index: number) => void;
 }

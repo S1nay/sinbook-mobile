@@ -7,7 +7,6 @@ import { IHttpError } from '@core/interfaces/http';
 import { IPost, IMeta, IPagination } from '@domain/models';
 import { GetPostsRequestParams } from '@domain/request-params';
 import { PostUseCases } from '@domain/use-cases';
-import { GetPostsMode } from '@domain/use-cases/post';
 import { Toasts } from '@ui/toast';
 
 import { IProfilePostsViewModel } from './IProfilePostsViewModel';
@@ -20,10 +19,7 @@ class ProfilePostsViewModel implements IProfilePostsViewModel {
 
   constructor(
     @inject(PostUseCases.$GetUserPosts)
-    private getUserPostsUseCase: UseCase<
-      GetPostsRequestParams & { mode: GetPostsMode },
-      IPagination<IPost>
-    >,
+    private getUserPostsUseCase: UseCase<GetPostsRequestParams, IPagination<IPost>>,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -52,25 +48,25 @@ class ProfilePostsViewModel implements IProfilePostsViewModel {
     this._posts = value;
   }
 
-  async getUserPosts(params: GetPostsRequestParams & { mode: GetPostsMode }): Promise<void> {
-    const { userId, mode, perPage = 20, page = 1 } = params;
+  load(posts: Array<IPost>, meta: IMeta): void {
+    this.posts = posts;
+    this.postsMeta = meta;
+  }
 
-    if (mode !== 'pagination') this.isLoading = true;
-
-    return this.getUserPostsUseCase
-      .execute({ userId, mode, perPage, page, sortedBy: 'desc' })
+  async loadMorePosts(page: number, userId: number): Promise<void> {
+    this.getUserPostsUseCase
+      .execute({
+        userId,
+        perPage: 20,
+        page,
+        sortedBy: 'desc',
+      })
       .then(data => {
-        this.posts =
-          mode === 'pagination'
-            ? mergeArraysWithoutDuplicates(this._posts, data.results, 'id')
-            : data.results;
+        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
         Toast.show({ text1: message as string, type: Toasts.Error });
-      })
-      .finally(() => {
-        if (mode !== 'pagination') this.isLoading = false;
       });
   }
 }

@@ -12,7 +12,7 @@ const SinbookHttpClientImpl = new HttpClients.AxiosHttpClient({
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
-  timeout: 15000,
+  timeout: 60000,
 });
 
 const RootStorageImpl = new Storages.MMKVStorage({

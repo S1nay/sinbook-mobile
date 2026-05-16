@@ -1,18 +1,18 @@
 import { ServiceIdentifier } from 'inversify';
 
 import { IMeta, IPost, IUser } from '@domain/models';
-import { GetPostsRequestParams, GetUserRequestParams } from '@domain/request-params';
-import { GetPostsMode } from '@domain/use-cases/post';
 
 export interface IProfileDetailsViewModel {
   user: IUser | null;
   posts: Array<IPost>;
   postsMeta: IMeta | null;
   isLoading: boolean;
+  isRefreshing: boolean;
 
-  getUserData(params: GetUserRequestParams & { isRefetching?: boolean }): Promise<IUser>;
-  getUserPosts(params: GetPostsRequestParams & { mode: GetPostsMode }): Promise<void>;
-  logout: (callback: PureFunction) => void;
+  load(): Promise<void>;
+  loadUser(): Promise<void>;
+  refresh(): Promise<void>;
+  loadMorePosts(page: number): Promise<void>;
 }
 
 export namespace IProfileDetailsViewModel {

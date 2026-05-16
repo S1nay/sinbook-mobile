@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
  * @param {string | undefined} url - Исходный URL (например, http://localhost:3000/api/image.jpg)
  * @returns {string | undefined} - Исправленный URL
  */
-const getCorrectUrl = (url?: string): string | undefined => {
+const getConnectUrl = (url?: string): string | undefined => {
   if (!url || typeof url !== 'string') return url;
 
   if (Platform.OS === 'android' && url.includes('localhost')) {
@@ -15,4 +15,4 @@ const getCorrectUrl = (url?: string): string | undefined => {
   return url;
 };
 
-export default getCorrectUrl;
+export default getConnectUrl;

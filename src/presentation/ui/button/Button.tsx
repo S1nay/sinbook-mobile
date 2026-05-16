@@ -58,7 +58,7 @@ const Button = (props: ButtonProps) => {
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       style={[styles.root, style as StyleProp<ViewStyle>]}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       {...otherProps}
     >
       {icon && <Icon {...icon} stroke={icon.stroke ?? iconColor} />}

@@ -1,7 +1,7 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { IUser } from '@domain/models';
+import { IMeta, IPost, IUser } from '@domain/models';
 
 import {
   AppRouteNames,
@@ -28,6 +28,10 @@ export type AuthStackParamList = {
 export type MaintenanceStackParamList = {
   [MaintenanceRouteNames.Tab]: NavigatorScreenParams<BottomTabStackParamList>;
   [MaintenanceRouteNames.Notifications]: undefined;
+  [MaintenanceRouteNames.UserDetails]: {
+    userId: number;
+    nickName: string;
+  };
 };
 
 export type BottomTabStackParamList = {
@@ -40,12 +44,13 @@ export type BottomTabStackParamList = {
 
 export type ProfileStackParamList = {
   [ProfileRouteNames.ProfileDetails]?: {
-    userId?: number;
     userIsUpdated?: boolean;
     newPostIsCreated?: number;
   };
   [ProfileRouteNames.ProfilePosts]: {
     user: IUser;
+    posts: Array<IPost>;
+    meta: IMeta;
   };
   [ProfileRouteNames.ProfileEdit]: {
     user: IUser;

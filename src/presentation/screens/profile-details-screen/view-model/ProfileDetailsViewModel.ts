@@ -5,9 +5,8 @@ import Toast from 'react-native-toast-message';
 import { mergeArraysWithoutDuplicates } from '@core/helpers';
 import { IHttpError } from '@core/interfaces/http';
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
-import { GetPostsRequestParams, GetUserRequestParams } from '@domain/request-params';
-import { AuthUseCases, UserUseCases, PostUseCases } from '@domain/use-cases';
-import { GetPostsMode } from '@domain/use-cases/post';
+import { GetPostsRequestParams } from '@domain/request-params';
+import { UserUseCases, PostUseCases } from '@domain/use-cases';
 import { Toasts } from '@ui/toast';
 
 import { IProfileDetailsViewModel } from './IProfileDetailsViewModel';
@@ -16,19 +15,15 @@ import { IProfileDetailsViewModel } from './IProfileDetailsViewModel';
 class ProfileDetailsViewModel implements IProfileDetailsViewModel {
   private _user: IUser | null = null;
   private _isLoading: boolean = false;
+  private _isRefreshing: boolean = false;
   private _posts: Array<IPost> = [];
   private _postsMeta: IMeta | null = null;
 
   constructor(
-    @inject(AuthUseCases.$Logout)
-    private logoutUseCase: UseCase<void, void>,
-    @inject(UserUseCases.$GetUser)
-    private getUserUseCase: UseCase<GetUserRequestParams & { isRefetching: boolean }, IUser>,
+    @inject(UserUseCases.$GetCurrentUser)
+    private getCurrentUserUseCase: UseCase<boolean, IUser>,
     @inject(PostUseCases.$GetUserPosts)
-    private getUserPostsUseCase: UseCase<
-      GetPostsRequestParams & { mode: GetPostsMode },
-      IPagination<IPost>
-    >,
+    private getUserPostsUseCase: UseCase<GetPostsRequestParams, IPagination<IPost>>,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -39,6 +34,10 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
 
   get isLoading(): boolean {
     return this._isLoading;
+  }
+
+  get isRefreshing(): boolean {
+    return this._isRefreshing;
   }
 
   get posts(): Array<IPost> {
@@ -53,6 +52,10 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._isLoading = value;
   }
 
+  private set isRefreshing(value: boolean) {
+    this._isRefreshing = value;
+  }
+
   private set user(value: IUser | null) {
     this._user = value;
   }
@@ -65,46 +68,90 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._posts = value;
   }
 
-  async getUserData(params: GetUserRequestParams & { isRefetching?: boolean }): Promise<IUser> {
-    const { isRefetching = false, id } = params;
-
+  async load(): Promise<void> {
     this.isLoading = true;
 
-    return this.getUserUseCase
-      .execute({ id, isRefetching })
+    try {
+      const user = await this.getCurrentUserUseCase.execute(true);
+
+      this.user = user;
+
+      const data = await this.getUserPostsUseCase.execute({
+        userId: user.id,
+        perPage: 20,
+        page: 1,
+        sortedBy: 'desc',
+      });
+
+      this.posts = data.results;
+      this.postsMeta = data.meta;
+    } catch (e) {
+      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  async loadUser(): Promise<void> {
+    this.isLoading = true;
+
+    this.getCurrentUserUseCase
+      .execute(false)
       .then(user => {
         this.user = user;
-        return user;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
       })
       .finally(() => {
         this.isLoading = false;
       });
   }
 
-  async getUserPosts(params: GetPostsRequestParams & { mode: GetPostsMode }): Promise<void> {
-    const { userId, mode, perPage = 20, page = 1 } = params;
+  async refresh(): Promise<void> {
+    if (!this.user) return;
 
-    if (mode !== 'pagination') this.isLoading = true;
+    this.isRefreshing = true;
 
-    return this.getUserPostsUseCase
-      .execute({ userId, mode, perPage, page, sortedBy: 'desc' })
-      .then(data => {
-        this.posts =
-          mode === 'pagination'
-            ? mergeArraysWithoutDuplicates(this._posts, data.results, 'id')
-            : data.results;
+    Promise.all([
+      this.getCurrentUserUseCase.execute(false),
+      this.getUserPostsUseCase.execute({
+        userId: this.user.id,
+        perPage: 20,
+        page: 1,
+        sortedBy: 'desc',
+      }),
+    ])
+      .then(([user, data]) => {
+        this.user = user;
+        this.posts = data.results;
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
         Toast.show({ text1: message as string, type: Toasts.Error });
       })
       .finally(() => {
-        if (mode !== 'pagination') this.isLoading = false;
+        this.isRefreshing = false;
       });
   }
 
-  logout(callback: PureFunction) {
-    this.logoutUseCase.execute().then(callback);
+  async loadMorePosts(page: number): Promise<void> {
+    if (!this.user) return;
+
+    this.getUserPostsUseCase
+      .execute({
+        userId: this.user.id,
+        perPage: 20,
+        page,
+        sortedBy: 'desc',
+      })
+      .then(data => {
+        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      });
   }
 }
 

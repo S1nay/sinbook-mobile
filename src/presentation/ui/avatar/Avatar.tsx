@@ -1,6 +1,7 @@
 import { memo, PropsWithChildren } from 'react';
 import { Image } from 'react-native';
-import TurboImage from 'react-native-turbo-image';
+
+import AppImage from '@ui/image';
 
 import { AvatarProps } from './types';
 
@@ -13,12 +14,7 @@ const Avatar = (props: PropsWithChildren<AvatarProps>) => {
   return (
     <>
       {uri ? (
-        <TurboImage
-          {...imageProps}
-          source={{ uri }}
-          rounded
-          style={{ width: size, height: size }}
-        />
+        <AppImage {...imageProps} source={{ uri }} rounded style={{ width: size, height: size }} />
       ) : (
         <Image
           source={AVATAR_PLACEHOLDER}

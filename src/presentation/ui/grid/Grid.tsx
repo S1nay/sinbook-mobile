@@ -1,5 +1,16 @@
-import React, { useMemo, useState, useCallback } from 'react';
-import { Dimensions, FlatList, ListRenderItemInfo, View, LayoutChangeEvent } from 'react-native';
+import { useMemo, useState, useCallback } from 'react';
+import {
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  ListRenderItemInfo,
+  View,
+  LayoutChangeEvent,
+} from 'react-native';
+import { RefreshControl } from 'react-native-gesture-handler';
+import { useUnistyles } from 'react-native-unistyles';
+
+import { usePagination } from '@core/hooks';
 
 import { GridProps } from './types';
 
@@ -11,14 +22,25 @@ const Grid = <T,>(props: GridProps<T>) => {
     numberOfColumns = 1,
     renderItem,
     data,
-    isLoadMore = false,
-    onLoadMore,
+    pagination,
+    onPaginate,
+    onRefresh,
+    isLoading = false,
+    isRefreshing = false,
+    placeholder,
+    GridHeaderComponent,
     contentContainerStyle,
     style,
     ...restProps
   } = props;
 
+  const { theme } = useUnistyles();
   const [containerWidth, setContainerWidth] = useState<number>(SCREEN_WIDTH);
+
+  const { isLoadMore, onLoadMore } = usePagination({
+    pagination: pagination ?? null,
+    onPaginate: onPaginate ?? (() => Promise.resolve()),
+  });
 
   const handleLayout = useCallback(
     (e: LayoutChangeEvent) => {
@@ -61,6 +83,22 @@ const Grid = <T,>(props: GridProps<T>) => {
         numColumns={numberOfColumns}
         onEndReachedThreshold={0.3}
         onEndReached={onEndReached}
+        refreshControl={
+          onRefresh ? (
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={onRefresh}
+              tintColor={theme.colors.foreground.primary}
+            />
+          ) : undefined
+        }
+        ListHeaderComponent={GridHeaderComponent ? GridHeaderComponent : null}
+        ListEmptyComponent={isLoading && placeholder ? placeholder : null}
+        ListFooterComponent={
+          isLoadMore ? (
+            <ActivityIndicator size="small" color={theme.colors.foreground.primary} />
+          ) : null
+        }
         {...restProps}
       />
     </View>

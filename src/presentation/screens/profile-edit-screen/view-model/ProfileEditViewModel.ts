@@ -52,7 +52,6 @@ class ProfileEditViewModel implements IProfileEditViewModel {
 
     return this.postAvatarUseCase
       .execute(image)
-      .then()
       .catch(({ message }: IHttpError) => {
         Toast.show({ text1: message as string, type: Toasts.Error });
       })

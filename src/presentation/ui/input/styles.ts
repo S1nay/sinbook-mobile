@@ -16,14 +16,14 @@ export const styles = StyleSheet.create(({ components, typography }) => ({
           paddingHorizontal: 0,
         },
         'outlined-transparent': {
+          borderRadius: 6,
           borderWidth: 1,
-          borderRadius: 4,
           borderColor: components.input.outlinedTransparent.border,
           paddingHorizontal: 8,
         },
         'borderless-filled': {
           backgroundColor: components.input.borderlessFilled.bg,
-          borderRadius: 4,
+          borderRadius: 6,
           paddingHorizontal: 8,
         },
       },
@@ -80,7 +80,6 @@ export const styles = StyleSheet.create(({ components, typography }) => ({
         variant: 'borderless-filled',
         state: 'focused',
         styles: {
-          borderWidth: 1,
           borderColor: components.input.borderlessFilled.focusBorder,
         },
       },
@@ -88,7 +87,6 @@ export const styles = StyleSheet.create(({ components, typography }) => ({
         variant: 'borderless-filled',
         state: 'error',
         styles: {
-          borderWidth: 1,
           borderColor: components.input.borderlessFilled.errorBorder,
           backgroundColor: components.input.borderlessFilled.errorBg,
         },

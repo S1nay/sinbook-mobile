@@ -20,6 +20,7 @@ import ProfilePostsScreen from '@screens/profile-posts-screen';
 import RegisterScreen from '@screens/register-screen';
 import SearchScreen from '@screens/search-screen';
 import SettingsScreen from '@screens/settings-screen';
+import UserDetailsScreen from '@screens/user-details-screen';
 
 import {
   AuthRouteNames,
@@ -47,7 +48,11 @@ const ProfileNavigator = () => {
         component={ProfileDetailsScreen}
         name={ProfileRouteNames.ProfileDetails}
       />
-      <ProfileStack.Screen component={ProfileEditScreen} name={ProfileRouteNames.ProfileEdit} />
+      <ProfileStack.Screen
+        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
+        component={ProfileEditScreen}
+        name={ProfileRouteNames.ProfileEdit}
+      />
       <ProfileStack.Screen
         options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
         component={ProfileFollowsScreen}
@@ -168,6 +173,11 @@ export const MaintenanceNavigator = () => {
         options={{
           header: props => <Header {...props} isShowRightIcon={false} isShowBackIcon />,
         }}
+      />
+      <MaintenanceStack.Screen
+        component={UserDetailsScreen}
+        name={MaintenanceRouteNames.UserDetails}
+        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
       />
     </MaintenanceStack.Navigator>
   );

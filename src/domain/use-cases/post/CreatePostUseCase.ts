@@ -32,16 +32,6 @@ class CreatePostUseCase {
 
     const post = await this.postRepository.createPost({ content, images: imageUrls });
 
-    const cachedPosts = this.postRepository.getLoggedInUserPosts();
-
-    if (cachedPosts) {
-      this.postRepository.setLoggedInUserPosts({
-        ...cachedPosts,
-        meta: { ...cachedPosts.meta, totalItems: cachedPosts.meta.totalItems + 1 },
-        results: [post, ...cachedPosts.results],
-      });
-    }
-
     const currentUser = this.userRepository.getUserSession();
 
     if (currentUser) {
