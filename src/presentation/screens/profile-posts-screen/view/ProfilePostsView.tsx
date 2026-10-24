@@ -7,7 +7,7 @@ import Post from '@components/post';
 import { useDIContainer } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
-import { ProfileRouteNames, ProfileScreenProps } from '@navigation/configuration';
+import { MaintenanceRouteNames, MaintenanceScreenProps } from '@navigation/configuration';
 import List from '@ui/list';
 
 import { IProfilePostsViewModel } from '../view-model';
@@ -15,19 +15,23 @@ import { IProfilePostsViewModel } from '../view-model';
 const ProfilePostsView = () => {
   const container = useDIContainer();
   const navigation =
-    useNavigation<ProfileScreenProps<ProfileRouteNames.ProfilePosts>['navigation']>();
-  const { params } = useRoute<ProfileScreenProps<ProfileRouteNames.ProfilePosts>['route']>();
-  const { load, loadMorePosts, posts, postsMeta } = container.get(IProfilePostsViewModel.$);
+    useNavigation<MaintenanceScreenProps<MaintenanceRouteNames.ProfilePosts>['navigation']>();
+  const { params } =
+    useRoute<MaintenanceScreenProps<MaintenanceRouteNames.ProfilePosts>['route']>();
+  const vm = container.get(IProfilePostsViewModel.$);
+  const { load, loadMorePosts, posts, postsMeta, currentUserId, likePost } = vm;
 
   useEffect(() => {
-    navigation.setOptions({ headerTitle: params.user.nickName });
+    navigation.setOptions({ headerTitle: params.nickName });
 
-    load(params.posts, params.meta);
+    load(params.postIds, params.meta);
   }, []);
 
-  const onPaginate = async (page: number) => loadMorePosts(page, params.user.id);
+  const onPaginate = async (page: number) => loadMorePosts(page, params.userId);
 
-  const renderPost = ({ item: post }: ListRenderItemInfo<IPost>) => <Post post={post} />;
+  const renderPost = ({ item: post }: ListRenderItemInfo<IPost>) => (
+    <Post post={post} currentUserId={currentUserId} onLike={likePost} />
+  );
 
   return (
     <AppLayout disableBottomInsets>

@@ -8,12 +8,7 @@ import ProfileInfo from '@components/profile-info';
 import { useDIContainer } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
-import {
-  BottomTabRouteNames,
-  MaintenanceRouteNames,
-  MaintenanceScreenProps,
-  ProfileRouteNames,
-} from '@navigation/configuration';
+import { MaintenanceRouteNames, MaintenanceScreenProps } from '@navigation/configuration';
 import Button from '@ui/button';
 import Grid, { GridRenderItemInfo } from '@ui/grid';
 import AppImage from '@ui/image';
@@ -44,12 +39,11 @@ const UserDetailsView = () => {
 
   const navigateToProfilePosts = () => {
     if (user && posts.length && postsMeta)
-      navigation.navigate(MaintenanceRouteNames.Tab, {
-        screen: BottomTabRouteNames.Profile,
-        params: {
-          screen: ProfileRouteNames.ProfilePosts,
-          params: { user, posts, meta: postsMeta },
-        },
+      navigation.navigate(MaintenanceRouteNames.ProfilePosts, {
+        userId: user.id,
+        nickName: user.nickName,
+        postIds: posts.map(p => p.id),
+        meta: postsMeta,
       });
   };
 

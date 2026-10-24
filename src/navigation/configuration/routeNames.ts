@@ -9,6 +9,7 @@ export enum MaintenanceRouteNames {
   Notifications = 'Notifications',
   Tab = 'TabNavigator',
   UserDetails = 'User Details',
+  ProfilePosts = 'Profile Posts',
 }
 
 //Чат

@@ -15,6 +15,7 @@ import { SocketConnectionPaths } from '@core/interfaces/socket';
 import { AuthProvider } from '@core/providers/auth-provider';
 import { DIProvider } from '@core/providers/di-provider';
 import { ThemeProvider } from '@core/providers/theme-provider';
+import { AuthUseCases } from '@domain/use-cases';
 import { AppNavigator } from '@navigation/AppNavigator';
 import BottomSheetModalWrapper from '@ui/bottom-sheet';
 import ToastConfig from '@ui/toast';
@@ -31,6 +32,7 @@ const App = () => {
   const storage = useRef(container.get(Identifiers.MMKVStorage)).current;
   const socketManager = useRef(container.get(Identifiers.SocketManager)).current;
   const navigation = useRef(container.get(Identifiers.NavigationService)).current;
+  const logoutUseCase = useRef(container.get(AuthUseCases.$Logout)).current;
 
   const setInterceptors = () => {
     httpClient.instance?.interceptors.request.use(request =>
@@ -39,7 +41,14 @@ const App = () => {
 
     httpClient.instance?.interceptors.response.use(
       response => response,
-      error => responseInterceptor({ error, storage, httpClient, navigation }),
+      error =>
+        responseInterceptor({
+          error,
+          storage,
+          httpClient,
+          navigation,
+          onSessionExpired: () => logoutUseCase.execute(),
+        }),
     );
   };
 

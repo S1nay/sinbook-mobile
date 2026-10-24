@@ -1,4 +1,5 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { CompositeNavigationProp, useNavigation, useRoute } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
 import { FlatList, Pressable } from 'react-native';
@@ -9,10 +10,21 @@ import ProfileInfo from '@components/profile-info';
 import { useDIContainer } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
-import { ProfileRouteNames, ProfileScreenProps } from '@navigation/configuration';
+import {
+  MaintenanceRouteNames,
+  MaintenanceStackParamList,
+  ProfileRouteNames,
+  ProfileScreenProps,
+  ProfileStackParamList,
+} from '@navigation/configuration';
 import Button from '@ui/button';
 import Grid, { GridRenderItemInfo } from '@ui/grid';
 import AppImage from '@ui/image';
+
+type ProfileDetailsNavigationProp = CompositeNavigationProp<
+  NativeStackNavigationProp<ProfileStackParamList, ProfileRouteNames.ProfileDetails>,
+  NativeStackNavigationProp<MaintenanceStackParamList>
+>;
 
 import styles from './styles';
 import { IProfileDetailsViewModel } from '../view-model';
@@ -22,8 +34,7 @@ const GRID_NUM_OF_COLUMNS = 3;
 
 const ProfileDetailsView = () => {
   const container = useDIContainer();
-  const navigation =
-    useNavigation<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['navigation']>();
+  const navigation = useNavigation<ProfileDetailsNavigationProp>();
   const { params } = useRoute<ProfileScreenProps<ProfileRouteNames.ProfileDetails>['route']>();
   const {
     user,
@@ -66,7 +77,12 @@ const ProfileDetailsView = () => {
 
   const navigateToProfilePosts = () => {
     if (user && posts.length && postsMeta)
-      navigation.navigate(ProfileRouteNames.ProfilePosts, { user, posts, meta: postsMeta });
+      navigation.navigate(MaintenanceRouteNames.ProfilePosts, {
+        userId: user.id,
+        nickName: user.nickName,
+        postIds: posts.map(p => p.id),
+        meta: postsMeta,
+      });
   };
 
   const onPaginate = async (page: number) => loadMorePosts(page);

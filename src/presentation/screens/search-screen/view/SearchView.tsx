@@ -26,6 +26,7 @@ const USERS_TAB_INDEX = 1;
 
 const SearchView = () => {
   const container = useDIContainer();
+  const vm = container.get(ISearchViewModel.$);
   const {
     loadPosts,
     loadUsers,
@@ -41,7 +42,9 @@ const SearchView = () => {
     isUsersLoading,
     isPostsRefreshing,
     isUsersRefreshing,
-  } = container.get(ISearchViewModel.$);
+    currentUserId,
+    likePost,
+  } = vm;
 
   const navigation =
     useNavigation<MaintenanceScreenProps<MaintenanceRouteNames.Tab>['navigation']>();
@@ -78,7 +81,9 @@ const SearchView = () => {
   const navigateToUserDetails = (userId: number, nickName: string) =>
     navigation.navigate(MaintenanceRouteNames.UserDetails, { userId, nickName });
 
-  const renderPost = ({ item: post }: ListRenderItemInfo<IPost>) => <Post post={post} />;
+  const renderPost = ({ item: post }: ListRenderItemInfo<IPost>) => (
+    <Post post={post} currentUserId={currentUserId} onLike={likePost} />
+  );
   const renderUser = ({ item: user }: ListRenderItemInfo<IUser>) => (
     <UserCard
       {...user}
@@ -96,7 +101,7 @@ const SearchView = () => {
             renderItem={renderPost}
             pagination={postsMeta}
             onPaginate={onPaginatePosts}
-            onRefresh={refreshPosts}
+            onRefresh={() => refreshPosts(search)}
             isLoading={isPostsLoading}
             ListHeaderComponent={<SearchInput onDebouncedChange={handleSearch} />}
             contentContainerStyle={styles.postListContainer}
@@ -110,7 +115,7 @@ const SearchView = () => {
             renderItem={renderUser}
             pagination={usersMeta}
             onPaginate={onPaginateUsers}
-            onRefresh={refreshUsers}
+            onRefresh={() => refreshUsers(search)}
             isLoading={isUsersLoading}
             ListHeaderComponent={<SearchInput onDebouncedChange={handleSearch} />}
             contentContainerStyle={styles.userListContainer}

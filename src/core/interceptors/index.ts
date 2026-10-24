@@ -25,6 +25,7 @@ const responseInterceptor = async ({
   error,
   storage,
   navigation,
+  onSessionExpired,
 }: IResponseInterceptor<AxiosInstance>) => {
   const originalRequest = error.config;
 
@@ -49,8 +50,9 @@ const responseInterceptor = async ({
     } catch (refreshError) {
       console.error('Token refresh failed:', refreshError);
 
-      storage.delete(AuthStorageKeys.ACCESS_TOKEN);
-      storage.delete(AuthStorageKeys.REFRESH_TOKEN);
+      await onSessionExpired().catch(logoutError => {
+        console.error('Session reset failed:', logoutError);
+      });
 
       navigation.reset({
         index: 0,

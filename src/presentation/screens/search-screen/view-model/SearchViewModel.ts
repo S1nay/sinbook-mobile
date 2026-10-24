@@ -4,17 +4,16 @@ import Toast from 'react-native-toast-message';
 
 import { mergeArraysWithoutDuplicates } from '@core/helpers';
 import { IHttpError } from '@core/interfaces/http';
-import { IMeta, IPost, IUser } from '@domain/models';
+import { IMeta, IPagination, IPost, IUser } from '@domain/models';
+import { GetPostsRequestParams, GetUsersRequestParams } from '@domain/request-params';
 import { PostUseCases, UserUseCases } from '@domain/use-cases';
-import SearchPostsUseCase from '@domain/use-cases/post/SearchPostsUseCase';
-import SearchUsersUseCase from '@domain/use-cases/user/SearchUsersUseCase';
 import { Toasts } from '@ui/toast';
 
 import { ISearchViewModel } from './ISearchViewModel';
 
 @injectable()
 class SearchViewModel implements ISearchViewModel {
-  private _posts: IPost[] = [];
+  private _postIds: number[] = [];
   private _postsMeta: IMeta | null = null;
   private _users: IUser[] = [];
   private _usersMeta: IMeta | null = null;
@@ -22,16 +21,37 @@ class SearchViewModel implements ISearchViewModel {
   private _isUsersLoading: boolean = false;
   private _isPostsRefreshing: boolean = false;
   private _isUsersRefreshing: boolean = false;
+  private _currentUserId: number | null = null;
+  // счётчики запросов: ответы устаревших запросов поиска игнорируются
+  private postsRequestId = 0;
+  private usersRequestId = 0;
 
   constructor(
-    @inject(PostUseCases.$SearchPosts) private searchPostsUseCase: SearchPostsUseCase,
-    @inject(UserUseCases.$SearchUsers) private searchUsersUseCase: SearchUsersUseCase,
+    @inject(PostUseCases.$SearchPosts)
+    private searchPostsUseCase: UseCase<GetPostsRequestParams, IPagination<IPost>>,
+    @inject(UserUseCases.$SearchUsers)
+    private searchUsersUseCase: UseCase<GetUsersRequestParams, IPagination<IUser>>,
+    @inject(PostUseCases.$GetPostsByIds)
+    private getPostsByIdsUseCase: UseCase<number[], IPost[], IPost[]>,
+    @inject(PostUseCases.$LikePost)
+    private likePostUseCase: UseCase<number, void>,
+    @inject(UserUseCases.$GetCurrentUser)
+    private getCurrentUserUseCase: UseCase<boolean, IUser>,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
+
+    this.getCurrentUserUseCase
+      .execute(true)
+      .then(user => {
+        this.currentUserId = user.id;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      });
   }
 
   get posts(): IPost[] {
-    return this._posts;
+    return this.getPostsByIdsUseCase.execute(this._postIds);
   }
 
   get postsMeta(): IMeta | null {
@@ -62,8 +82,16 @@ class SearchViewModel implements ISearchViewModel {
     return this._isUsersRefreshing;
   }
 
-  private set posts(value: IPost[]) {
-    this._posts = value;
+  get currentUserId(): number | null {
+    return this._currentUserId;
+  }
+
+  private set currentUserId(value: number | null) {
+    this._currentUserId = value;
+  }
+
+  private set postIds(value: number[]) {
+    this._postIds = value;
   }
 
   private set postsMeta(value: IMeta | null) {
@@ -95,6 +123,7 @@ class SearchViewModel implements ISearchViewModel {
   }
 
   async loadPosts(search?: string): Promise<void> {
+    const requestId = ++this.postsRequestId;
     this.isPostsLoading = true;
 
     this.searchPostsUseCase
@@ -104,18 +133,21 @@ class SearchViewModel implements ISearchViewModel {
         search,
       })
       .then(data => {
-        this.posts = data.results;
+        if (requestId !== this.postsRequestId) return;
+        this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
+        if (requestId !== this.postsRequestId) return;
         Toast.show({ text1: message as string, type: Toasts.Error });
       })
       .finally(() => {
-        this.isPostsLoading = false;
+        if (requestId === this.postsRequestId) this.isPostsLoading = false;
       });
   }
 
   async loadUsers(search?: string): Promise<void> {
+    const requestId = ++this.usersRequestId;
     this.isUsersLoading = true;
 
     this.searchUsersUseCase
@@ -125,27 +157,30 @@ class SearchViewModel implements ISearchViewModel {
         search,
       })
       .then(data => {
+        if (requestId !== this.usersRequestId) return;
         this.users = data.results;
         this.usersMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
+        if (requestId !== this.usersRequestId) return;
         Toast.show({ text1: message as string, type: Toasts.Error });
       })
       .finally(() => {
-        this.isUsersLoading = false;
+        if (requestId === this.usersRequestId) this.isUsersLoading = false;
       });
   }
 
-  async refreshPosts(): Promise<void> {
+  async refreshPosts(search?: string): Promise<void> {
     this.isPostsRefreshing = true;
 
     this.searchPostsUseCase
       .execute({
         page: 1,
         perPage: 20,
+        search,
       })
       .then(data => {
-        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
+        this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
@@ -156,16 +191,17 @@ class SearchViewModel implements ISearchViewModel {
       });
   }
 
-  async refreshUsers(): Promise<void> {
+  async refreshUsers(search?: string): Promise<void> {
     this.isUsersRefreshing = true;
 
     this.searchUsersUseCase
       .execute({
         page: 1,
         perPage: 20,
+        search,
       })
       .then(data => {
-        this.users = mergeArraysWithoutDuplicates(this.users, data.results, 'id');
+        this.users = data.results;
         this.usersMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
@@ -184,7 +220,10 @@ class SearchViewModel implements ISearchViewModel {
         search,
       })
       .then(data => {
-        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
+        this.postIds = mergeArraysWithoutDuplicates(
+          this._postIds,
+          data.results.map(p => p.id),
+        );
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
@@ -200,12 +239,18 @@ class SearchViewModel implements ISearchViewModel {
         search,
       })
       .then(data => {
-        this.users = mergeArraysWithoutDuplicates(this.users, data.results, 'id');
+        this.users = mergeArraysWithoutDuplicates(this._users, data.results, 'id');
         this.usersMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
         Toast.show({ text1: message as string, type: Toasts.Error });
       });
+  }
+
+  async likePost(postId: number): Promise<void> {
+    return this.likePostUseCase.execute(postId).catch(({ message }: IHttpError) => {
+      Toast.show({ text1: message as string, type: Toasts.Error });
+    });
   }
 }
 
