@@ -60,11 +60,6 @@ const ProfileNavigator = () => {
       />
       <ProfileStack.Screen
         options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
-        component={ProfilePostsScreen}
-        name={ProfileRouteNames.ProfilePosts}
-      />
-      <ProfileStack.Screen
-        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
         component={SettingsScreen}
         name={ProfileRouteNames.ProfileSettings}
       />
@@ -177,6 +172,11 @@ export const MaintenanceNavigator = () => {
       <MaintenanceStack.Screen
         component={UserDetailsScreen}
         name={MaintenanceRouteNames.UserDetails}
+        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
+      />
+      <MaintenanceStack.Screen
+        component={ProfilePostsScreen}
+        name={MaintenanceRouteNames.ProfilePosts}
         options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
       />
     </MaintenanceStack.Navigator>

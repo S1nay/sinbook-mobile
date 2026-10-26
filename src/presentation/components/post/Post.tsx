@@ -1,30 +1,23 @@
 import dayjs from 'dayjs';
-import { memo, useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import { Dimensions, Pressable, Text, View } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 
-import { useUseCase } from '@core/hooks';
-import { IUser } from '@domain/models';
-import { UserUseCases } from '@domain/use-cases';
-import { GetCurrentUserUseCase } from '@domain/use-cases/user';
 import Avatar from '@ui/avatar';
 import Icon from '@ui/icon';
 import ImageCarousel from '@ui/image-carousel';
 
+import PostLikeButton from './components/PostLikeButton';
 import styles from './styles';
 import { PostProps } from './types';
 
 const POST_IMAGE_SIZE = Dimensions.get('screen').width;
 
-const Post = (props: PostProps) => {
-  const { post } = props;
+const Post = observer(function Post(props: PostProps) {
+  const { post, currentUserId, onLike } = props;
   const { theme } = useUnistyles();
-  const [currentUser, setCurrentUser] = useState<IUser | null>(null);
-  const getUserUseCase = useUseCase<GetCurrentUserUseCase>(UserUseCases.$GetCurrentUser);
 
-  useEffect(() => {
-    getUserUseCase.execute(true).then(setCurrentUser);
-  }, []);
+  const isOwner = post.user.id === currentUserId;
 
   return (
     <View style={styles.container}>
@@ -40,7 +33,7 @@ const Post = (props: PostProps) => {
           </View>
         </View>
 
-        {currentUser?.id === post.user.id && (
+        {isOwner && (
           <Pressable hitSlop={8}>
             <Icon
               size={24}
@@ -61,10 +54,7 @@ const Post = (props: PostProps) => {
       />
 
       <View style={styles.postActions}>
-        <Pressable hitSlop={8} style={styles.postAction}>
-          <Icon size={16} name="like" stroke={theme.colors.foreground.secondary} />
-          <Text style={styles.postActionText}>{post.likes.length}</Text>
-        </Pressable>
+        <PostLikeButton post={post} currentUserId={currentUserId} onLike={onLike} />
 
         <Pressable hitSlop={8} style={styles.postAction}>
           <Icon size={16} name="comment" stroke={theme.colors.foreground.secondary} />
@@ -73,6 +63,6 @@ const Post = (props: PostProps) => {
       </View>
     </View>
   );
-};
+});
 
-export default memo(Post);
+export default Post;

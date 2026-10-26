@@ -3,10 +3,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { Text, View } from 'react-native';
 import { Asset } from 'react-native-image-picker';
 
+import MediaPicker from '@components/media-picker';
 import Icon from '@ui/icon';
 import ImageCarousel from '@ui/image-carousel';
 import Input from '@ui/input';
-import MediaPicker from '@ui/media-picker';
 
 import { CreatePostFormKeys } from './keys';
 import styles from './styles';

@@ -16,7 +16,7 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
   private _user: IUser | null = null;
   private _isLoading: boolean = false;
   private _isRefreshing: boolean = false;
-  private _posts: Array<IPost> = [];
+  private _postIds: number[] = [];
   private _postsMeta: IMeta | null = null;
 
   constructor(
@@ -24,6 +24,8 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
     private getUserByIdUseCase: UseCase<number, IUser>,
     @inject(PostUseCases.$GetUserPosts)
     private getUserPostsUseCase: UseCase<GetPostsRequestParams, IPagination<IPost>>,
+    @inject(PostUseCases.$GetPostsByIds)
+    private getPostsByIdsUseCase: UseCase<number[], IPost[], IPost[]>,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -41,7 +43,7 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
   }
 
   get posts(): Array<IPost> {
-    return this._posts;
+    return this.getPostsByIdsUseCase.execute(this._postIds);
   }
 
   get postsMeta(): IMeta | null {
@@ -64,13 +66,13 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
     this._postsMeta = value;
   }
 
-  private set posts(value: Array<IPost>) {
-    this._posts = value;
+  private set postIds(value: number[]) {
+    this._postIds = value;
   }
 
   async load(userId: number): Promise<void> {
     this.user = null;
-    this.posts = [];
+    this.postIds = [];
     this.isLoading = true;
 
     Promise.all([
@@ -79,7 +81,7 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
     ])
       .then(([user, data]) => {
         this.user = user;
-        this.posts = data.results;
+        this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
@@ -106,7 +108,7 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
     ])
       .then(([user, data]) => {
         this.user = user;
-        this.posts = data.results;
+        this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
@@ -128,7 +130,10 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
         sortedBy: 'desc',
       })
       .then(data => {
-        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
+        this.postIds = mergeArraysWithoutDuplicates(
+          this._postIds,
+          data.results.map(p => p.id),
+        );
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {

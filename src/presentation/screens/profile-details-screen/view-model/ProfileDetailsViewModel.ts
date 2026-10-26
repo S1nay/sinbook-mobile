@@ -16,7 +16,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
   private _user: IUser | null = null;
   private _isLoading: boolean = false;
   private _isRefreshing: boolean = false;
-  private _posts: Array<IPost> = [];
+  private _postIds: number[] = [];
   private _postsMeta: IMeta | null = null;
 
   constructor(
@@ -24,6 +24,8 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     private getCurrentUserUseCase: UseCase<boolean, IUser>,
     @inject(PostUseCases.$GetUserPosts)
     private getUserPostsUseCase: UseCase<GetPostsRequestParams, IPagination<IPost>>,
+    @inject(PostUseCases.$GetPostsByIds)
+    private getPostsByIdsUseCase: UseCase<number[], IPost[], IPost[]>,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -41,7 +43,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
   }
 
   get posts(): Array<IPost> {
-    return this._posts;
+    return this.getPostsByIdsUseCase.execute(this._postIds);
   }
 
   get postsMeta(): IMeta | null {
@@ -64,32 +66,34 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._postsMeta = value;
   }
 
-  private set posts(value: Array<IPost>) {
-    this._posts = value;
+  private set postIds(value: number[]) {
+    this._postIds = value;
   }
 
   async load(): Promise<void> {
     this.isLoading = true;
 
-    try {
-      const user = await this.getCurrentUserUseCase.execute(true);
-
-      this.user = user;
-
-      const data = await this.getUserPostsUseCase.execute({
-        userId: user.id,
-        perPage: 20,
-        page: 1,
-        sortedBy: 'desc',
+    return this.getCurrentUserUseCase
+      .execute(true)
+      .then(user => {
+        this.user = user;
+        return this.getUserPostsUseCase.execute({
+          userId: user.id,
+          perPage: 20,
+          page: 1,
+          sortedBy: 'desc',
+        });
+      })
+      .then(data => {
+        this.postIds = data.results.map(p => p.id);
+        this.postsMeta = data.meta;
+      })
+      .catch(({ message }: IHttpError) => {
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      })
+      .finally(() => {
+        this.isLoading = false;
       });
-
-      this.posts = data.results;
-      this.postsMeta = data.meta;
-    } catch (e) {
-      Toast.show({ text1: (e as IHttpError).message as string, type: Toasts.Error });
-    } finally {
-      this.isLoading = false;
-    }
   }
 
   async loadUser(): Promise<void> {
@@ -124,7 +128,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     ])
       .then(([user, data]) => {
         this.user = user;
-        this.posts = data.results;
+        this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {
@@ -146,7 +150,10 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
         sortedBy: 'desc',
       })
       .then(data => {
-        this.posts = mergeArraysWithoutDuplicates(this.posts, data.results, 'id');
+        this.postIds = mergeArraysWithoutDuplicates(
+          this._postIds,
+          data.results.map(p => p.id),
+        );
         this.postsMeta = data.meta;
       })
       .catch(({ message }: IHttpError) => {

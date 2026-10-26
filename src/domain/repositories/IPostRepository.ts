@@ -6,6 +6,10 @@ import { GetPostsRequestParams } from '@domain/request-params';
 
 export interface IPostRepository {
   getPosts(params?: GetPostsRequestParams): Promise<IPagination<IPost>>;
+  getPostsByIds(ids: number[]): IPost[];
+  patchPost(id: number, partial: Partial<IPost>): void;
+  upsertPost(post: IPost): IPost;
+  clearPosts(): void;
   updatePost(id: number, dto: IPatchPostRequestDto): Promise<IPost>;
   deletePost(id: number): Promise<void>;
   createPost(dto: ICreatePostRequestDto): Promise<IPost>;

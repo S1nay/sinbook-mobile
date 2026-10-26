@@ -8,7 +8,14 @@ import {
   RegisterUseCase,
 } from './auth';
 import { FileUseCases, PostAvatarUseCase } from './file';
-import { CreatePostUseCase, GetUserPostsUseCase, PostUseCases, SearchPostsUseCase } from './post';
+import {
+  CreatePostUseCase,
+  GetPostsByIdsUseCase,
+  GetUserPostsUseCase,
+  LikePostUseCase,
+  PostUseCases,
+  SearchPostsUseCase,
+} from './post';
 import { GetThemeUseCase, SwitchThemeUseCase, ThemeUseCases } from './theme';
 import {
   GetCurrentUserUseCase,
@@ -32,6 +39,8 @@ export const combineUseCases = (container: Container) => {
   container.bind(PostUseCases.$GetUserPosts).to(GetUserPostsUseCase).inSingletonScope();
   container.bind(PostUseCases.$CreatePost).to(CreatePostUseCase).inSingletonScope();
   container.bind(PostUseCases.$SearchPosts).to(SearchPostsUseCase).inSingletonScope();
+  container.bind(PostUseCases.$GetPostsByIds).to(GetPostsByIdsUseCase).inSingletonScope();
+  container.bind(PostUseCases.$LikePost).to(LikePostUseCase).inSingletonScope();
 
   container.bind(FileUseCases.$PostAvatar).to(PostAvatarUseCase).inSingletonScope();
 

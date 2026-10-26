@@ -19,6 +19,8 @@ export interface IResponseInterceptor<T> {
   httpClient: IHttpClient<T>;
   storage: IStorage;
   navigation: INavigationService<RootStackParamList>;
+  /** Общая точка сброса сессии (токены + сторы), вызывается при неудачном refresh */
+  onSessionExpired: () => Promise<unknown>;
 }
 
 export interface IRefreshTokenRequestDto {

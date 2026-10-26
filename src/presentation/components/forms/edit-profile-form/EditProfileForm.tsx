@@ -4,10 +4,10 @@ import { View } from 'react-native';
 import { Asset } from 'react-native-image-picker';
 import { useUnistyles } from 'react-native-unistyles';
 
+import MediaPicker from '@components/media-picker';
 import Avatar from '@ui/avatar';
 import Icon from '@ui/icon';
 import Input from '@ui/input';
-import MediaPicker from '@ui/media-picker';
 
 import { EditProfileFormKeys } from './keys';
 import styles from './styles';

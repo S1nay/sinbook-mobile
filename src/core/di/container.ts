@@ -40,7 +40,16 @@ import {
   ThemeStorage,
   UserStorage,
 } from '@data/storage';
-import { IThemeStore, IUserStore, ThemeStore, UserStore } from '@data/store';
+import {
+  ILikeStore,
+  IPostsStore,
+  IThemeStore,
+  IUserStore,
+  LikeStore,
+  PostsStore,
+  ThemeStore,
+  UserStore,
+} from '@data/store';
 import {
   IAuthRepository,
   ICommentRepository,
@@ -72,6 +81,8 @@ container.bind<ILikeApi>(ILikeApi.$).to(LikeApi).inSingletonScope();
 /* -- Store's -- */
 container.bind<IUserStore>(IUserStore.$).to(UserStore).inSingletonScope();
 container.bind<IThemeStore>(IThemeStore.$).to(ThemeStore).inSingletonScope();
+container.bind<IPostsStore>(IPostsStore.$).to(PostsStore).inSingletonScope();
+container.bind<ILikeStore>(ILikeStore.$).to(LikeStore).inSingletonScope();
 
 /* -- Storage's -- */
 
