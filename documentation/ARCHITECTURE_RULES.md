@@ -158,7 +158,9 @@ const XxxView = observer(() => {
 
 ## 8. Правила MobX-стора
 
-Сторы — **тупые контейнеры состояния**. Они никогда не загружают данные и не содержат бизнес-логику.
+Реактивный стор — часть **Presentation-слоя** (`src/presentation/store/`). Он синхронизирует
+состояние UI между экранами и ничего не знает о том, откуда пришли данные. Это **тупой контейнер
+состояния**: только get/set/clear, без бизнес-логики, async и инжекций.
 
 ```typescript
 @injectable()
@@ -169,68 +171,77 @@ class XxxStore implements IXxxStore {
 
   get data() { return this._data; }
   setData(data: IData | null) { this._data = data; }
+  clear() { this._data = null; }
 }
 ```
 
 Правила:
-- Только геттер + сеттер
-- Никаких асинхронных методов
-- Никаких инжекций use cases или API
-- Сторы представляют **только in-memory состояние сессии** (сбрасывается при перезапуске)
+- Стор живёт в `src/presentation/store/`, биндится в корневом контейнере как singleton
+- Только геттер + сеттер + `clear`; никаких асинхронных методов, бизнес-логики и инжекций
+- **К стору обращается только ViewModel** — никогда не UseCase, Repository или Infrastructure
+- Стор сам себя не меняет: VM пишет в него после успешного use case
+- Стор представляет **только in-memory состояние сессии** (сбрасывается при перезапуске /
+  logout — очистку инициирует presentation, напр. `AuthProvider.unauthorize`)
+- Состояние, нужное одному экрану (загрузка, выбранная вкладка, текст формы), в стор не кладётся —
+  оно принадлежит ViewModel
 
-### 8.1. Нормализованные сторы сущностей (исключение)
+### 8.1. Нормализованные сторы сущностей
 
-Для сущностей, которые отображаются на нескольких экранах одновременно (посты, пользователи,
-комментарии), используется нормализованный стор: `observable.map<id, XxxModel>`, где каждая
-сущность существует в памяти в единственном экземпляре. Это гарантирует синхронизацию состояния
-между экранами (лайк в профиле → сразу виден в ленте).
+Для сущностей, отображаемых на нескольких экранах одновременно (посты), используется
+нормализованный стор: `observable.map<id, XxxEntity>`, где каждая сущность существует в памяти в
+единственном экземпляре. Это гарантирует синхронизацию (лайк в профиле → сразу виден в ленте).
 
 ```typescript
 @injectable()
 class PostsStore implements IPostsStore {
-  private posts = observable.map<number, PostModel>();
+  private posts = observable.map<number, PostEntity>();
 
   constructor() { makeAutoObservable(this); }
 
-  get(id: number) { return this.posts.get(id); }
-  getMany(ids: number[]) { /* ... */ }
-  upsert(data: IPost) { /* патчит существующий инстанс или создаёт новый PostModel */ }
-  upsertMany(items: IPost[]) { /* ... */ }
-  patch(id: number, partial: Partial<IPost>) { /* ... */ }
-  remove(id: number) { /* ... */ }
+  upsert(data: IPost) {
+    const existing = this.posts.get(data.id);
+    if (existing) { this.applyPatch(existing, data); return existing; }
+    // observability навешивается на границе стора — доменная сущность остаётся framework-free
+    const entity = makeAutoObservable(new PostEntity(data));
+    this.posts.set(data.id, entity);
+    return entity;
+  }
+  // get / getMany / upsertMany / patch / remove / clear ...
 }
 ```
 
 Правила:
-- Разрешены операции `get / getMany / upsert / upsertMany / patch / remove` и создание
-  observable-моделей (`src/data/models/XxxModel.ts`)
-- `upsert` **обязан** патчить существующий инстанс, а не создавать новый — иначе экраны,
+- Доменные сущности (`src/domain/entities/`) — **обычные классы без MobX**. Реактивность даёт
+  presentation-стор, вызывая `makeAutoObservable(entity)` при вставке
+- `upsert` **обязан** патчить существующий инстанс, а не заменять его — иначе компоненты,
   держащие старую ссылку, перестанут обновляться
-- Бизнес-логика, асинхронные методы и инжекции по-прежнему **запрещены**
-- Любой метод репозитория, получающий сущность с сервера, кладёт её в стор через `upsert`
-- ViewModel хранит только `ids` и получает сущности через use case (`GetXxxByIdsUseCase`)
-- Компонент, отображающий сущность, обёрнут в `observer()` и получает модель целиком —
+- ViewModel хранит только `ids`, а `get posts()` читает `postsStore.getMany(ids)` **напрямую**
+  (use case ради чтения состояния не создаём)
+- Компонент, отображающий сущность, обёрнут в `observer()` и получает сущность целиком —
   поля читаются внутри компонента, не деструктурируются в родителе
+- Оптимистичные мутации (лайк) делает **ViewModel**: патчит стор сразу и шлёт запрос
+  fire-and-forget через use case, на ошибку откатывая только свой лайк. Use case остаётся
+  stateless и в стор не пишет; со стором по-прежнему работает только VM
 
 ---
 
 ## 9. Правила репозитория
 
-Репозитории координируют **три источника данных**: API (удалённый), Store (память), Storage (постоянный).
+Репозитории координируют API (удалённый) и Storage (постоянный, MMKV) и **преобразуют ответ
+сервера в доменную сущность** через маппер. К реактивному стору репозиторий НЕ обращается.
 
 ```typescript
 @injectable()
 class XxxRepository implements IXxxRepository {
   constructor(
-    @inject(IXxxStore.$) private store: IXxxStore,
     @inject(IXxxStorage.$) private storage: IXxxStorage,
     @inject(IXxxApi.$) private api: IXxxApi,
   ) {}
 
-  // Всегда использовать хелперы для API-вызовов:
   async getItem(id: number): Promise<IItem> {
     return this.api.getItem(id)
       .then(getDataFromHttpResponse)
+      .then(dto => XxxMapper.toEntity(dto)) // DTO сервера → доменная сущность
       .catch(getErrorFromHttpResponse);
   }
 }
@@ -239,8 +250,9 @@ class XxxRepository implements IXxxRepository {
 Правила:
 - Репозитории реализуют доменные интерфейсы (`IXxxRepository`)
 - **Всегда** использовать `getDataFromHttpResponse` и `getErrorFromHttpResponse` для API-вызовов
-- Никакой бизнес-логики — репозитории только получают и преобразуют данные
-- Решения о кэшировании принадлежат **Use Cases**, не репозиториям
+- API-клиенты типизируются на **response-DTO** (`src/data/dto/response/`), не на доменные типы
+- Маппинг DTO → сущность живёт в **мапперах** (`src/data/mappers/`) — чистые функции, без DI
+- Никакой бизнес-логики и обращений к стору — репозитории только получают и преобразуют данные
 
 ---
 
@@ -263,9 +275,11 @@ class GetXxxUseCase {
 
 Правила:
 - Один use case = одна бизнес-операция (`GetUser`, `CreatePost`, `Logout`)
-- Use cases инжектируют **только репозитории**, никогда API-клиенты или сторы напрямую
+- Use cases инжектируют **только репозитории**, никогда API-клиенты или сторы
+- Use case **не хранит состояние** и не пишет в реактивный стор — он возвращает данные,
+  а запись в стор делает ViewModel/presentation
+- Не создаём use case ради чтения/записи стора (чтение `postsStore.getMany` VM делает сам)
 - Use cases группируются и регистрируются в `combineUseCases.ts`
-- Стратегия кэширования (память → storage → API) живёт в use cases
 
 ---
 

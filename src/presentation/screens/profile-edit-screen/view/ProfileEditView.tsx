@@ -10,9 +10,9 @@ import {
   EditProfileFormRef,
   EditProfileFormValidationSchema,
 } from '@components/forms/edit-profile-form';
-import { useDIContainer } from '@core/hooks';
 import AppLayout from '@layouts/_app';
 import { ProfileScreenProps, ProfileRouteNames } from '@navigation/configuration';
+import { useDIContainer } from '@shared/hooks';
 import Button from '@ui/button';
 
 import styles from './styles';

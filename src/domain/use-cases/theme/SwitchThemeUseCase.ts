@@ -9,7 +9,6 @@ class SwitchThemeUseCase {
 
   execute(theme: TTheme): void {
     this.themeRepository.saveTheme(theme);
-    this.themeRepository.setActiveTheme(theme);
   }
 }
 

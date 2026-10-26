@@ -2,8 +2,8 @@ import { Container } from 'inversify';
 import { PropsWithChildren, useEffect, useRef } from 'react';
 
 import { bindInContainer } from '@core/helpers';
-import { useDIContainer } from '@core/hooks';
-import { DIProvider } from '@core/providers/di-provider';
+import { useDIContainer } from '@shared/hooks';
+import { DIProvider } from '@shared/providers';
 
 interface ViewModelInjectorProps {
   viewModels: Array<Binding>;

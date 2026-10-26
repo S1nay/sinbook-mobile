@@ -2,9 +2,12 @@ import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 
 import { RegisterFormData, RegisterFormExternalErrors } from '@components/forms/register-form';
+import { Identifiers } from '@core/di/identifiers';
 import { transformHttpFieldErrors } from '@core/helpers';
 import { IHttpError } from '@core/interfaces/http';
+import { INavigationService } from '@core/interfaces/navigation';
 import { AuthUseCases } from '@domain/use-cases';
+import { AppRouteNames, RootStackParamList } from '@navigation/configuration';
 
 import { IRegisterViewModel } from './IRegisterViewModel';
 
@@ -13,10 +16,11 @@ class RegisterViewModel implements IRegisterViewModel {
   private _isLoading: boolean = false;
   private _formErrors: RegisterFormExternalErrors | null = null;
   private _error: string = '';
-  private _isSuccess: boolean = false;
 
   constructor(
     @inject(AuthUseCases.$Register) private registerUseCase: UseCase<RegisterFormData, boolean>,
+    @inject(Identifiers.NavigationService)
+    private navigationService: INavigationService<RootStackParamList>,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -29,13 +33,6 @@ class RegisterViewModel implements IRegisterViewModel {
   }
   get error(): string {
     return this._error;
-  }
-  get isSuccess(): boolean {
-    return this._isSuccess;
-  }
-
-  private set isSuccess(value: boolean) {
-    this._isSuccess = value;
   }
 
   private set formErrors(value: RegisterFormExternalErrors | null) {
@@ -58,7 +55,10 @@ class RegisterViewModel implements IRegisterViewModel {
     this.registerUseCase
       .execute(data)
       .then(() => {
-        this.isSuccess = true;
+        this.navigationService.reset({
+          index: 0,
+          routes: [{ name: AppRouteNames.Maintenance }],
+        });
       })
       .catch(({ message }: IHttpError) => {
         if (Array.isArray(message)) {

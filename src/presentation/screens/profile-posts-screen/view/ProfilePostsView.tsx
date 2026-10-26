@@ -4,10 +4,10 @@ import { useEffect } from 'react';
 import { ListRenderItemInfo } from 'react-native';
 
 import Post from '@components/post';
-import { useDIContainer } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
 import { MaintenanceRouteNames, MaintenanceScreenProps } from '@navigation/configuration';
+import { useDIContainer } from '@shared/hooks';
 import List from '@ui/list';
 
 import { IProfilePostsViewModel } from '../view-model';

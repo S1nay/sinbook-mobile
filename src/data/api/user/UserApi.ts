@@ -2,7 +2,8 @@ import { inject, injectable } from 'inversify';
 
 import { Identifiers } from '@core/di/identifiers';
 import { IHttpResponse, IHttpClient } from '@core/interfaces/http';
-import { IPagination, IUser } from '@domain/models';
+import { IPaginationResponseDto, IUserResponseDto } from '@data/dto/response';
+import { IPatchUserRequestDto } from '@domain/dto';
 import { GetUsersRequestParams } from '@domain/request-params';
 
 import { IUserApi } from './IUserApi';
@@ -11,20 +12,25 @@ import { IUserApi } from './IUserApi';
 class UserApi implements IUserApi {
   constructor(@inject(Identifiers.SinbookHttpClient) private httpClient: IHttpClient) {}
 
-  getUser(id: number): Promise<IHttpResponse<IUser>> {
-    return this.httpClient.get<IUser>(`/user/${id}`);
+  getUser(id: number): Promise<IHttpResponse<IUserResponseDto>> {
+    return this.httpClient.get<IUserResponseDto>(`/user/${id}`);
   }
 
   deleteUser(id: number): Promise<IHttpResponse<void>> {
     return this.httpClient.delete(`/user/${id}`);
   }
 
-  updateUser(dto: IUser): Promise<IHttpResponse<IUser>> {
-    return this.httpClient.patch<IUser, IUser>('/user', dto);
+  updateUser(dto: Partial<IPatchUserRequestDto>): Promise<IHttpResponse<IUserResponseDto>> {
+    return this.httpClient.patch<IUserResponseDto, Partial<IPatchUserRequestDto>>('/user', dto);
   }
 
-  findUsers(params?: GetUsersRequestParams): Promise<IHttpResponse<IPagination<IUser>>> {
-    return this.httpClient.get<IPagination<IUser>>('/user', params ? { params } : undefined);
+  findUsers(
+    params?: GetUsersRequestParams,
+  ): Promise<IHttpResponse<IPaginationResponseDto<IUserResponseDto>>> {
+    return this.httpClient.get<IPaginationResponseDto<IUserResponseDto>>(
+      '/user',
+      params ? { params } : undefined,
+    );
   }
 }
 

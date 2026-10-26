@@ -47,13 +47,27 @@ Presentation  →  Domain  ←  Data
 
 ```
 src/
-├── core/           # DI container, interceptors, providers, hooks, helpers
-├── domain/         # Models, DTOs, repository interfaces, use cases (framework-free)
-├── data/           # API clients, repository implementations, MobX stores, storages
+├── core/           # DI container, interceptors, generic hooks, helpers
+├── domain/         # Entities, models, DTOs, repository interfaces, use cases (framework-free)
+├── data/           # API clients, repository implementations, response DTOs, mappers, storages
 ├── infrastructure/ # AxiosHttpClient, SocketManager, MMKVStorage, NavigationService
 ├── navigation/     # React Navigation setup, route name enums, param types
-└── presentation/   # screens/ (view + view-model), components/, ui/, shared/, _layouts/
+└── presentation/   # screens/ (view + view-model), components/, ui/, shared/, store/, _layouts/
 ```
+
+Reactive MobX **stores live in `presentation/store/`** (not `data/`): dumb get/set/clear, touched
+only by ViewModels. Repositories map server DTOs → domain entities and never touch a store.
+React **providers and context hooks live in `presentation/shared/`** (`@shared/providers`,
+`@shared/hooks`), not `core/` — React/UI is a presentation concern. `core` must not import
+presentation (the DI container in `core/di` is the composition root and is the only exception).
+
+**Use cases are invoked only from ViewModels** — never from providers or components. There are no
+auth/theme providers: the only provider is `DIProvider`. App startup runs through a bootstrap gate
+(`presentation/bootstrap`): its `BootstrapViewModel` reads initial theme + auth via use cases,
+applies the theme, and passes `initialAuthed` into the navigator. **Auth routing is imperative**
+via `NavigationService.reset` from ViewModels (Login/Register → Maintenance, Settings logout →
+Auth) and the 401 interceptor — there is no global `isAuth` state. Theme selection lives in
+`ThemeStore` (presentation), written by `BootstrapViewModel`/`SettingsViewModel`.
 
 **Forbidden imports:** Domain → Data/Presentation/Infrastructure; Data → Presentation; Infrastructure → Data.
 
@@ -103,21 +117,24 @@ xxx-screen/
 
 ### Repositories
 
-- Inject store + storage + API.
+- Inject storage + API (never a store).
 - **Always** wrap API calls with `getDataFromHttpResponse` / `getErrorFromHttpResponse` helpers (`src/core/helpers`).
+- Map server response DTOs (`src/data/dto/response`) to domain entities via a mapper (`src/data/mappers`).
 - No business logic; no caching decisions (those belong to use cases).
 
 ### Use cases
 
 - One class = one operation, with an `execute(params)` method.
-- Inject repositories only — never API clients or stores directly.
-- Caching strategy lives here: in-memory store → MMKV storage → API; for paginated lists merge with `mergeArraysWithoutDuplicates`; `isRefetching: true` skips cache.
+- Inject repositories only — never API clients or stores.
+- Stateless: return data, never write to a reactive store (the ViewModel does that). Don't create a use case just to read a store.
 - Group and register via `combineUseCases.ts`.
 
-### Stores
+### Stores (presentation)
 
-- Dumb in-memory containers — getter + setter only, no async, no injection.
-- Session state only (resets on app restart). Persistent state belongs in MMKV via storage classes.
+- Live in `src/presentation/store/`; dumb in-memory containers — get/set/clear only, no async, no injection, no business logic.
+- Touched **only by ViewModels**; the VM writes to the store after a use case returns.
+- Session state only (resets on app restart / logout, cleared from presentation). Persistent state belongs in MMKV via storage classes.
+- Domain entities stay framework-free; the normalized store adds observability at its boundary (`makeAutoObservable(entity)` on insert).
 
 ### API clients
 

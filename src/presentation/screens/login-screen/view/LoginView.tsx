@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Keyboard, Text, View } from 'react-native';
 
 import Forms from '@components/forms';
@@ -10,9 +10,9 @@ import {
   LoginFormRef,
   LoginFormValidationSchema,
 } from '@components/forms/login-form';
-import { useAuth, useDIContainer } from '@core/hooks';
 import AuthLayout from '@layouts/_auth';
 import { AuthRouteNames, AuthScreenProps } from '@navigation/configuration';
+import { useDIContainer } from '@shared/hooks';
 import Button from '@ui/button';
 import ErrorMessage from '@ui/error';
 
@@ -26,16 +26,9 @@ const LoginFormDefaultValues: LoginFormData = {
 
 const LoginView = () => {
   const container = useDIContainer();
-  const { login, formErrors, error, isLoading, isSuccess } = container.get(ILoginViewModel.$);
+  const { login, formErrors, error, isLoading } = container.get(ILoginViewModel.$);
   const form = useRef<LoginFormRef>(null);
-  const { authorize } = useAuth();
   const navigation = useNavigation<AuthScreenProps<AuthRouteNames.Login>['navigation']>();
-
-  useEffect(() => {
-    if (isSuccess) {
-      authorize();
-    }
-  }, [isSuccess]);
 
   const onSubmit = (formData: LoginFormData) => {
     Keyboard.dismiss();

@@ -41,16 +41,6 @@ import {
   UserStorage,
 } from '@data/storage';
 import {
-  ILikeStore,
-  IPostsStore,
-  IThemeStore,
-  IUserStore,
-  LikeStore,
-  PostsStore,
-  ThemeStore,
-  UserStore,
-} from '@data/store';
-import {
   IAuthRepository,
   ICommentRepository,
   IFileRepository,
@@ -63,6 +53,14 @@ import {
 import { combineUseCases } from '@domain/use-cases';
 import NavigationService from '@infrastructure/navigation/service';
 import type { RootStackParamList } from '@navigation/configuration/routeParams';
+import {
+  IPostsStore,
+  IThemeStore,
+  IUserStore,
+  PostsStore,
+  ThemeStore,
+  UserStore,
+} from '@presentation/store';
 
 import { SinbookHttpClientImpl, RootStorageImpl, SocketManagerImpl } from './implementations';
 
@@ -78,11 +76,10 @@ container.bind<ICommentApi>(ICommentApi.$).to(CommentApi).inSingletonScope();
 container.bind<IFollowsApi>(IFollowsApi.$).to(FollowsApi).inSingletonScope();
 container.bind<ILikeApi>(ILikeApi.$).to(LikeApi).inSingletonScope();
 
-/* -- Store's -- */
+/* -- Store's (Presentation) -- */
 container.bind<IUserStore>(IUserStore.$).to(UserStore).inSingletonScope();
-container.bind<IThemeStore>(IThemeStore.$).to(ThemeStore).inSingletonScope();
 container.bind<IPostsStore>(IPostsStore.$).to(PostsStore).inSingletonScope();
-container.bind<ILikeStore>(ILikeStore.$).to(LikeStore).inSingletonScope();
+container.bind<IThemeStore>(IThemeStore.$).to(ThemeStore).inSingletonScope();
 
 /* -- Storage's -- */
 

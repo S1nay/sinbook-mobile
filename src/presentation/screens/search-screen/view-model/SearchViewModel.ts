@@ -2,11 +2,12 @@ import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import Toast from 'react-native-toast-message';
 
-import { mergeArraysWithoutDuplicates } from '@core/helpers';
+import { mergeArraysWithoutDuplicates, setListMembership } from '@core/helpers';
 import { IHttpError } from '@core/interfaces/http';
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
 import { GetPostsRequestParams, GetUsersRequestParams } from '@domain/request-params';
 import { PostUseCases, UserUseCases } from '@domain/use-cases';
+import { IPostsStore, IUserStore } from '@presentation/store';
 import { Toasts } from '@ui/toast';
 
 import { ISearchViewModel } from './ISearchViewModel';
@@ -31,18 +32,29 @@ class SearchViewModel implements ISearchViewModel {
     private searchPostsUseCase: UseCase<GetPostsRequestParams, IPagination<IPost>>,
     @inject(UserUseCases.$SearchUsers)
     private searchUsersUseCase: UseCase<GetUsersRequestParams, IPagination<IUser>>,
-    @inject(PostUseCases.$GetPostsByIds)
-    private getPostsByIdsUseCase: UseCase<number[], IPost[], IPost[]>,
-    @inject(PostUseCases.$LikePost)
-    private likePostUseCase: UseCase<number, void>,
     @inject(UserUseCases.$GetCurrentUser)
-    private getCurrentUserUseCase: UseCase<boolean, IUser>,
+    private getCurrentUserUseCase: UseCase<void, IUser>,
+    @inject(PostUseCases.$LikePost)
+    private likePostUseCase: UseCase<number, IPost>,
+    @inject(IPostsStore.$) private postsStore: IPostsStore,
+    @inject(IUserStore.$) private userStore: IUserStore,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
 
+    this.initCurrentUser();
+  }
+
+  private initCurrentUser(): void {
+    const cached = this.userStore.userData;
+    if (cached) {
+      this.currentUserId = cached.id;
+      return;
+    }
+
     this.getCurrentUserUseCase
-      .execute(true)
+      .execute()
       .then(user => {
+        this.userStore.setUserData(user);
         this.currentUserId = user.id;
       })
       .catch(({ message }: IHttpError) => {
@@ -51,7 +63,7 @@ class SearchViewModel implements ISearchViewModel {
   }
 
   get posts(): IPost[] {
-    return this.getPostsByIdsUseCase.execute(this._postIds);
+    return this.postsStore.getMany(this._postIds);
   }
 
   get postsMeta(): IMeta | null {
@@ -134,6 +146,7 @@ class SearchViewModel implements ISearchViewModel {
       })
       .then(data => {
         if (requestId !== this.postsRequestId) return;
+        this.postsStore.upsertMany(data.results);
         this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
@@ -180,6 +193,7 @@ class SearchViewModel implements ISearchViewModel {
         search,
       })
       .then(data => {
+        this.postsStore.upsertMany(data.results);
         this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
@@ -220,6 +234,7 @@ class SearchViewModel implements ISearchViewModel {
         search,
       })
       .then(data => {
+        this.postsStore.upsertMany(data.results);
         this.postIds = mergeArraysWithoutDuplicates(
           this._postIds,
           data.results.map(p => p.id),
@@ -248,9 +263,30 @@ class SearchViewModel implements ISearchViewModel {
   }
 
   async likePost(postId: number): Promise<void> {
-    return this.likePostUseCase.execute(postId).catch(({ message }: IHttpError) => {
-      Toast.show({ text1: message as string, type: Toasts.Error });
-    });
+    const userId = this._currentUserId;
+    if (userId === null) return;
+
+    const post = this.postsStore.get(postId);
+    if (!post) return;
+
+    const isLiked = post.likes.includes(userId);
+    // мгновенно меняем UI
+    this.postsStore.patch(postId, { likes: setListMembership(post.likes, userId, !isLiked) });
+
+    // fire-and-forget: ответ игнорируем, на ошибку откатываем только свой лайк
+    return this.likePostUseCase
+      .execute(postId)
+      .then(() => undefined)
+      .catch(({ message }: IHttpError) => {
+        const current = this.postsStore.get(postId);
+
+        if (current) {
+          this.postsStore.patch(postId, {
+            likes: setListMembership(current.likes, userId, isLiked),
+          });
+        }
+        Toast.show({ text1: message as string, type: Toasts.Error });
+      });
   }
 }
 

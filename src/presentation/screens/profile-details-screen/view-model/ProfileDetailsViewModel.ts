@@ -7,6 +7,7 @@ import { IHttpError } from '@core/interfaces/http';
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
 import { GetPostsRequestParams } from '@domain/request-params';
 import { UserUseCases, PostUseCases } from '@domain/use-cases';
+import { IPostsStore, IUserStore } from '@presentation/store';
 import { Toasts } from '@ui/toast';
 
 import { IProfileDetailsViewModel } from './IProfileDetailsViewModel';
@@ -21,11 +22,11 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
 
   constructor(
     @inject(UserUseCases.$GetCurrentUser)
-    private getCurrentUserUseCase: UseCase<boolean, IUser>,
+    private getCurrentUserUseCase: UseCase<void, IUser>,
     @inject(PostUseCases.$GetUserPosts)
     private getUserPostsUseCase: UseCase<GetPostsRequestParams, IPagination<IPost>>,
-    @inject(PostUseCases.$GetPostsByIds)
-    private getPostsByIdsUseCase: UseCase<number[], IPost[], IPost[]>,
+    @inject(IPostsStore.$) private postsStore: IPostsStore,
+    @inject(IUserStore.$) private userStore: IUserStore,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -43,7 +44,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
   }
 
   get posts(): Array<IPost> {
-    return this.getPostsByIdsUseCase.execute(this._postIds);
+    return this.postsStore.getMany(this._postIds);
   }
 
   get postsMeta(): IMeta | null {
@@ -70,11 +71,23 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this._postIds = value;
   }
 
+  // Кэш сессии держим в presentation-сторе: useCache=true возвращает сохранённого
+  // пользователя, иначе тянем свежего из use case и обновляем стор.
+  private async resolveCurrentUser(useCache: boolean): Promise<IUser> {
+    if (useCache && this.userStore.userData) {
+      return Promise.resolve(this.userStore.userData);
+    }
+
+    return this.getCurrentUserUseCase.execute().then(user => {
+      this.userStore.setUserData(user);
+      return user;
+    });
+  }
+
   async load(): Promise<void> {
     this.isLoading = true;
 
-    return this.getCurrentUserUseCase
-      .execute(true)
+    return this.resolveCurrentUser(true)
       .then(user => {
         this.user = user;
         return this.getUserPostsUseCase.execute({
@@ -85,6 +98,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
         });
       })
       .then(data => {
+        this.postsStore.upsertMany(data.results);
         this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
@@ -99,8 +113,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
   async loadUser(): Promise<void> {
     this.isLoading = true;
 
-    this.getCurrentUserUseCase
-      .execute(false)
+    this.resolveCurrentUser(false)
       .then(user => {
         this.user = user;
       })
@@ -118,7 +131,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     this.isRefreshing = true;
 
     Promise.all([
-      this.getCurrentUserUseCase.execute(false),
+      this.resolveCurrentUser(false),
       this.getUserPostsUseCase.execute({
         userId: this.user.id,
         perPage: 20,
@@ -128,6 +141,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     ])
       .then(([user, data]) => {
         this.user = user;
+        this.postsStore.upsertMany(data.results);
         this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
@@ -150,6 +164,7 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
         sortedBy: 'desc',
       })
       .then(data => {
+        this.postsStore.upsertMany(data.results);
         this.postIds = mergeArraysWithoutDuplicates(
           this._postIds,
           data.results.map(p => p.id),

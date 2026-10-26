@@ -7,6 +7,7 @@ import { IHttpError } from '@core/interfaces/http';
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
 import { GetPostsRequestParams } from '@domain/request-params';
 import { PostUseCases, UserUseCases } from '@domain/use-cases';
+import { IPostsStore } from '@presentation/store';
 import { Toasts } from '@ui/toast';
 
 import { IUserDetailsViewModel } from './IUserDetailsViewModel';
@@ -24,8 +25,7 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
     private getUserByIdUseCase: UseCase<number, IUser>,
     @inject(PostUseCases.$GetUserPosts)
     private getUserPostsUseCase: UseCase<GetPostsRequestParams, IPagination<IPost>>,
-    @inject(PostUseCases.$GetPostsByIds)
-    private getPostsByIdsUseCase: UseCase<number[], IPost[], IPost[]>,
+    @inject(IPostsStore.$) private postsStore: IPostsStore,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -43,7 +43,7 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
   }
 
   get posts(): Array<IPost> {
-    return this.getPostsByIdsUseCase.execute(this._postIds);
+    return this.postsStore.getMany(this._postIds);
   }
 
   get postsMeta(): IMeta | null {
@@ -81,6 +81,7 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
     ])
       .then(([user, data]) => {
         this.user = user;
+        this.postsStore.upsertMany(data.results);
         this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
@@ -108,6 +109,7 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
     ])
       .then(([user, data]) => {
         this.user = user;
+        this.postsStore.upsertMany(data.results);
         this.postIds = data.results.map(p => p.id);
         this.postsMeta = data.meta;
       })
@@ -130,6 +132,7 @@ class UserDetailsViewModel implements IUserDetailsViewModel {
         sortedBy: 'desc',
       })
       .then(data => {
+        this.postsStore.upsertMany(data.results);
         this.postIds = mergeArraysWithoutDuplicates(
           this._postIds,
           data.results.map(p => p.id),

@@ -12,6 +12,7 @@ import {
   BottomTabStackParamList,
   BottomTabRouteNames,
 } from '@navigation/configuration';
+import { IUserStore } from '@presentation/store';
 import { Toasts } from '@ui/toast';
 
 import { ICreatePostViewModel } from './ICreatePostViewModel';
@@ -25,6 +26,7 @@ class CreatePostViewModel implements ICreatePostViewModel {
     @inject(PostUseCases.$CreatePost) private createPostUseCase: CreatePostUseCase,
     @inject(Identifiers.NavigationService)
     private navigationService: INavigationService<BottomTabStackParamList>,
+    @inject(IUserStore.$) private userStore: IUserStore,
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -57,6 +59,12 @@ class CreatePostViewModel implements ICreatePostViewModel {
     this.createPostUseCase
       .execute(data.content, data.images)
       .then(() => {
+        const currentUser = this.userStore.userData;
+
+        if (currentUser) {
+          this.userStore.setUserData({ ...currentUser, postsCount: currentUser.postsCount + 1 });
+        }
+
         Toast.show({ text1: 'Post created successfully!', type: Toasts.Success });
 
         this.reset();

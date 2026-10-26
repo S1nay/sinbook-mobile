@@ -6,7 +6,6 @@ export interface ILoginViewModel {
   isLoading: boolean;
   formErrors: LoginFormExternalErrors | null;
   error: string;
-  isSuccess: boolean;
   login: (data: LoginFormData) => void;
 }
 
