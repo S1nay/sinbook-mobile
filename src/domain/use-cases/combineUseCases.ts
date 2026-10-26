@@ -10,7 +10,6 @@ import {
 import { FileUseCases, PostAvatarUseCase } from './file';
 import {
   CreatePostUseCase,
-  GetPostsByIdsUseCase,
   GetUserPostsUseCase,
   LikePostUseCase,
   PostUseCases,
@@ -39,7 +38,6 @@ export const combineUseCases = (container: Container) => {
   container.bind(PostUseCases.$GetUserPosts).to(GetUserPostsUseCase).inSingletonScope();
   container.bind(PostUseCases.$CreatePost).to(CreatePostUseCase).inSingletonScope();
   container.bind(PostUseCases.$SearchPosts).to(SearchPostsUseCase).inSingletonScope();
-  container.bind(PostUseCases.$GetPostsByIds).to(GetPostsByIdsUseCase).inSingletonScope();
   container.bind(PostUseCases.$LikePost).to(LikePostUseCase).inSingletonScope();
 
   container.bind(FileUseCases.$PostAvatar).to(PostAvatarUseCase).inSingletonScope();

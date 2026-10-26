@@ -7,18 +7,11 @@ import { IUserRepository } from '@domain/repositories';
 class GetCurrentUserUseCase {
   constructor(@inject(IUserRepository.$) private userRepository: IUserRepository) {}
 
-  async execute(shouldUseCache: boolean = true): Promise<IUser> {
-    if (shouldUseCache) {
-      const sessionUser = this.userRepository.getUserSession();
-      if (sessionUser) return sessionUser;
-    }
-
+  async execute(): Promise<IUser> {
     const storageUser = this.userRepository.loadUserFromStorage();
     if (!storageUser) throw new Error('User not found in storage');
 
-    const fetchedUser = await this.userRepository.getUser(storageUser.id);
-    this.userRepository.setUserSession(fetchedUser);
-    return fetchedUser;
+    return this.userRepository.getUser(storageUser.id);
   }
 }
 

@@ -12,11 +12,10 @@ import container from '@core/di/container';
 import { Identifiers } from '@core/di/identifiers';
 import { requestInterceptor, responseInterceptor } from '@core/interceptors';
 import { SocketConnectionPaths } from '@core/interfaces/socket';
-import { AuthProvider } from '@core/providers/auth-provider';
-import { DIProvider } from '@core/providers/di-provider';
-import { ThemeProvider } from '@core/providers/theme-provider';
 import { AuthUseCases } from '@domain/use-cases';
-import { AppNavigator } from '@navigation/AppNavigator';
+import Bootstrap from '@presentation/bootstrap';
+import { IPostsStore, IUserStore } from '@presentation/store';
+import { DIProvider } from '@shared/providers';
 import BottomSheetModalWrapper from '@ui/bottom-sheet';
 import ToastConfig from '@ui/toast';
 
@@ -34,6 +33,13 @@ const App = () => {
   const navigation = useRef(container.get(Identifiers.NavigationService)).current;
   const logoutUseCase = useRef(container.get(AuthUseCases.$Logout)).current;
 
+  const clearSession = async () => {
+    await logoutUseCase.execute();
+    // Реактивную сессию (сторы presentation) чистим здесь — LogoutUseCase её не трогает
+    container.get<IPostsStore>(IPostsStore.$).clear();
+    container.get<IUserStore>(IUserStore.$).clear();
+  };
+
   const setInterceptors = () => {
     httpClient.instance?.interceptors.request.use(request =>
       requestInterceptor({ request, storage }),
@@ -47,7 +53,7 @@ const App = () => {
           storage,
           httpClient,
           navigation,
-          onSessionExpired: () => logoutUseCase.execute(),
+          onSessionExpired: clearSession,
         }),
     );
   };
@@ -67,17 +73,13 @@ const App = () => {
       <SafeAreaProvider>
         <BottomSheetModalProvider>
           <DIProvider container={container}>
-            <ThemeProvider>
-              <AuthProvider>
-                <StatusBar barStyle={theme.components.statusBar.barStyle} />
+            <StatusBar barStyle={theme.components.statusBar.barStyle} />
 
-                <AppNavigator />
+            <Bootstrap />
 
-                <BottomSheetModalWrapper />
+            <BottomSheetModalWrapper />
 
-                <Toast position={'bottom'} visibilityTime={3000} config={ToastConfig} />
-              </AuthProvider>
-            </ThemeProvider>
+            <Toast position={'bottom'} visibilityTime={3000} config={ToastConfig} />
           </DIProvider>
         </BottomSheetModalProvider>
       </SafeAreaProvider>

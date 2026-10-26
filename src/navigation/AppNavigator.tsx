@@ -4,14 +4,17 @@ import { useUnistyles } from 'react-native-unistyles';
 
 import Header from '@components/header';
 import { Identifiers } from '@core/di/identifiers';
-import { useAuth, useDIContainer } from '@core/hooks';
 import { AppRouteNames, AuthNavigator, MaintenanceNavigator } from '@navigation/configuration';
 import LogScreen from '@screens/log-screen';
+import { useDIContainer } from '@shared/hooks';
 
 const RootStack = createNativeStackNavigator();
 
-export const AppNavigator = () => {
-  const { isAuth } = useAuth();
+interface AppNavigatorProps {
+  initialAuthed: boolean;
+}
+
+export const AppNavigator = ({ initialAuthed }: AppNavigatorProps) => {
   const { theme } = useUnistyles();
   const navigationService = useDIContainer().get(Identifiers.NavigationService);
 
@@ -26,15 +29,14 @@ export const AppNavigator = () => {
       }}
       ref={navigationService.navigationRef}
     >
+      {/* Оба стека зарегистрированы всегда; стартовый выбирается по initialAuthed,
+          дальнейшее переключение — императивно через NavigationService.reset из VM */}
       <RootStack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName={isAuth ? AppRouteNames.Maintenance : AppRouteNames.Auth}
+        initialRouteName={initialAuthed ? AppRouteNames.Maintenance : AppRouteNames.Auth}
       >
-        {isAuth ? (
-          <RootStack.Screen component={MaintenanceNavigator} name={AppRouteNames.Maintenance} />
-        ) : (
-          <RootStack.Screen component={AuthNavigator} name={AppRouteNames.Auth} />
-        )}
+        <RootStack.Screen component={MaintenanceNavigator} name={AppRouteNames.Maintenance} />
+        <RootStack.Screen component={AuthNavigator} name={AppRouteNames.Auth} />
         <RootStack.Screen
           component={LogScreen}
           name={AppRouteNames.Log}

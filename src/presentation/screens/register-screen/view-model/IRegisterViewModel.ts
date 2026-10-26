@@ -6,7 +6,6 @@ export interface IRegisterViewModel {
   isLoading: boolean;
   formErrors: RegisterFormExternalErrors | null;
   error: string;
-  isSuccess: boolean;
   register: (data: RegisterFormData) => void;
 }
 

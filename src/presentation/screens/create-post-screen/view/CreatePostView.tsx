@@ -9,8 +9,8 @@ import {
   CreatePostFormRef,
   CreatePostFormValidationSchema,
 } from '@components/forms/create-post-form';
-import { useDIContainer } from '@core/hooks';
 import AppLayout from '@layouts/_app';
+import { useDIContainer } from '@shared/hooks';
 import Button from '@ui/button';
 
 import { ICreatePostViewModel } from '../view-model';

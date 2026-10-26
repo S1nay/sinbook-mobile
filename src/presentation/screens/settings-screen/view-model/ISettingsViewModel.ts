@@ -1,7 +1,11 @@
 import { ServiceIdentifier } from 'inversify';
 
+import { TTheme } from '@domain/models';
+
 export interface ISettingsViewModel {
-  logout(callback: PureFunction): void;
+  activeTheme: TTheme;
+  switchTheme(theme: TTheme): void;
+  logout(): void;
 }
 
 export namespace ISettingsViewModel {

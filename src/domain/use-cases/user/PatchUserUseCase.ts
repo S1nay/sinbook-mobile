@@ -12,7 +12,6 @@ class PatchUserUseCase {
 
     if (user) {
       this.userRepository.persistUser(user);
-      this.userRepository.setUserSession(user);
     }
 
     return true;

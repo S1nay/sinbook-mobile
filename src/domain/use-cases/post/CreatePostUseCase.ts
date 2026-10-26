@@ -2,14 +2,13 @@ import { inject, injectable } from 'inversify';
 import { Asset } from 'react-native-image-picker';
 
 import { IPost } from '@domain/models';
-import { IFileRepository, IPostRepository, IUserRepository } from '@domain/repositories';
+import { IFileRepository, IPostRepository } from '@domain/repositories';
 
 @injectable()
 class CreatePostUseCase {
   constructor(
     @inject(IPostRepository.$) private postRepository: IPostRepository,
     @inject(IFileRepository.$) private fileRepository: IFileRepository,
-    @inject(IUserRepository.$) private userRepository: IUserRepository,
   ) {}
 
   async execute(content: string, images: Asset[]): Promise<IPost> {
@@ -30,18 +29,7 @@ class CreatePostUseCase {
       imageUrls = files.map(f => f.url);
     }
 
-    const post = await this.postRepository.createPost({ content, images: imageUrls });
-
-    const currentUser = this.userRepository.getUserSession();
-
-    if (currentUser) {
-      this.userRepository.setUserSession({
-        ...currentUser,
-        postsCount: currentUser.postsCount + 1,
-      });
-    }
-
-    return post;
+    return this.postRepository.createPost({ content, images: imageUrls });
   }
 }
 

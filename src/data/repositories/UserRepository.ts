@@ -2,8 +2,8 @@ import { inject, injectable } from 'inversify';
 
 import { getDataFromHttpResponse, getErrorFromHttpResponse } from '@core/helpers';
 import { IUserApi } from '@data/api';
+import { UserMapper } from '@data/mappers';
 import { IUserStorage } from '@data/storage';
-import { IUserStore } from '@data/store';
 import { IPatchUserRequestDto } from '@domain/dto';
 import { IPagination, IUser } from '@domain/models';
 import { IUserRepository } from '@domain/repositories';
@@ -13,20 +13,8 @@ import { GetUsersRequestParams } from '@domain/request-params';
 class UserRepository implements IUserRepository {
   constructor(
     @inject(IUserStorage.$) private userStorage: IUserStorage,
-    @inject(IUserStore.$) private userStore: IUserStore,
     @inject(IUserApi.$) private userApi: IUserApi,
   ) {}
-
-  /* session */
-  getUserSession(): IUser | null {
-    return this.userStore.userData;
-  }
-  setUserSession(user: IUser | null): void {
-    this.userStore.setUserData(user);
-  }
-  clearUserSession(): void {
-    this.userStore.setUserData(null);
-  }
 
   /* persistent */
   loadUserFromStorage(): IUser | null {
@@ -41,7 +29,11 @@ class UserRepository implements IUserRepository {
 
   /* api */
   async getUser(id: number): Promise<IUser> {
-    return this.userApi.getUser(id).then(getDataFromHttpResponse).catch(getErrorFromHttpResponse);
+    return this.userApi
+      .getUser(id)
+      .then(getDataFromHttpResponse)
+      .then(user => UserMapper.toEntity(user))
+      .catch(getErrorFromHttpResponse);
   }
 
   async deleteUser(id: number): Promise<void> {
@@ -52,6 +44,7 @@ class UserRepository implements IUserRepository {
     return this.userApi
       .updateUser(dto)
       .then(getDataFromHttpResponse)
+      .then(user => UserMapper.toEntity(user))
       .catch(getErrorFromHttpResponse);
   }
 
@@ -59,6 +52,7 @@ class UserRepository implements IUserRepository {
     return this.userApi
       .findUsers(params)
       .then(getDataFromHttpResponse)
+      .then(data => UserMapper.toPage(data))
       .catch(getErrorFromHttpResponse);
   }
 }

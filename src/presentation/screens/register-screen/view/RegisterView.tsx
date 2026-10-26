@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Keyboard, Text, View } from 'react-native';
 
 import Forms from '@components/forms';
@@ -10,9 +10,9 @@ import {
   RegisterFormRef,
   RegisterFormValidationSchema,
 } from '@components/forms/register-form';
-import { useAuth, useDIContainer } from '@core/hooks';
 import AuthLayout from '@layouts/_auth';
 import { AuthRouteNames, AuthScreenProps } from '@navigation/configuration';
+import { useDIContainer } from '@shared/hooks';
 import Button from '@ui/button';
 import ErrorMessage from '@ui/error';
 
@@ -29,16 +29,9 @@ const RegisterFormDefaultValues: RegisterFormData = {
 
 const RegisterView = () => {
   const container = useDIContainer();
-  const { register, formErrors, error, isLoading, isSuccess } = container.get(IRegisterViewModel.$);
+  const { register, formErrors, error, isLoading } = container.get(IRegisterViewModel.$);
   const form = useRef<RegisterFormRef>(null);
-  const { authorize } = useAuth();
   const navigation = useNavigation<AuthScreenProps<AuthRouteNames.Register>['navigation']>();
-
-  useEffect(() => {
-    if (isSuccess) {
-      authorize();
-    }
-  }, [isSuccess]);
 
   const onSubmit = (formData: RegisterFormData) => {
     Keyboard.dismiss();

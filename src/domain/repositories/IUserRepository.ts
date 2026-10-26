@@ -5,11 +5,6 @@ import { AuthUser, IPagination, IUser } from '@domain/models';
 import { GetUsersRequestParams } from '@domain/request-params';
 
 export interface IUserRepository {
-  // session
-  getUserSession(): IUser | null;
-  setUserSession(user: IUser | null): void;
-  clearUserSession(): void;
-
   // persistent
   loadUserFromStorage(): AuthUser | null;
   persistUser(user: AuthUser): void;

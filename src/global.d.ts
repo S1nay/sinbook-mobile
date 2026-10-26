@@ -5,6 +5,12 @@ declare module '*.svg' {
   export default content;
 }
 
+declare module '*.png' {
+  import { ImageRequireSource } from 'react-native';
+  const content: ImageRequireSource;
+  export default content;
+}
+
 declare type PureFunction = () => void;
 declare type ValuesOf<T> = T[keyof T];
 

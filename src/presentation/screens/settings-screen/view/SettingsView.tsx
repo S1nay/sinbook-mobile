@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import { Text, View } from 'react-native';
 
-import { useAuth, useDIContainer, useTheme } from '@core/hooks';
 import { TTheme } from '@domain/models';
 import AppLayout from '@layouts/_app';
+import { useDIContainer } from '@shared/hooks';
 import Button from '@ui/button';
 import SegmentedControl from '@ui/segmented-control';
 
@@ -18,16 +18,14 @@ const THEMES = [
 
 const SettingsView = () => {
   const container = useDIContainer();
-  const { logout } = container.get(ISettingsViewModel.$);
-  const { activeTheme, switchTheme } = useTheme();
-  const { unauthorize } = useAuth();
+  const { logout, activeTheme, switchTheme } = container.get(ISettingsViewModel.$);
 
   const handleThemeChange = (value: string) => {
     switchTheme(value as TTheme);
   };
 
   const handleLogout = () => {
-    logout(unauthorize);
+    logout();
   };
 
   return (

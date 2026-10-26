@@ -7,7 +7,6 @@ import { FlatList, Pressable } from 'react-native';
 import Header from '@components/header';
 import Placeholders from '@components/placeholders';
 import ProfileInfo from '@components/profile-info';
-import { useDIContainer } from '@core/hooks';
 import { IPost } from '@domain/models';
 import AppLayout from '@layouts/_app';
 import {
@@ -17,6 +16,7 @@ import {
   ProfileScreenProps,
   ProfileStackParamList,
 } from '@navigation/configuration';
+import { useDIContainer } from '@shared/hooks';
 import Button from '@ui/button';
 import Grid, { GridRenderItemInfo } from '@ui/grid';
 import AppImage from '@ui/image';

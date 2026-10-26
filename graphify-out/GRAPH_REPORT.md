@@ -1,16 +1,16 @@
-# Graph Report - sinbook-mobile  (2026-10-24)
+# Graph Report - sinbook-mobile  (2026-10-26)
 
 ## Corpus Check
-- 457 files · ~42,572 words
+- 470 files · ~43,356 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1305 nodes · 629 edges · 713 communities (584 shown, 129 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 17 edges (avg confidence: 0.8)
+- 1405 nodes · 697 edges · 760 communities (626 shown, 134 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 26 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `74f0c5a6`
+- Built from commit: `adc840ad`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -56,9 +56,9 @@
 - [[_COMMUNITY_Community 38|Community 38]]
 - [[_COMMUNITY_Community 39|Community 39]]
 - [[_COMMUNITY_Community 40|Community 40]]
+- [[_COMMUNITY_Community 41|Community 41]]
 - [[_COMMUNITY_Community 42|Community 42]]
 - [[_COMMUNITY_Community 43|Community 43]]
-- [[_COMMUNITY_Community 44|Community 44]]
 - [[_COMMUNITY_Community 45|Community 45]]
 - [[_COMMUNITY_Community 46|Community 46]]
 - [[_COMMUNITY_Community 47|Community 47]]
@@ -111,113 +111,130 @@
 - [[_COMMUNITY_Community 94|Community 94]]
 - [[_COMMUNITY_Community 95|Community 95]]
 - [[_COMMUNITY_Community 96|Community 96]]
+- [[_COMMUNITY_Community 97|Community 97]]
 - [[_COMMUNITY_Community 98|Community 98]]
 - [[_COMMUNITY_Community 99|Community 99]]
 - [[_COMMUNITY_Community 100|Community 100]]
 - [[_COMMUNITY_Community 101|Community 101]]
 - [[_COMMUNITY_Community 102|Community 102]]
 - [[_COMMUNITY_Community 103|Community 103]]
-- [[_COMMUNITY_Community 104|Community 104]]
 - [[_COMMUNITY_Community 105|Community 105]]
+- [[_COMMUNITY_Community 106|Community 106]]
+- [[_COMMUNITY_Community 107|Community 107]]
+- [[_COMMUNITY_Community 108|Community 108]]
 - [[_COMMUNITY_Community 109|Community 109]]
 - [[_COMMUNITY_Community 110|Community 110]]
 - [[_COMMUNITY_Community 111|Community 111]]
 - [[_COMMUNITY_Community 112|Community 112]]
-- [[_COMMUNITY_Community 686|Community 686]]
-- [[_COMMUNITY_Community 687|Community 687]]
-- [[_COMMUNITY_Community 688|Community 688]]
-- [[_COMMUNITY_Community 689|Community 689]]
-- [[_COMMUNITY_Community 690|Community 690]]
-- [[_COMMUNITY_Community 691|Community 691]]
-- [[_COMMUNITY_Community 692|Community 692]]
-- [[_COMMUNITY_Community 693|Community 693]]
-- [[_COMMUNITY_Community 694|Community 694]]
-- [[_COMMUNITY_Community 695|Community 695]]
-- [[_COMMUNITY_Community 696|Community 696]]
-- [[_COMMUNITY_Community 697|Community 697]]
-- [[_COMMUNITY_Community 698|Community 698]]
-- [[_COMMUNITY_Community 699|Community 699]]
-- [[_COMMUNITY_Community 700|Community 700]]
-- [[_COMMUNITY_Community 701|Community 701]]
-- [[_COMMUNITY_Community 702|Community 702]]
-- [[_COMMUNITY_Community 703|Community 703]]
-- [[_COMMUNITY_Community 704|Community 704]]
-- [[_COMMUNITY_Community 705|Community 705]]
-- [[_COMMUNITY_Community 706|Community 706]]
-- [[_COMMUNITY_Community 707|Community 707]]
-- [[_COMMUNITY_Community 708|Community 708]]
-- [[_COMMUNITY_Community 709|Community 709]]
-- [[_COMMUNITY_Community 710|Community 710]]
-- [[_COMMUNITY_Community 711|Community 711]]
-- [[_COMMUNITY_Community 712|Community 712]]
+- [[_COMMUNITY_Community 116|Community 116]]
+- [[_COMMUNITY_Community 117|Community 117]]
+- [[_COMMUNITY_Community 118|Community 118]]
+- [[_COMMUNITY_Community 119|Community 119]]
+- [[_COMMUNITY_Community 733|Community 733]]
+- [[_COMMUNITY_Community 734|Community 734]]
+- [[_COMMUNITY_Community 735|Community 735]]
+- [[_COMMUNITY_Community 736|Community 736]]
+- [[_COMMUNITY_Community 737|Community 737]]
+- [[_COMMUNITY_Community 738|Community 738]]
+- [[_COMMUNITY_Community 739|Community 739]]
+- [[_COMMUNITY_Community 740|Community 740]]
+- [[_COMMUNITY_Community 741|Community 741]]
+- [[_COMMUNITY_Community 742|Community 742]]
+- [[_COMMUNITY_Community 743|Community 743]]
+- [[_COMMUNITY_Community 744|Community 744]]
+- [[_COMMUNITY_Community 745|Community 745]]
+- [[_COMMUNITY_Community 746|Community 746]]
+- [[_COMMUNITY_Community 747|Community 747]]
+- [[_COMMUNITY_Community 748|Community 748]]
+- [[_COMMUNITY_Community 749|Community 749]]
+- [[_COMMUNITY_Community 750|Community 750]]
+- [[_COMMUNITY_Community 751|Community 751]]
+- [[_COMMUNITY_Community 752|Community 752]]
+- [[_COMMUNITY_Community 753|Community 753]]
+- [[_COMMUNITY_Community 754|Community 754]]
+- [[_COMMUNITY_Community 755|Community 755]]
+- [[_COMMUNITY_Community 756|Community 756]]
+- [[_COMMUNITY_Community 757|Community 757]]
+- [[_COMMUNITY_Community 758|Community 758]]
+- [[_COMMUNITY_Community 759|Community 759]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `SearchViewModel` - 19 edges
-2. `ProfileDetailsViewModel` - 16 edges
+1. `SearchViewModel` - 20 edges
+2. `ProfileDetailsViewModel` - 17 edges
 3. `PostRepository` - 13 edges
 4. `UserRepository` - 13 edges
-5. `ProfilePostsViewModel` - 12 edges
+5. `ProfilePostsViewModel` - 13 edges
 6. `AxiosHttpClient` - 11 edges
 7. `WebSocketIOClient` - 11 edges
 8. `MMKVStorage` - 11 edges
 9. `UserDetailsViewModel` - 11 edges
-10. `LikeRepository` - 10 edges
+10. `PostsStore` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `AppNavigator()` --calls--> `useAuth()`  [INFERRED]
-  navigation/AppNavigator.tsx → src/core/hooks/use-auth/useAuth.ts
-- `AppNavigator()` --calls--> `useDIContainer()`  [INFERRED]
-  navigation/AppNavigator.tsx → src/core/hooks/use-DI-container/useDIContainer.ts
-- `ProfilePostsView()` --calls--> `useDIContainer()`  [INFERRED]
-  presentation/screens/profile-posts-screen/view/ProfilePostsView.tsx → src/core/hooks/use-DI-container/useDIContainer.ts
 - `ProfilePostsView()` --calls--> `usePagination()`  [INFERRED]
   presentation/screens/profile-posts-screen/view/ProfilePostsView.tsx → src/core/hooks/use-pagination/usePagination.ts
-- `useUseCase()` --calls--> `useDIContainer()`  [INFERRED]
-  src/core/hooks/use-use-case/useUseCase.ts → src/core/hooks/use-DI-container/useDIContainer.ts
+- `AppNavigator()` --calls--> `useDIContainer()`  [INFERRED]
+  navigation/AppNavigator.tsx → src/presentation/shared/hooks/use-DI-container/useDIContainer.ts
+- `ProfilePostsView()` --calls--> `useDIContainer()`  [INFERRED]
+  presentation/screens/profile-posts-screen/view/ProfilePostsView.tsx → src/presentation/shared/hooks/use-DI-container/useDIContainer.ts
+- `AppNavigator()` --calls--> `useAuth()`  [INFERRED]
+  navigation/AppNavigator.tsx → src/presentation/shared/hooks/use-auth/useAuth.ts
+- `ViewModelInjector()` --calls--> `bindInContainer()`  [INFERRED]
+  src/presentation/components/view-model-injector/ViewModelInjector.tsx → src/core/helpers/bind-in-container/bindInContainer.ts
 
-## Communities (713 total, 129 thin omitted)
+## Communities (760 total, 134 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.07
-Nodes (11): AuthProvider(), bindInContainer(), AppNavigator(), App(), ThemeProvider(), useAuth(), useDIContainer(), usePagination() (+3 more)
+Cohesion: 0.05
+Nodes (13): AuthProvider(), bindInContainer(), AppNavigator(), App(), ThemeProvider(), useAuth(), useDIContainer(), usePagination() (+5 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.07
+Cohesion: 0.08
 Nodes (3): ProfileDetailsViewModel, handleLogout(), onPaginate()
 
 ### Community 2 - "Community 2"
 Cohesion: 0.09
 Nodes (4): SearchViewModel, handleSearch(), onPaginateUsers(), onTabIndexChange()
 
-### Community 12 - "Community 12"
+### Community 3 - "Community 3"
+Cohesion: 0.12
+Nodes (3): toggleLikeOptimistic(), setListMembership(), ProfilePostsViewModel
+
+### Community 6 - "Community 6"
+Cohesion: 0.15
+Nodes (4): applyTheme(), BootstrapViewModel, SettingsViewModel, handleLogout()
+
+### Community 14 - "Community 14"
 Cohesion: 0.24
 Nodes (5): RCTDefaultReactNativeFactoryDelegate, AppDelegate, ReactNativeDelegate, UIApplicationDelegate, UIResponder
 
-### Community 32 - "Community 32"
+### Community 34 - "Community 34"
 Cohesion: 0.38
 Nodes (3): defaultHeader(), ChatNavigator(), ProfileNavigator()
 
-### Community 56 - "Community 56"
+### Community 58 - "Community 58"
 Cohesion: 0.8
 Nodes (3): getBottomSheetModal(), hide(), show()
 
 ## Knowledge Gaps
 - **27 isolated node(s):** `Add Icon (Plus/Create)`, `Bell Icon (Notifications)`, `Camera Icon (Photo Capture)`, `Chat Icon (Messaging)`, `Check Icon (Confirmation/Selection)` (+22 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **129 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **134 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
+- **Why does `SearchViewModel` connect `Community 2` to `Community 3`?**
+  _High betweenness centrality (0.001) - this node is a cross-community bridge._
 - **What connects `Add Icon (Plus/Create)`, `Bell Icon (Notifications)`, `Camera Icon (Photo Capture)` to the rest of the system?**
   _27 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.09 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.14 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12 - nodes in this community are weakly interconnected._
 - **Should `Community 4` be split into smaller, more focused modules?**
   _Cohesion score 0.14 - nodes in this community are weakly interconnected._
