@@ -20,6 +20,8 @@ export interface ISearchViewModel {
   loadMorePosts(page: number, search: string): Promise<void>;
   loadMoreUsers(page: number, search: string): Promise<void>;
   likePost(postId: number): Promise<void>;
+  editPost(postId: number): void;
+  deletePost(postId: number): Promise<void>;
 }
 
 export namespace ISearchViewModel {

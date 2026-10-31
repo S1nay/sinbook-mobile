@@ -4,11 +4,7 @@ import { useCallback, useRef } from 'react';
 import { Keyboard, View } from 'react-native';
 
 import Forms from '@components/forms';
-import {
-  CreatePostFormData,
-  CreatePostFormRef,
-  CreatePostFormValidationSchema,
-} from '@components/forms/create-post-form';
+import { PostFormData, PostFormRef, PostFormValidationSchema } from '@components/forms/post-form';
 import AppLayout from '@layouts/_app';
 import { useDIContainer } from '@shared/hooks';
 import Button from '@ui/button';
@@ -16,7 +12,7 @@ import Button from '@ui/button';
 import { ICreatePostViewModel } from '../view-model';
 import styles from './styles';
 
-const CreatePostDefaultValues: CreatePostFormData = {
+const CreatePostDefaultValues: PostFormData = {
   content: '',
   images: [],
 };
@@ -24,9 +20,9 @@ const CreatePostDefaultValues: CreatePostFormData = {
 const CreatePostView = () => {
   const container = useDIContainer();
   const { createPost, isLoading } = container.get(ICreatePostViewModel.$);
-  const form = useRef<CreatePostFormRef>(null);
+  const form = useRef<PostFormRef>(null);
 
-  const onSubmit = (data: CreatePostFormData) => {
+  const onSubmit = (data: PostFormData) => {
     createPost(data, () => form.current?.reset(CreatePostDefaultValues));
   };
 
@@ -38,11 +34,11 @@ const CreatePostView = () => {
   return (
     <AppLayout>
       <View style={styles.container}>
-        <Forms.CreatePostForm
+        <Forms.PostForm
           ref={form}
           formParams={{
             defaultValues: CreatePostDefaultValues,
-            resolver: zodResolver(CreatePostFormValidationSchema()),
+            resolver: zodResolver(PostFormValidationSchema()),
           }}
         />
 

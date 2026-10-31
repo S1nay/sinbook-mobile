@@ -38,6 +38,9 @@ export type MaintenanceStackParamList = {
     postIds: number[];
     meta: IMeta;
   };
+  [MaintenanceRouteNames.EditPost]: {
+    postId: number;
+  };
 };
 
 export type BottomTabStackParamList = {

@@ -2,11 +2,14 @@ import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import Toast from 'react-native-toast-message';
 
+import { Identifiers } from '@core/di/identifiers';
 import { mergeArraysWithoutDuplicates, setListMembership } from '@core/helpers';
 import { IHttpError } from '@core/interfaces/http';
+import { INavigationService } from '@core/interfaces/navigation';
 import { IMeta, IPagination, IPost, IUser } from '@domain/models';
 import { GetPostsRequestParams, GetUsersRequestParams } from '@domain/request-params';
 import { PostUseCases, UserUseCases } from '@domain/use-cases';
+import { MaintenanceRouteNames, MaintenanceStackParamList } from '@navigation/configuration';
 import { IPostsStore, IUserStore } from '@presentation/store';
 import { Toasts } from '@ui/toast';
 
@@ -36,6 +39,10 @@ class SearchViewModel implements ISearchViewModel {
     private getCurrentUserUseCase: UseCase<void, IUser>,
     @inject(PostUseCases.$LikePost)
     private likePostUseCase: UseCase<number, IPost>,
+    @inject(PostUseCases.$DeletePost)
+    private deletePostUseCase: UseCase<number, void>,
+    @inject(Identifiers.NavigationService)
+    private navigationService: INavigationService<MaintenanceStackParamList>,
     @inject(IPostsStore.$) private postsStore: IPostsStore,
     @inject(IUserStore.$) private userStore: IUserStore,
   ) {
@@ -70,8 +77,9 @@ class SearchViewModel implements ISearchViewModel {
     return this._postsMeta;
   }
 
+  // себя в поиске пользователей не показываем
   get users(): IUser[] {
-    return this._users;
+    return this._users.filter(user => user.id !== this._currentUserId);
   }
 
   get usersMeta(): IMeta | null {
@@ -287,6 +295,32 @@ class SearchViewModel implements ISearchViewModel {
         }
         Toast.show({ text1: message as string, type: Toasts.Error });
       });
+  }
+
+  editPost(postId: number): void {
+    this.navigationService.navigate(MaintenanceRouteNames.EditPost, { postId });
+  }
+
+  async deletePost(postId: number): Promise<void> {
+    this.isPostsLoading = true;
+
+    try {
+      await this.deletePostUseCase.execute(postId);
+
+      // getMany пропускает удалённые id — пост исчезнет из всех списков
+      this.postsStore.remove(postId);
+
+      const currentUser = this.userStore.userData;
+      if (currentUser) {
+        this.userStore.setUserData({ ...currentUser, postsCount: currentUser.postsCount - 1 });
+      }
+
+      Toast.show({ text1: 'Post removed', type: Toasts.Success });
+    } catch (error) {
+      Toast.show({ text1: (error as IHttpError).message as string, type: Toasts.Error });
+    } finally {
+      this.isPostsLoading = false;
+    }
   }
 }
 

@@ -44,6 +44,8 @@ const SearchView = () => {
     isUsersRefreshing,
     currentUserId,
     likePost,
+    editPost,
+    deletePost,
   } = vm;
 
   const navigation =
@@ -82,7 +84,13 @@ const SearchView = () => {
     navigation.navigate(MaintenanceRouteNames.UserDetails, { userId, nickName });
 
   const renderPost = ({ item: post }: ListRenderItemInfo<IPost>) => (
-    <Post post={post} currentUserId={currentUserId} onLike={likePost} />
+    <Post
+      post={post}
+      currentUserId={currentUserId}
+      onLike={likePost}
+      onEdit={editPost}
+      onDelete={deletePost}
+    />
   );
   const renderUser = ({ item: user }: ListRenderItemInfo<IUser>) => (
     <UserCard
