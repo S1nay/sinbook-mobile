@@ -8,7 +8,7 @@ import styles from '../styles';
 import { PostLikeButtonProps } from '../types';
 
 // Отдельный observer: изменение likes перерисовывает только кнопку, а не весь пост с каруселью
-const PostLikeButton = observer(function PostLikeButton(props: PostLikeButtonProps) {
+const PostLikeButton = (props: PostLikeButtonProps) => {
   const { post, currentUserId, onLike } = props;
   const { theme } = useUnistyles();
 
@@ -25,6 +25,6 @@ const PostLikeButton = observer(function PostLikeButton(props: PostLikeButtonPro
       <Text style={styles.postActionText}>{post.likes.length}</Text>
     </Pressable>
   );
-});
+};
 
-export default PostLikeButton;
+export default observer(PostLikeButton);

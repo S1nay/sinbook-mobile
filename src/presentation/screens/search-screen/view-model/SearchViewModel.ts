@@ -77,8 +77,9 @@ class SearchViewModel implements ISearchViewModel {
     return this._postsMeta;
   }
 
+  // себя в поиске пользователей не показываем
   get users(): IUser[] {
-    return this._users;
+    return this._users.filter(user => user.id !== this._currentUserId);
   }
 
   get usersMeta(): IMeta | null {
