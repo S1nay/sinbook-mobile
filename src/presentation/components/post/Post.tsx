@@ -15,7 +15,7 @@ import { PostProps } from './types';
 
 const POST_IMAGE_SIZE = Dimensions.get('screen').width;
 
-const Post = observer(function Post(props: PostProps) {
+const Post = (props: PostProps) => {
   const { post, currentUserId, onLike, onEdit, onDelete } = props;
   const { theme } = useUnistyles();
 
@@ -71,6 +71,6 @@ const Post = observer(function Post(props: PostProps) {
       </View>
     </View>
   );
-});
+};
 
-export default Post;
+export default observer(Post);
