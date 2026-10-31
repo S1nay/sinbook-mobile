@@ -10,10 +10,12 @@ import {
 import { FileUseCases, PostAvatarUseCase } from './file';
 import {
   CreatePostUseCase,
+  DeletePostUseCase,
   GetUserPostsUseCase,
   LikePostUseCase,
   PostUseCases,
   SearchPostsUseCase,
+  UpdatePostUseCase,
 } from './post';
 import { GetThemeUseCase, SwitchThemeUseCase, ThemeUseCases } from './theme';
 import {
@@ -39,6 +41,8 @@ export const combineUseCases = (container: Container) => {
   container.bind(PostUseCases.$CreatePost).to(CreatePostUseCase).inSingletonScope();
   container.bind(PostUseCases.$SearchPosts).to(SearchPostsUseCase).inSingletonScope();
   container.bind(PostUseCases.$LikePost).to(LikePostUseCase).inSingletonScope();
+  container.bind(PostUseCases.$UpdatePost).to(UpdatePostUseCase).inSingletonScope();
+  container.bind(PostUseCases.$DeletePost).to(DeletePostUseCase).inSingletonScope();
 
   container.bind(FileUseCases.$PostAvatar).to(PostAvatarUseCase).inSingletonScope();
 

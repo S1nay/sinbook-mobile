@@ -10,6 +10,7 @@ export enum MaintenanceRouteNames {
   Tab = 'TabNavigator',
   UserDetails = 'User Details',
   ProfilePosts = 'Profile Posts',
+  EditPost = 'Edit Post',
 }
 
 //Чат

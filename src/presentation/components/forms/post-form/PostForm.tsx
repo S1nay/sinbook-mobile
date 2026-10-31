@@ -8,30 +8,30 @@ import Icon from '@ui/icon';
 import ImageCarousel from '@ui/image-carousel';
 import Input from '@ui/input';
 
-import { CreatePostFormKeys } from './keys';
+import { PostFormKeys } from './keys';
 import styles from './styles';
-import { CreatePostFormData, CreatePostFormProps } from './types';
+import { PostFormData, PostFormProps } from './types';
 
 const CAROUSEL_DIMENSIONS = 320;
 const MAX_IMAGES = 10;
 
-const CreatePostForm = (props: CreatePostFormProps) => {
+const PostForm = (props: PostFormProps) => {
   const { formParams, ref } = props;
-  const form = useForm<CreatePostFormData>(formParams);
+  const form = useForm<PostFormData>(formParams);
 
   useImperativeHandle(ref, () => form);
 
-  const chosenImages = form.watch(CreatePostFormKeys.IMAGES);
+  const chosenImages = form.watch(PostFormKeys.IMAGES);
   const remaining = MAX_IMAGES - chosenImages.length;
 
   const onPickImages = (assets: Array<Asset>) => {
-    form.setValue(CreatePostFormKeys.IMAGES, [...chosenImages, ...assets]);
+    form.setValue(PostFormKeys.IMAGES, [...chosenImages, ...assets]);
   };
 
   const onRemoveImage = (index: number) => {
     const updatedImages = [...chosenImages];
     updatedImages.splice(index, 1);
-    form.setValue(CreatePostFormKeys.IMAGES, updatedImages);
+    form.setValue(PostFormKeys.IMAGES, updatedImages);
   };
 
   const ImagePlaceholder = useMemo(() => {
@@ -49,7 +49,7 @@ const CreatePostForm = (props: CreatePostFormProps) => {
   return (
     <View>
       <Controller
-        name={CreatePostFormKeys.IMAGES}
+        name={PostFormKeys.IMAGES}
         control={form.control}
         render={({ field: { value }, fieldState: { error } }) => (
           <>
@@ -71,7 +71,7 @@ const CreatePostForm = (props: CreatePostFormProps) => {
       />
 
       <Controller
-        name={CreatePostFormKeys.CONTENT}
+        name={PostFormKeys.CONTENT}
         control={form.control}
         render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
           <>
@@ -93,4 +93,4 @@ const CreatePostForm = (props: CreatePostFormProps) => {
   );
 };
 
-export default CreatePostForm;
+export default PostForm;

@@ -17,6 +17,7 @@ import Bootstrap from '@presentation/bootstrap';
 import { IPostsStore, IUserStore } from '@presentation/store';
 import { DIProvider } from '@shared/providers';
 import BottomSheetModalWrapper from '@ui/bottom-sheet';
+import ConfirmModalWrapper from '@ui/confirm-modal';
 import ToastConfig from '@ui/toast';
 
 const socketConnections = [
@@ -78,6 +79,8 @@ const App = () => {
             <Bootstrap />
 
             <BottomSheetModalWrapper />
+
+            <ConfirmModalWrapper />
 
             <Toast position={'bottom'} visibilityTime={3000} config={ToastConfig} />
           </DIProvider>

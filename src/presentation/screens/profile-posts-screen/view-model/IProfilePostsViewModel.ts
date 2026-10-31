@@ -11,6 +11,8 @@ export interface IProfilePostsViewModel {
   load(postIds: number[], meta: IMeta): Promise<void>;
   loadMorePosts(page: number, userId: number): Promise<void>;
   likePost(postId: number): Promise<void>;
+  editPost(postId: number): void;
+  deletePost(postId: number): Promise<void>;
 }
 
 export namespace IProfilePostsViewModel {

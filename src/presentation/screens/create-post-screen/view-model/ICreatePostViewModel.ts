@@ -1,11 +1,11 @@
 import { ServiceIdentifier } from 'inversify';
 
-import { CreatePostFormData } from '@components/forms/create-post-form';
+import { PostFormData } from '@components/forms/post-form';
 
 export interface ICreatePostViewModel {
   isLoading: boolean;
   error: string;
-  createPost: (data: CreatePostFormData, resetForm: PureFunction) => void;
+  createPost: (data: PostFormData, resetForm: PureFunction) => void;
 }
 
 export namespace ICreatePostViewModel {

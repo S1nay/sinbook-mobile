@@ -5,10 +5,10 @@ import { useUnistyles } from 'react-native-unistyles';
 import Icon from '@ui/icon';
 
 import styles from '../styles';
-import { PostProps } from '../types';
+import { PostLikeButtonProps } from '../types';
 
 // Отдельный observer: изменение likes перерисовывает только кнопку, а не весь пост с каруселью
-const PostLikeButton = observer(function PostLikeButton(props: PostProps) {
+const PostLikeButton = observer(function PostLikeButton(props: PostLikeButtonProps) {
   const { post, currentUserId, onLike } = props;
   const { theme } = useUnistyles();
 

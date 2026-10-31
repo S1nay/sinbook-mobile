@@ -1,4 +1,4 @@
-export const CreatePostFormKeys = {
+export const PostFormKeys = {
   CONTENT: 'content',
   IMAGES: 'images',
 } as const;

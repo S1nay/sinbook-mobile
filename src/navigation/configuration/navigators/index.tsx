@@ -10,6 +10,7 @@ import Header from '@components/header';
 import ChatScreen from '@screens/chat-screen';
 import ChatsScreen from '@screens/chats-screen';
 import CreatePostScreen from '@screens/create-post-screen';
+import EditPostScreen from '@screens/edit-post-screen';
 import HomeScreen from '@screens/home-screen';
 import LoginScreen from '@screens/login-screen';
 import NotificationsScreen from '@screens/notifications-screen';
@@ -177,6 +178,11 @@ export const MaintenanceNavigator = () => {
       <MaintenanceStack.Screen
         component={ProfilePostsScreen}
         name={MaintenanceRouteNames.ProfilePosts}
+        options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
+      />
+      <MaintenanceStack.Screen
+        component={EditPostScreen}
+        name={MaintenanceRouteNames.EditPost}
         options={{ header: props => <Header {...props} isShowBackIcon isShowRightIcon={false} /> }}
       />
     </MaintenanceStack.Navigator>

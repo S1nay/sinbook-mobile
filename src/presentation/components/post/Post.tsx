@@ -4,9 +4,11 @@ import { Dimensions, Pressable, Text, View } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 
 import Avatar from '@ui/avatar';
+import { BottomSheetModal } from '@ui/bottom-sheet';
 import Icon from '@ui/icon';
 import ImageCarousel from '@ui/image-carousel';
 
+import PostActionsSheet from './components/PostActionsSheet';
 import PostLikeButton from './components/PostLikeButton';
 import styles from './styles';
 import { PostProps } from './types';
@@ -14,10 +16,16 @@ import { PostProps } from './types';
 const POST_IMAGE_SIZE = Dimensions.get('screen').width;
 
 const Post = observer(function Post(props: PostProps) {
-  const { post, currentUserId, onLike } = props;
+  const { post, currentUserId, onLike, onEdit, onDelete } = props;
   const { theme } = useUnistyles();
 
   const isOwner = post.user.id === currentUserId;
+
+  const openActions = () => {
+    BottomSheetModal.show({
+      modal: <PostActionsSheet postId={post.id} onEdit={onEdit} onDelete={onDelete} />,
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -34,7 +42,7 @@ const Post = observer(function Post(props: PostProps) {
         </View>
 
         {isOwner && (
-          <Pressable hitSlop={8}>
+          <Pressable hitSlop={8} onPress={openActions}>
             <Icon
               size={24}
               name="threeDots"

@@ -31,8 +31,9 @@ class ProfileDetailsViewModel implements IProfileDetailsViewModel {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
+  // читаем из стора, чтобы видеть изменения с других экранов (например, postsCount после удаления)
   get user(): IUser | null {
-    return this._user;
+    return this.userStore.userData ?? this._user;
   }
 
   get isLoading(): boolean {

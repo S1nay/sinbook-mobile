@@ -19,7 +19,8 @@ const ProfilePostsView = () => {
   const { params } =
     useRoute<MaintenanceScreenProps<MaintenanceRouteNames.ProfilePosts>['route']>();
   const vm = container.get(IProfilePostsViewModel.$);
-  const { load, loadMorePosts, posts, postsMeta, currentUserId, likePost } = vm;
+  const { load, loadMorePosts, posts, postsMeta, currentUserId, likePost, editPost, deletePost } =
+    vm;
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: params.nickName });
@@ -30,7 +31,13 @@ const ProfilePostsView = () => {
   const onPaginate = async (page: number) => loadMorePosts(page, params.userId);
 
   const renderPost = ({ item: post }: ListRenderItemInfo<IPost>) => (
-    <Post post={post} currentUserId={currentUserId} onLike={likePost} />
+    <Post
+      post={post}
+      currentUserId={currentUserId}
+      onLike={likePost}
+      onEdit={editPost}
+      onDelete={deletePost}
+    />
   );
 
   return (

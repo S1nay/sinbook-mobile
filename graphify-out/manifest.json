@@ -40,15 +40,15 @@
     "hash": "e497b59ca0af502748158660233179c4"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\App.tsx": {
-    "mtime": 1793043753.864396,
-    "hash": "1848c4730ce688819c7379806a9f4483"
+    "mtime": 1793455042.181603,
+    "hash": "ed568d1ad64640a8f73838eab126fbff"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\global.d.ts": {
-    "mtime": 1792961684.340837,
+    "mtime": 1793045666.788481,
     "hash": "e9fd6136414d3b50887dfb7bf8edab0c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\di\\container.ts": {
-    "mtime": 1792961794.233678,
+    "mtime": 1793045666.773279,
     "hash": "6c7c54a4653aabca5950150ee1c8b573"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\di\\identifiers.ts": {
@@ -60,8 +60,8 @@
     "hash": "1a1d668dde3a03578aee52fa3d8eda52"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\helpers\\index.ts": {
-    "mtime": 1792958826.5694108,
-    "hash": "adb0588aae837c90504a4d96ca83132e"
+    "mtime": 1793045666.773279,
+    "hash": "236601eeaf10f2472fa69988e1e9004b"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\helpers\\bind-in-container\\bindInContainer.ts": {
     "mtime": 1758489092.3486917,
@@ -100,16 +100,16 @@
     "hash": "111cdb9665a85b433957aed0ca020b8f"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\helpers\\merge-arrays-without-duplicates\\mergeArraysWithoutDuplicates.ts": {
-    "mtime": 1778942563.314988,
+    "mtime": 1793045340.828335,
     "hash": "dc46317452ed8830fa310e81f7694725"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\helpers\\set-list-membership\\index.ts": {
-    "mtime": 1792958822.6540835,
-    "hash": "b4686e0fa517e70fe9f0c4b9efe5c280"
+    "mtime": 1793045666.773279,
+    "hash": "6feb02622983bb440e322aeabfd35f5c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\helpers\\set-list-membership\\setListMembership.ts": {
-    "mtime": 1792958854.1675515,
-    "hash": "d8e93b2ecaec6e2fae3c0913621dbd94"
+    "mtime": 1793045666.773279,
+    "hash": "aab17670f4c907b44e36233a31a5b3dc"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\helpers\\transform-http-field-errors\\index.ts": {
     "mtime": 1758489092.3507085,
@@ -120,8 +120,8 @@
     "hash": "e0d26b677f8ab4ac380540fd633df1f0"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\hooks\\index.ts": {
-    "mtime": 1792959147.802248,
-    "hash": "16633f5bdbcc0fece7b008be0881b82f"
+    "mtime": 1793045666.7742796,
+    "hash": "ac3d698ac779e8c246584573d2d9c831"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\hooks\\use-pagination\\index.ts": {
     "mtime": 1774981583.4162188,
@@ -132,12 +132,12 @@
     "hash": "f3d726680865d2f03321fd5e691ec6b6"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\interceptors\\index.ts": {
-    "mtime": 1792863498.1150868,
-    "hash": "ed032b9c66d7488de42146c0705a4d2e"
+    "mtime": 1793045340.8286643,
+    "hash": "81eaa7409ad794afba26fd36da524db9"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\interceptors\\interfaces.ts": {
-    "mtime": 1792863498.1060581,
-    "hash": "704610718daf28f1f90015413402ee22"
+    "mtime": 1793045340.8286643,
+    "hash": "0165b10112dbe602f0db4ff2158c0df9"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\core\\interfaces\\http\\IHttpClient.ts": {
     "mtime": 1762545999.5605495,
@@ -268,96 +268,96 @@
     "hash": "4bd73036ef791e4c6951b6d9086ce83f"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\api\\like\\ILikeApi.ts": {
-    "mtime": 1792872307.4422414,
-    "hash": "d8175403d9956924553b95e6f2ea6df7"
+    "mtime": 1793045666.7742796,
+    "hash": "3e2bb7ece93e6ea79230288752e08cc5"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\api\\like\\index.ts": {
     "mtime": 1774984370.7745416,
     "hash": "de48b3b648d8b32237b9360c0a80b825"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\api\\like\\LikeApi.ts": {
-    "mtime": 1792872311.920833,
-    "hash": "f0b2c82a275ef982cbe91c4ec3a010e7"
+    "mtime": 1793045666.7752788,
+    "hash": "3667460cef0f2cc2662481aabfa22024"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\api\\post\\index.ts": {
     "mtime": 1763307269.3902037,
     "hash": "b37fae0c4803641b5391f0cca285d5bf"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\api\\post\\IPostApi.ts": {
-    "mtime": 1792872281.9906209,
-    "hash": "bc983f35766e3fc2c80e5c9d857190cd"
+    "mtime": 1793045666.7752788,
+    "hash": "4f1787807c438555261f6f0184e837d5"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\api\\post\\PostApi.ts": {
-    "mtime": 1792872288.5998015,
-    "hash": "4cb233bd225a86e29906200bf2a37c55"
+    "mtime": 1793045666.7752788,
+    "hash": "a9410896d52d6d94428bc74c03dc02a3"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\api\\user\\index.ts": {
     "mtime": 1762545999.554516,
     "hash": "fd1cef1ed7d8a1e775b5a0662257f78e"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\api\\user\\IUserApi.ts": {
-    "mtime": 1792872557.1398547,
-    "hash": "6cfca6f18c81310d3c5d2c12be823cb6"
+    "mtime": 1793045666.7752788,
+    "hash": "6f37e9c9f478d18f06842afaf59f1e82"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\api\\user\\UserApi.ts": {
-    "mtime": 1792872564.9733582,
-    "hash": "db9b34b2e6beb0d4b3f00ab65007d618"
+    "mtime": 1793045666.7767398,
+    "hash": "51a103020a0ff26b86c90b0108de4e35"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\dto\\response\\ICommentResponseDto.ts": {
-    "mtime": 1792872017.8028238,
-    "hash": "3a1a7932110cdc6eee96c2de747788b1"
+    "mtime": 1793045666.7767398,
+    "hash": "10a3fffd2b9fa5b39044ae23c35f7c5b"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\dto\\response\\IFileResponseDto.ts": {
-    "mtime": 1792872019.9755242,
-    "hash": "9aa023286b681aefc7b45ba12ba9aeec"
+    "mtime": 1793045666.7767398,
+    "hash": "aba868257569bf8eff9a8beb4425f9dd"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\dto\\response\\IMetaResponseDto.ts": {
-    "mtime": 1792872022.2086012,
-    "hash": "4c970291432bc176a6224144d94dff10"
+    "mtime": 1793045666.777744,
+    "hash": "ba5413a12e0a5cb13c5e71e2178756eb"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\dto\\response\\index.ts": {
-    "mtime": 1792872361.973084,
-    "hash": "9b526f11e0546d54fb3351ebc5b110de"
+    "mtime": 1793045666.7787433,
+    "hash": "bccb98b4faa78f406ac47df6a493435c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\dto\\response\\IPaginationResponseDto.ts": {
-    "mtime": 1792872025.5261025,
-    "hash": "4cbd5f49106333b978b4bc6b880829ef"
+    "mtime": 1793045666.777744,
+    "hash": "904e1ff0ce09717b973c18744d4adc21"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\dto\\response\\IPostResponseDto.ts": {
-    "mtime": 1792872015.2599597,
-    "hash": "28d0752860e0bf4b63fbb8394b169d21"
+    "mtime": 1793045666.777744,
+    "hash": "d65d78e7075e77e8580837320f32dff4"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\dto\\response\\IUserResponseDto.ts": {
-    "mtime": 1792872012.1113417,
-    "hash": "2eb6d395b2b8ff23b4853dc47c1fc002"
+    "mtime": 1793045666.7787433,
+    "hash": "aeeefffc4348574f7a517bf46714fc38"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\mappers\\CommentMapper.ts": {
-    "mtime": 1792872881.361143,
-    "hash": "6176fe05f9ea5ae653b92961963f5178"
+    "mtime": 1793045666.7792456,
+    "hash": "39d59d8e8aabd2c1c83b476b88b8dc66"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\mappers\\FileMapper.ts": {
-    "mtime": 1792872881.361143,
-    "hash": "ed5700e9c8d2e38646329c2200086e43"
+    "mtime": 1793045666.7792456,
+    "hash": "3839e6b185912e1253310249faf39bd6"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\mappers\\index.ts": {
-    "mtime": 1792872067.9088497,
-    "hash": "b0fe56fd245bab2fbe37be4bcef25c96"
+    "mtime": 1793045666.7802498,
+    "hash": "a1ea3855eb166a915d40584a214cc9d6"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\mappers\\MetaMapper.ts": {
-    "mtime": 1792872881.361143,
-    "hash": "ba01b7831aedc1e7a8abd0dfbb4a0f8a"
+    "mtime": 1793045666.7792456,
+    "hash": "64fa524853f0fab70db3e31c9bdb9638"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\mappers\\PaginationMapper.ts": {
-    "mtime": 1792872881.361143,
-    "hash": "aaf7ddffaf54f41b3bb00df3112832c9"
+    "mtime": 1793045666.7792456,
+    "hash": "59237157aedacdac5bd7c54376bb4f02"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\mappers\\PostMapper.ts": {
-    "mtime": 1792872881.361143,
-    "hash": "32bf63538093779b896e2d241c4bf6b0"
+    "mtime": 1793045666.7802498,
+    "hash": "aef3aeb2a833c96b7d41c298ddc09586"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\mappers\\UserMapper.ts": {
-    "mtime": 1792872881.361143,
-    "hash": "87502e72b3dcd7282f68452ca4504fab"
+    "mtime": 1793045666.7802498,
+    "hash": "e808548790c9bd8ce335f05dfc4f2dcc"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\repositories\\AuthRepository.ts": {
     "mtime": 1778180559.0274973,
@@ -380,20 +380,20 @@
     "hash": "3aec42c4fee049c3b190f09558e37a76"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\repositories\\LikeRepository.ts": {
-    "mtime": 1792872319.5648582,
-    "hash": "f18edc29ee94fb14b877dfdd58aa0357"
+    "mtime": 1793045666.7802498,
+    "hash": "b825330e2551eec2071a2fc6b60101cf"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\repositories\\PostRepository.ts": {
-    "mtime": 1792872302.9619052,
-    "hash": "c383974cbae2c820703d10d9c026199f"
+    "mtime": 1793045666.7812538,
+    "hash": "ae8c09490f95bd39aeda4c25b14380de"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\repositories\\ThemeRepository.ts": {
-    "mtime": 1792872549.041244,
-    "hash": "c66716e54d200af98465679ec583ce6d"
+    "mtime": 1793045666.7812538,
+    "hash": "195cbe3a78f65262587b2117cc72c08c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\repositories\\UserRepository.ts": {
-    "mtime": 1792872844.164297,
-    "hash": "d16f3e0b6ffaf57cfb92651adf32b782"
+    "mtime": 1793045666.7821157,
+    "hash": "232df5a2fb507ed48198d910cd91dd0a"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\data\\storage\\index.ts": {
     "mtime": 1778180559.0284986,
@@ -492,32 +492,32 @@
     "hash": "533e15860505e5f950261645ca8313c8"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\entities\\CommentEntity.ts": {
-    "mtime": 1792871931.8314352,
-    "hash": "f232e0f9388190439ccf5ae5a36357bb"
+    "mtime": 1793045666.7821157,
+    "hash": "a2af61f845a761132db4d9d5176d68c5"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\entities\\FileEntity.ts": {
-    "mtime": 1792871934.4651325,
-    "hash": "18d58663ada5ce3ba883b7f26e2eff0f"
+    "mtime": 1793045666.7821157,
+    "hash": "e30f70a41839888aecc071f0dca7aa48"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\entities\\index.ts": {
-    "mtime": 1792871944.25262,
-    "hash": "e494b1b10e6f44a9fc86e942feeb9b9e"
+    "mtime": 1793045666.7832801,
+    "hash": "0abb0b621e61c19e7b7ec4fe94b22de8"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\entities\\MetaEntity.ts": {
-    "mtime": 1792871937.6665523,
-    "hash": "998a137276de991c27a281e29bd3d8ab"
+    "mtime": 1793045666.7821157,
+    "hash": "16f5c1b4c1093901a3acc13b98dc00f7"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\entities\\PaginationEntity.ts": {
-    "mtime": 1792871940.686743,
-    "hash": "c907cb64b88fddf2628bb324ae97daf1"
+    "mtime": 1793045666.7821157,
+    "hash": "32c48b9bf4198e4d155eeac06ec74cc9"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\entities\\PostEntity.ts": {
-    "mtime": 1792871928.4833355,
-    "hash": "074efcc9ca6a926949a05de7b05fbaef"
+    "mtime": 1793045666.7832801,
+    "hash": "c189ee0cf1838f5da5e8bb8e038cf940"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\entities\\UserEntity.ts": {
-    "mtime": 1792871922.600003,
-    "hash": "00815c3ae513b0c39dcc33785662cee2"
+    "mtime": 1793045666.7832801,
+    "hash": "25ca0508556dbbf7c63024ebcec1c90d"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\models\\IComment.ts": {
     "mtime": 1774984370.8000972,
@@ -568,24 +568,24 @@
     "hash": "2e8e77153cb9d211956f1882380bcbfd"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\repositories\\ILikeRepository.ts": {
-    "mtime": 1792872315.0676038,
-    "hash": "49962d1edd13eb4261861be664e53533"
+    "mtime": 1793045666.7842805,
+    "hash": "7ecbc81f5941a71c5ed772e420eeef3c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\repositories\\index.ts": {
-    "mtime": 1793044109.4335625,
+    "mtime": 1793045666.7852871,
     "hash": "3ca7b81a3133df4e88a3429c27efb181"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\repositories\\IPostRepository.ts": {
-    "mtime": 1792872295.8115368,
-    "hash": "3b2511aae5246bb062109347872193ac"
+    "mtime": 1793045666.7842805,
+    "hash": "e46e12d60383572589123687490aaca2"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\repositories\\IThemeRepository.ts": {
-    "mtime": 1792872545.2748413,
-    "hash": "c872a1b884431eba4906d78415524dd2"
+    "mtime": 1793045666.7842805,
+    "hash": "4210dcbb5c6b4b1360e13d9f8cdfba70"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\repositories\\IUserRepository.ts": {
-    "mtime": 1792872570.3631213,
-    "hash": "b94661aec24a8f68f995f4f4962ef0ee"
+    "mtime": 1793045666.7842805,
+    "hash": "533a3c2bcd4d3d1c8a8a2e76c296cec7"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\request-params\\GetCommentsRequestParams.ts": {
     "mtime": 1774984370.8071947,
@@ -608,8 +608,8 @@
     "hash": "d19a24dfbae0db92bde82405cc857546"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\combineUseCases.ts": {
-    "mtime": 1792872515.813648,
-    "hash": "499577e796b7336727e6ff79a01f4970"
+    "mtime": 1793455002.0525546,
+    "hash": "e32831881e4febb04d3d4b81e76e40d0"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\index.ts": {
     "mtime": 1778180559.0338225,
@@ -628,8 +628,8 @@
     "hash": "37807aa0d73c13b90d66e77fc858603b"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\auth\\LogoutUseCase.ts": {
-    "mtime": 1792961850.9190378,
-    "hash": "4e6c974576fe1a6817a667892fef3279"
+    "mtime": 1793045666.7852871,
+    "hash": "b411ef39e038475d3f35b1f70bfdaaba"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\auth\\RegisterUseCase.ts": {
     "mtime": 1774981583.4243288,
@@ -644,40 +644,52 @@
     "hash": "8889b972e34cfcced14eb0955c6d5c08"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\post\\CreatePostUseCase.ts": {
-    "mtime": 1792872525.904878,
-    "hash": "5cd4b7240a697acb92a961eed8d66fb7"
+    "mtime": 1793455001.9517665,
+    "hash": "1f843b2eef97ac2773c6a9ebe1b0ef3a"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\post\\DeletePostUseCase.ts": {
+    "mtime": 1793455001.9867406,
+    "hash": "ae72e23084357524c99e44853cb80815"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\post\\GetUserPostsUseCase.ts": {
     "mtime": 1778942524.0233486,
     "hash": "a23582af3a07a4e3e5e8b13d087b226a"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\post\\index.ts": {
-    "mtime": 1792872508.685941,
-    "hash": "eced41d6188540e5655304558c1b091a"
+    "mtime": 1793455002.0038621,
+    "hash": "2421487fa5735839435290e7f5b7cda6"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\post\\LikePostUseCase.ts": {
-    "mtime": 1792958441.1450124,
-    "hash": "b7ec0cf0c3d33dd263879a7612842e53"
+    "mtime": 1793045666.7862844,
+    "hash": "34313871a9f0227bb28876d5c1a51019"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\post\\SearchPostsUseCase.ts": {
     "mtime": 1778942524.0233486,
     "hash": "dae23741c5fa0059cdfc6816a6b16ffc"
   },
+  "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\post\\UpdatePostUseCase.ts": {
+    "mtime": 1793455001.968723,
+    "hash": "3e6b4dc673cc4ee0a0c83255ae28d4a0"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\post\\uploadPostImages.ts": {
+    "mtime": 1793455001.9338589,
+    "hash": "7d8dc985f0b1effbee0ab923fc2bdeb7"
+  },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\theme\\GetThemeUseCase.ts": {
-    "mtime": 1792872538.6998222,
-    "hash": "e9ebe14069924e9ccfb0747ec8cb79e2"
+    "mtime": 1793045666.7862844,
+    "hash": "d5e072036e1faa57c4a51fd07a26c4f7"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\theme\\index.ts": {
     "mtime": 1778180559.0338225,
     "hash": "309b81c672a1f3092e55ae8413873bfc"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\theme\\SwitchThemeUseCase.ts": {
-    "mtime": 1792872542.1151528,
-    "hash": "f06b4cc5ee16a12d92da05fd88645a90"
+    "mtime": 1793045666.7874777,
+    "hash": "6f461b92f0dc1400fff965889265624b"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\user\\GetCurrentUserUseCase.ts": {
-    "mtime": 1792958471.693528,
-    "hash": "690f8810bd0630b9597b5c9ae5efd7ed"
+    "mtime": 1793045666.7874777,
+    "hash": "0019a7fded0cec85ae6f6b932d3ee18b"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\user\\GetUserByIdUseCase.ts": {
     "mtime": 1778942524.0248532,
@@ -688,7 +700,7 @@
     "hash": "08d49b8900f33e8ae007dd951a0e076f"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\user\\PatchUserUseCase.ts": {
-    "mtime": 1792872776.297782,
+    "mtime": 1793045666.7874777,
     "hash": "5b9844e3f332c9c519d4968f8dee0a9d"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\domain\\use-cases\\user\\SearchUsersUseCase.ts": {
@@ -740,52 +752,52 @@
     "hash": "e5cf78a8db93d44c8bf25f7d73ce1239"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\navigation\\AppNavigator.tsx": {
-    "mtime": 1792961660.305022,
-    "hash": "00622c6c8181ba745c2129e72f1f91cd"
+    "mtime": 1793045666.788481,
+    "hash": "03bee382d51766d97bb3d99d8dc52f41"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\navigation\\configuration\\index.ts": {
     "mtime": 1757803951.24453,
     "hash": "7dc169bb2dacffaf75ffca26457766f6"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\navigation\\configuration\\routeNames.ts": {
-    "mtime": 1792858419.2169492,
-    "hash": "7efd2847b2a56902cd1189fe78bd003c"
+    "mtime": 1793455070.873341,
+    "hash": "5f636978ab6f83c4581e5ee43e6fcdd3"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\navigation\\configuration\\routeParams.ts": {
-    "mtime": 1792863545.8381765,
-    "hash": "346ca74891e4cef46ee3dc58b5a9a5a3"
+    "mtime": 1793455070.9461637,
+    "hash": "b4edc3f4a47002559deeeb2761877cd4"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\navigation\\configuration\\navigators\\defaultHeader.tsx": {
     "mtime": 1758489092.362668,
     "hash": "e0cd96ed38702de8d2b0c7801d5009c2"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\navigation\\configuration\\navigators\\index.tsx": {
-    "mtime": 1778942563.3477392,
-    "hash": "868943319b202781e8bfd182f934e90a"
+    "mtime": 1793455112.676417,
+    "hash": "384a6de1e631217dbc37c66132ab4913"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\navigation\\configuration\\navigators\\types\\index.ts": {
     "mtime": 1758489092.3637152,
     "hash": "734b9fbaec34a144b66e039f7a98fa60"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\bootstrap\\index.tsx": {
-    "mtime": 1792961649.526137,
-    "hash": "662a833c5b0e228d153d6e39e88f3c35"
+    "mtime": 1793045666.788481,
+    "hash": "29d5716a622a5408b4063249e58d53d0"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\bootstrap\\view\\BootstrapGate.tsx": {
-    "mtime": 1793042986.61514,
-    "hash": "e8dac2d98fdebc7f46b4429c341c7305"
+    "mtime": 1793045666.7894864,
+    "hash": "3cb2351de801ee5c5bd8fd568fc9f1d0"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\bootstrap\\view-model\\BootstrapViewModel.ts": {
-    "mtime": 1792961635.14307,
-    "hash": "253741e6e5199049a329f9583f8c615e"
+    "mtime": 1793045666.7894864,
+    "hash": "48b107cb7b70e31ab1ca1609e7388d1a"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\bootstrap\\view-model\\IBootstrapViewModel.ts": {
-    "mtime": 1792961629.1216276,
-    "hash": "9361c8329cbcbcbae1624d5d91aba1f8"
+    "mtime": 1793045666.7894864,
+    "hash": "f9fa8b3a496665fee7135ee9870c74ca"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\bootstrap\\view-model\\index.ts": {
-    "mtime": 1792961637.6595476,
-    "hash": "577faa640461bd4a4deb3ceee37048e2"
+    "mtime": 1793045666.7894864,
+    "hash": "c16fd37722261a7c26eda011446192f2"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\bottom-tab-bar\\BottomTabBar.tsx": {
     "mtime": 1778180559.0368268,
@@ -804,35 +816,11 @@
     "hash": "ae14d3a6c3b685e6d0170735f6ff7ddb"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\index.ts": {
-    "mtime": 1777972117.8291192,
-    "hash": "7ed3402b23e12ad42f2e3b2aaa5c5cfb"
-  },
-  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\create-post-form\\CreatePostForm.tsx": {
-    "mtime": 1778942563.3588066,
-    "hash": "83eba6203e3c7a47746d6e1438a537b2"
-  },
-  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\create-post-form\\index.ts": {
-    "mtime": 1777972117.827118,
-    "hash": "10c10a30e16f3475f2f711886b84836c"
-  },
-  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\create-post-form\\keys.ts": {
-    "mtime": 1777972117.827118,
-    "hash": "da0effbd113878a5c30abf3a7937d7ac"
-  },
-  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\create-post-form\\schema.ts": {
-    "mtime": 1778942524.0268621,
-    "hash": "1609f47a90c4e13cc18a8552b033ee6f"
-  },
-  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\create-post-form\\styles.ts": {
-    "mtime": 1778942524.0268621,
-    "hash": "064dd332fdde343414061a189768d97e"
-  },
-  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\create-post-form\\types\\index.ts": {
-    "mtime": 1777972117.8281188,
-    "hash": "804e6b577e9e6d4825d44fa4b4370fce"
+    "mtime": 1793455112.676417,
+    "hash": "a49516cba3f9c1892d81b0c639680234"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\edit-profile-form\\EditProfileForm.tsx": {
-    "mtime": 1778942563.3618057,
+    "mtime": 1793045340.8342104,
     "hash": "c0b830a537aff002d961f70290eb860d"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\edit-profile-form\\index.ts": {
@@ -879,6 +867,30 @@
     "mtime": 1759059360.7286675,
     "hash": "bca33b959fcbab96112cf61625f6869a"
   },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\post-form\\index.ts": {
+    "mtime": 1793455112.676417,
+    "hash": "391a76cccebefb3d205e1dfa2628f11a"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\post-form\\keys.ts": {
+    "mtime": 1793455008.5644066,
+    "hash": "2c0519be575485260889034ccebfc603"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\post-form\\PostForm.tsx": {
+    "mtime": 1793455008.5518956,
+    "hash": "34a4308175af1b149adc5356e069007a"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\post-form\\schema.ts": {
+    "mtime": 1793455008.568157,
+    "hash": "3103d6a4f019b770d3aba0982beff00b"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\post-form\\styles.ts": {
+    "mtime": 1793455008.5746863,
+    "hash": "d7669b22ff71605cd0b781debe34467f"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\post-form\\types\\index.ts": {
+    "mtime": 1793455008.578691,
+    "hash": "65794205f70e4f76642cae2b45b298e3"
+  },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\forms\\register-form\\index.ts": {
     "mtime": 1759069512.1710205,
     "hash": "1f7fc971d233f2bd8bbd1ec248fe64cd"
@@ -920,15 +932,15 @@
     "hash": "03782b787698c88ac3c3a57eb341b932"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\media-picker\\index.ts": {
-    "mtime": 1778942563.5107038,
+    "mtime": 1793045340.8362522,
     "hash": "f4423defca4373c6eccb2a2ab1fece3d"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\media-picker\\MediaPicker.tsx": {
-    "mtime": 1778942563.5107038,
+    "mtime": 1793045340.8362522,
     "hash": "9da9a1b14c34094bc4cbc47c6357adfe"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\media-picker\\types\\index.ts": {
-    "mtime": 1778942563.5107038,
+    "mtime": 1793045340.8362522,
     "hash": "4c6d53eff6617f180c32de27222df041"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\placeholders\\index.ts": {
@@ -972,20 +984,24 @@
     "hash": "9f2dd74f05a05354838fc5e37ccc7892"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\post\\Post.tsx": {
-    "mtime": 1792863808.6530683,
-    "hash": "117f714b94ce04f9d0d18512b1730777"
+    "mtime": 1793455049.2444398,
+    "hash": "081864ea9cc2c1259588a9189c9bd28e"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\post\\styles.ts": {
     "mtime": 1778180559.0403266,
     "hash": "7edc19f5a136b486a99444dfbf7ffb79"
   },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\post\\components\\PostActionsSheet.tsx": {
+    "mtime": 1793455042.2582476,
+    "hash": "ba869a7ccdfe38ef926e753520e2bd92"
+  },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\post\\components\\PostLikeButton.tsx": {
-    "mtime": 1792863808.4473076,
-    "hash": "14aaa948b8dda2ef531ca8fac164fb12"
+    "mtime": 1793455126.3475778,
+    "hash": "6de2b4eea234e46cf7f591b8fbdfdd42"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\post\\types\\index.ts": {
-    "mtime": 1792863508.271851,
-    "hash": "fc280bdbbad4ea430e53a24d8d3cfe7b"
+    "mtime": 1793455126.3723938,
+    "hash": "826e8e2ddce7b71d6b0acbd9fb5c1140"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\profile-info\\index.ts": {
     "mtime": 1778942524.0313716,
@@ -1044,8 +1060,8 @@
     "hash": "f0534d77432813e7438fb9d1822bffb4"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\components\\view-model-injector\\ViewModelInjector.tsx": {
-    "mtime": 1793043163.6377974,
-    "hash": "e81acbc5e48a036829496a5eb5ed42c5"
+    "mtime": 1793045666.7894864,
+    "hash": "30d54a2e11205ba3012fd2fa45bb932b"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\chat-screen\\ChatScreen.tsx": {
     "mtime": 1758489092.3692834,
@@ -1068,8 +1084,8 @@
     "hash": "bfb304af80aec5d942a8b8cd9ed88dcf"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\create-post-screen\\view\\CreatePostView.tsx": {
-    "mtime": 1792959209.1954575,
-    "hash": "ac10d0c29ff21352dbb606307cef1b85"
+    "mtime": 1793455112.676417,
+    "hash": "d19f8ca4174234dc3bf359574b58879c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\create-post-screen\\view\\index.ts": {
     "mtime": 1777972117.8311186,
@@ -1080,16 +1096,44 @@
     "hash": "19978642095883c2a4852fd2dc39d198"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\create-post-screen\\view-model\\CreatePostViewModel.ts": {
-    "mtime": 1792958500.3741555,
-    "hash": "87cf7104248f786b01a2216d3e8926c3"
+    "mtime": 1793455008.6310897,
+    "hash": "d691c7dd3a616948bcce999157fc6ea2"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\create-post-screen\\view-model\\ICreatePostViewModel.ts": {
-    "mtime": 1777972117.830118,
-    "hash": "0337c1423827df7543c294e63215002e"
+    "mtime": 1793455008.6391134,
+    "hash": "f553b32bc160dac278b616d7c38f689f"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\create-post-screen\\view-model\\index.ts": {
-    "mtime": 1777972117.830118,
-    "hash": "8ba9b99d0f8f4ccc6727d48cc0cde23c"
+    "mtime": 1793455008.6467512,
+    "hash": "fae88a96deab6457cd0e85a95cd973f6"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\edit-post-screen\\index.tsx": {
+    "mtime": 1793455088.0383575,
+    "hash": "0e60530c53526e0804ae12552b6884b3"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\edit-post-screen\\view\\EditPostView.tsx": {
+    "mtime": 1793455098.1479752,
+    "hash": "56c3415d5e94b8c8677b3d40e9a8f366"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\edit-post-screen\\view\\index.ts": {
+    "mtime": 1793455098.125762,
+    "hash": "5159b6e994366466673d1c14ce2120fb"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\edit-post-screen\\view\\styles.ts": {
+    "mtime": 1793455088.1463225,
+    "hash": "19978642095883c2a4852fd2dc39d198"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\edit-post-screen\\view-model\\EditPostViewModel.ts": {
+    "mtime": 1793455088.0837605,
+    "hash": "90bacadb01e3a600e2f1670c00388a31"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\edit-post-screen\\view-model\\IEditPostViewModel.ts": {
+    "mtime": 1793455088.0585883,
+    "hash": "b162d065efe5fb4ca02a9198a5a94c43"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\edit-post-screen\\view-model\\index.ts": {
+    "mtime": 1793455088.1020224,
+    "hash": "906d1e8e6b24ab29ad5910bd98b08521"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\home-screen\\HomeScreen.tsx": {
     "mtime": 1758489092.3707886,
@@ -1120,15 +1164,15 @@
     "hash": "b4ddc82b4632a676be3e80d79c06078f"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\login-screen\\view\\LoginView.tsx": {
-    "mtime": 1792961719.2297468,
-    "hash": "21224e0fc7231ff24a3bcd66014ed2e6"
+    "mtime": 1793045666.7914915,
+    "hash": "026dbea8a917d9923c3196439b41ab67"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\login-screen\\view\\styles.ts": {
     "mtime": 1778180559.042332,
     "hash": "b71f9ba7a9da5c503f5349f3d258ddf7"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\login-screen\\view-model\\ILoginViewModel.ts": {
-    "mtime": 1792961706.9805877,
+    "mtime": 1793045666.7904906,
     "hash": "ee4c99a29bbaeb0876e3b208fd7c6d6a"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\login-screen\\view-model\\index.ts": {
@@ -1136,8 +1180,8 @@
     "hash": "4d0c8f4d44b64cda3f989a82eb4d7830"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\login-screen\\view-model\\LoginViewModel.ts": {
-    "mtime": 1792961703.5889115,
-    "hash": "c01dfea4f7ee1852baed02a04432ede3"
+    "mtime": 1793045666.7914915,
+    "hash": "2ed7bea7bf2f40279ab6bf78a06e409f"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\notifications-screen\\index.ts": {
     "mtime": 1758489092.3732367,
@@ -1156,8 +1200,8 @@
     "hash": "a5bfda829f0d043f5d8f5aac160ce11e"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\profile-details-screen\\view\\ProfileDetailsView.tsx": {
-    "mtime": 1792959209.1954575,
-    "hash": "765d2398462ba1ece0b76aae7f31c948"
+    "mtime": 1793045666.79249,
+    "hash": "548bea29e59a565036bdaed1ed818072"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\profile-details-screen\\view\\styles.ts": {
     "mtime": 1778180559.043331,
@@ -1172,8 +1216,8 @@
     "hash": "040cf504de5184242c8e3640c8e480dd"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\profile-details-screen\\view-model\\ProfileDetailsViewModel.ts": {
-    "mtime": 1792958589.5051749,
-    "hash": "3f87b1e9a9c64d5b551bc631e76daf47"
+    "mtime": 1793457603.306706,
+    "hash": "68d7357b92b00d2a7219f05ae8c7304c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\profile-edit-screen\\index.tsx": {
     "mtime": 1762960578.9403799,
@@ -1184,8 +1228,8 @@
     "hash": "0d94618929298a246a21173cf48aa8eb"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\profile-edit-screen\\view\\ProfileEditView.tsx": {
-    "mtime": 1792959209.1954575,
-    "hash": "9b7860662bf9a61283b0c159f48f0c80"
+    "mtime": 1793045666.7930055,
+    "hash": "f8ecea59f4446266681e834b38f68dd0"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\profile-edit-screen\\view\\styles.ts": {
     "mtime": 1778180559.044333,
@@ -1220,8 +1264,8 @@
     "hash": "df03396f3af8bd3a3465e76e65849055"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\profile-posts-screen\\view\\ProfilePostsView.tsx": {
-    "mtime": 1792959209.1954575,
-    "hash": "63381da052feb1a468a6b7d650772731"
+    "mtime": 1793455112.676417,
+    "hash": "307644c0282c45187e2d853cf5332940"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\profile-posts-screen\\view\\styles.ts": {
     "mtime": 1778180559.044333,
@@ -1232,12 +1276,12 @@
     "hash": "845b875075c95160193f571fc6d2e502"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\profile-posts-screen\\view-model\\IProfilePostsViewModel.ts": {
-    "mtime": 1792863528.2898686,
-    "hash": "01f55dc332f3f6805e1e053e53eceaf1"
+    "mtime": 1793455070.9461637,
+    "hash": "2befa141cf185ab2ca1ace1153157a3c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\profile-posts-screen\\view-model\\ProfilePostsViewModel.ts": {
-    "mtime": 1792958866.6163902,
-    "hash": "19189f2dff7cd5ee4a082ec007d2c294"
+    "mtime": 1793457394.5173688,
+    "hash": "508baadf9893a4d698ce28fd6d91b826"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\register-screen\\index.tsx": {
     "mtime": 1759069512.1731205,
@@ -1248,8 +1292,8 @@
     "hash": "7a2fca4bd4ebeefc451a595c703cf198"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\register-screen\\view\\RegisterView.tsx": {
-    "mtime": 1792961744.234051,
-    "hash": "205b18c7f6de821fc4286c2a322e4241"
+    "mtime": 1793045666.7950444,
+    "hash": "e84ed2dd4140d160dbb3f98fb251a467"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\register-screen\\view\\styles.ts": {
     "mtime": 1778180559.045332,
@@ -1260,12 +1304,12 @@
     "hash": "5aad4b38334aa5e983e1904b01ef2416"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\register-screen\\view-model\\IRegisterViewModel.ts": {
-    "mtime": 1792961732.4704702,
+    "mtime": 1793045666.7940447,
     "hash": "32698b159241b4d4696b7bffccd9ee8d"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\register-screen\\view-model\\RegisterViewModel.ts": {
-    "mtime": 1793044114.7747378,
-    "hash": "b7d0ba01a21571ef512152194d9757ec"
+    "mtime": 1793045666.7940447,
+    "hash": "017fb90249b62f4ee1b4deb5a2182ce5"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\search-screen\\index.tsx": {
     "mtime": 1778942524.0358882,
@@ -1276,8 +1320,8 @@
     "hash": "e5e7a6ae5c6e9957c6c3127d7a25904e"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\search-screen\\view\\SearchView.tsx": {
-    "mtime": 1792959209.1954575,
-    "hash": "f92109cb8d05690bc71e7059fbd25762"
+    "mtime": 1793455070.947167,
+    "hash": "6196e8ce26a08d5fa294fb6b06fea202"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\search-screen\\view\\styles.ts": {
     "mtime": 1778942524.0378833,
@@ -1288,20 +1332,20 @@
     "hash": "8d2ce9c82b8e06cb745c3fe5804b1c69"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\search-screen\\view-model\\ISearchViewModel.ts": {
-    "mtime": 1792863598.6627722,
-    "hash": "3453f21fd47e12e88f71286d8ac67999"
+    "mtime": 1793455070.947167,
+    "hash": "3c880840fc78773f26a08b8edeb60d8b"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\search-screen\\view-model\\SearchViewModel.ts": {
-    "mtime": 1793043358.1041596,
-    "hash": "06a283a550870a71b4201893939453d3"
+    "mtime": 1793455126.4056978,
+    "hash": "3aa4fa42a50c6455d95046cabc625496"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\settings-screen\\index.tsx": {
     "mtime": 1778180559.045332,
     "hash": "983edd29fdb58fc904a0b19b580df2ed"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\settings-screen\\view\\SettingsView.tsx": {
-    "mtime": 1792961767.105165,
-    "hash": "2a102d546b24fefa177df6920e9ef3de"
+    "mtime": 1793045666.7962391,
+    "hash": "d6f7c5dfe0076043d29b0a41b2a8a456"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\settings-screen\\view\\styles.ts": {
     "mtime": 1778180559.0463314,
@@ -1312,12 +1356,12 @@
     "hash": "cb4373412a45ccc00b197d24c6795681"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\settings-screen\\view-model\\ISettingsViewModel.ts": {
-    "mtime": 1792961758.8931358,
-    "hash": "c82db7aad7161828f033c33f383e20b6"
+    "mtime": 1793045666.7950444,
+    "hash": "45f16a39b6456dcc00cf8a4b1c12352c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\settings-screen\\view-model\\SettingsViewModel.ts": {
-    "mtime": 1792961755.5138426,
-    "hash": "1ac7dbbe30511d801c62992a61323470"
+    "mtime": 1793045666.7962391,
+    "hash": "0a56a9346a4c7e659a17c43aa655233c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\user-details-screen\\index.tsx": {
     "mtime": 1778942524.0378833,
@@ -1332,8 +1376,8 @@
     "hash": "dcb9b54c9619d98c6b1812efb14be983"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\user-details-screen\\view\\UserDetailsView.tsx": {
-    "mtime": 1792959209.1954575,
-    "hash": "a502b61cb73eb71664de726904484863"
+    "mtime": 1793045666.7972393,
+    "hash": "d41b94f806a67ad36b566a66bf04a1bd"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\user-details-screen\\view-model\\index.ts": {
     "mtime": 1778942524.0378833,
@@ -1344,7 +1388,7 @@
     "hash": "1213ac9fec8052a3e9d032e6c97d37bd"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\screens\\user-details-screen\\view-model\\UserDetailsViewModel.ts": {
-    "mtime": 1792872746.4141574,
+    "mtime": 1793045666.7962391,
     "hash": "92d10fbd184b3a047469f795bd60052d"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\colors\\index.ts": {
@@ -1352,40 +1396,40 @@
     "hash": "6360b7666107ab0348709a01c9dcbfb9"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\hooks\\index.ts": {
-    "mtime": 1792961834.8708947,
-    "hash": "28181763c0abac92e786e545e8ace38d"
+    "mtime": 1793045666.7972393,
+    "hash": "d14a6e3eb3b00f99187a479230da83f5"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\hooks\\use-DI-container\\index.ts": {
-    "mtime": 1758489092.3512175,
+    "mtime": 1793045666.7972393,
     "hash": "8e96f986ef3414fd5a72467dbed9a4c5"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\hooks\\use-DI-container\\useDIContainer.ts": {
-    "mtime": 1792959170.0540366,
-    "hash": "35981114eb17e5589e0719db3b6cd89d"
+    "mtime": 1793045666.7972393,
+    "hash": "277ff425ed49cbe2a0eb539d6cba7022"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\icons\\index.ts": {
     "mtime": 1777972117.8341174,
     "hash": "29acf57d9a800bde71b5ae69dfe58936"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\providers\\index.ts": {
-    "mtime": 1793043147.7597184,
+    "mtime": 1793045666.7987144,
     "hash": "81f7b1a9f180e4f84b2578978983973a"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\providers\\di-provider\\DIContext.ts": {
-    "mtime": 1762960578.9275072,
+    "mtime": 1793045666.7972393,
     "hash": "d7815eadebf629ee7b41471119950a2c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\providers\\di-provider\\DIProvider.tsx": {
-    "mtime": 1762960578.9275072,
+    "mtime": 1793045666.7972393,
     "hash": "1c8ac1dec2ecd41681fb01b074b1aa8f"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\providers\\di-provider\\index.ts": {
-    "mtime": 1762960578.9275072,
+    "mtime": 1793045666.7987144,
     "hash": "620b5d0e01952c06dcc82c4321762094"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\theme\\applyTheme.ts": {
-    "mtime": 1792961589.6059136,
-    "hash": "07228dd6ee141161e4176cf16eee486e"
+    "mtime": 1793045666.7987144,
+    "hash": "fddfbd9541fff730ffc266d2a1cd5601"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\theme\\breakpoints.ts": {
     "mtime": 1778180559.0473318,
@@ -1428,44 +1472,44 @@
     "hash": "4b214bdf30b8145aa3d1d0d5dc0327bc"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\store\\index.ts": {
-    "mtime": 1792961585.1344185,
-    "hash": "79a688ccbe043681397ad47912be7e3a"
+    "mtime": 1793045666.7987144,
+    "hash": "9e11378b8d847587517256c109988f7a"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\store\\posts\\index.ts": {
-    "mtime": 1792872227.7093036,
-    "hash": "f22646330d3f56287aa0c8246a73c7bb"
+    "mtime": 1793045666.7999008,
+    "hash": "9f982f639491331daa00eaff8fa2a473"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\store\\posts\\IPostsStore.ts": {
-    "mtime": 1792872216.1305392,
-    "hash": "c53a398e2c0a0b52b11c71b418d6ebb3"
+    "mtime": 1793045666.7999008,
+    "hash": "98de2557d1696ad8b400e08d783bd5e6"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\store\\posts\\PostsStore.ts": {
-    "mtime": 1793043622.298118,
-    "hash": "d57e2821fc7160fad5d2906ab185d0ac"
+    "mtime": 1793045666.7999008,
+    "hash": "6977f0f02f5b12bde9df1641f33ef25c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\store\\theme\\index.ts": {
-    "mtime": 1792961582.3516746,
-    "hash": "a806111967024b30c6b1a435539a86f2"
+    "mtime": 1793045666.8009005,
+    "hash": "8df1977da19b7998c7a664749f29bd5a"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\store\\theme\\IThemeStore.ts": {
-    "mtime": 1792961576.1598663,
-    "hash": "f05865dadc71de38055e207b632bbd8f"
+    "mtime": 1793045666.7999008,
+    "hash": "ffbf24afd21ce56b95392b2e46f9eb51"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\store\\theme\\ThemeStore.ts": {
-    "mtime": 1792961579.9830568,
-    "hash": "cd789565f008a1afe340656a782f9976"
+    "mtime": 1793045666.8009005,
+    "hash": "aaffa429fd3d68fbbb5c9a31a7ab9a6e"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\store\\user\\index.ts": {
-    "mtime": 1792872240.3525157,
-    "hash": "e7e938dadc63f996ffcce34191a0bd39"
+    "mtime": 1793045666.8009005,
+    "hash": "06cea3968b9100e44decbfabca5bb451"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\store\\user\\IUserStore.ts": {
-    "mtime": 1792872234.548792,
-    "hash": "1bde320b9cb4baf4df7c8f3342162954"
+    "mtime": 1793045666.8009005,
+    "hash": "71f4acf1b12c887602eba18aa3ad9224"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\store\\user\\UserStore.ts": {
-    "mtime": 1792872238.1731222,
-    "hash": "5a38f74c09422cf0a3d966454b50c6ae"
+    "mtime": 1793045666.8009005,
+    "hash": "8e2ea67c461e2ad74ded122755cead09"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\avatar\\Avatar.tsx": {
     "mtime": 1778942524.0398846,
@@ -1530,6 +1574,26 @@
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\checkbox\\types\\index.ts": {
     "mtime": 1757012112.3790126,
     "hash": "193b123d58d8a58fa99debf5014b1cb5"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\confirm-modal\\ConfirmModal.ts": {
+    "mtime": 1793455029.5457468,
+    "hash": "c93828e9d58f253e4e7f6e1065f6db3d"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\confirm-modal\\ConfirmModalWrapper.tsx": {
+    "mtime": 1793455029.5625427,
+    "hash": "30249201dfe95cb2bdfab08baf35f27c"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\confirm-modal\\index.ts": {
+    "mtime": 1793455029.596531,
+    "hash": "a058c150c425b2a9a562a8f889a39a0a"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\confirm-modal\\styles.ts": {
+    "mtime": 1793455033.9172869,
+    "hash": "a7c0e080b580bb2a0317476208a7bee4"
+  },
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\confirm-modal\\types\\index.ts": {
+    "mtime": 1793455029.5278883,
+    "hash": "bb8de0f5f01f96565673e6e22cc9ac39"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\error\\ErrorMessage.tsx": {
     "mtime": 1778180559.0518444,
@@ -1803,9 +1867,9 @@
     "mtime": 1778942524.0519338,
     "hash": "a130e4ef84d9a193297eca85d5e735a2"
   },
-  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\toast\\index.ts": {
-    "mtime": 1762960578.9446418,
-    "hash": "5cac1627e5cf20d4d16d95cad75ea112"
+  "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\toast\\index.tsx": {
+    "mtime": 1793457505.8923388,
+    "hash": "d3cff087abdec3a387433ff5e520f54d"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\ui\\toast\\toast-components\\countdown-bar\\CountdownBar.tsx": {
     "mtime": 1778180559.0612133,
@@ -1880,7 +1944,7 @@
     "hash": "becd455e9d91294d71a716c83ae14273"
   },
   "G:\\sinbook\\sinbook-mobile\\CLAUDE.md": {
-    "mtime": 1792961878.8807423,
+    "mtime": 1793045666.7674844,
     "hash": "a7077f686d226d30e8f5e171625a1686"
   },
   "G:\\sinbook\\sinbook-mobile\\README.md": {
@@ -1888,7 +1952,7 @@
     "hash": "2489230a8d9e94b8be0f3ccb051a7ea4"
   },
   "G:\\sinbook\\sinbook-mobile\\documentation\\ARCHITECTURE_RULES.md": {
-    "mtime": 1792958396.940777,
+    "mtime": 1793045666.7674844,
     "hash": "fc6ca643e165cc2e1444184577882b9f"
   },
   "G:\\sinbook\\sinbook-mobile\\android\\app\\src\\main\\ic_launcher-playstore.png": {
@@ -2080,7 +2144,7 @@
     "hash": "6848135e9a435fb17541934c9ed4a0bc"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\icons\\svg\\Like.svg": {
-    "mtime": 1778942563.4054792,
+    "mtime": 1793045340.8397725,
     "hash": "a71cd34fa068f45e5d9ce2a9cefc862c"
   },
   "G:\\sinbook\\sinbook-mobile\\src\\presentation\\shared\\icons\\svg\\Lock.svg": {

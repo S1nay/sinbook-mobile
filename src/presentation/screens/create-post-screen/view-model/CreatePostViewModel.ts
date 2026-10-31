@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import Toast from 'react-native-toast-message';
 
-import { CreatePostFormData } from '@components/forms/create-post-form';
+import { PostFormData } from '@components/forms/post-form';
 import { Identifiers } from '@core/di/identifiers';
 import { IHttpError } from '@core/interfaces/http';
 import { INavigationService } from '@core/interfaces/navigation';
@@ -52,7 +52,7 @@ class CreatePostViewModel implements ICreatePostViewModel {
     this.error = '';
   }
 
-  createPost(data: CreatePostFormData, resetForm: PureFunction): void {
+  createPost(data: PostFormData, resetForm: PureFunction): void {
     this.isLoading = true;
     this.error = '';
 
